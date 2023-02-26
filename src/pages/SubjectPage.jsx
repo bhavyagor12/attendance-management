@@ -4,6 +4,7 @@ import Nav from "../components/Navbar";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
+import Table from "../components/TableNoTick";
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
   let location = useLocation();
@@ -36,6 +37,7 @@ const SubjectPage = () => {
           <LectureCard />
         ))}
       </div>
+      <Table />
     </div>
   );
 };

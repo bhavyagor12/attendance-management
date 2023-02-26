@@ -271,7 +271,7 @@ export default function WithMultipleCheckboxes() {
   };
 
   return (
-    <div>
+    <div className="p-3">
       <MDBDataTableV5
         hover
         entriesOptions={[5, 20, 25]}
