@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { VscRocket } from "react-icons/vsc";
+import { useNavigate } from "react-router";
 const Nav = () => {
+  const navigate= useNavigate();
+  const handleClicked = () => {
+    navigate('/home')
+  }
   let Links = [
     { name: "HOME", link: "/" },
-    { name: "SERVICE", link: "/" },
     { name: "ABOUT", link: "/" },
     { name: "BLOG'S", link: "/" },
     { name: "CONTACT", link: "/" },
@@ -18,7 +22,7 @@ const Nav = () => {
           className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
       text-gray-800"
         >
-          <span className="text-3xl text-indigo-600 mr-1">
+          <span className="text-3xl text-indigo-600 mr-1" onClick={handleClicked}>
             <ion-icon name="logo-ionic">
               <VscRocket />
             </ion-icon>
