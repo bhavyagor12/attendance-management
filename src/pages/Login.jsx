@@ -42,7 +42,12 @@ const Login = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Error!",
+        text: "Entered credentials dont exist",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
     }
   };
 
