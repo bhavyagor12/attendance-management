@@ -5,8 +5,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function WithMultipleCheckboxes({ lecture }) {
+  const navigate = useNavigate();
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
@@ -50,7 +53,13 @@ export default function WithMultipleCheckboxes({ lecture }) {
         lecture_id: "fb7ad24b-8991-4e8b-a2b7-4e73314f63b6",
         attendance: saps,
       });
-      console.log(res);
+      Swal.fire({
+        title: "Success!",
+        text: "Marked Attendance",
+        icon: "success",
+        confirmButtonText: "Done",
+      });
+      navigate("/home");
       saps = [];
     } else {
       console.log(checkbox1.sapid);
