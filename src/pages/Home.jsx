@@ -1,4 +1,5 @@
 import React from "react";
+import TimeTable from "../components/Timetable";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
@@ -8,7 +9,7 @@ import Table from "../components/Table";
 
 const Home = () => {
   const info = useRecoilValue(infoState);
-  console.log(info)
+  console.log(info);
   return (
     <div>
       <Nav />
@@ -20,6 +21,7 @@ const Home = () => {
       </div>
       <div className="mt-24">{info.name}</div>
       <Table />
+      {/* <TimeTable /> */}
     </div>
   );
 };

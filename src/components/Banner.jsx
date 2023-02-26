@@ -2,9 +2,9 @@ import React from "react";
 import { MdWavingHand } from "react-icons/md";
 const Banner = () => {
   return (
-    <section class="mt-[8%] flex md:mt-[4%] ">
+    <section class="mt-[8%] flex md:mt-[3%] ">
       <div class="container">
-        <div class="flex px-2 bg-gray-800 w-[100vw]">
+        <div class="flex bg-gray-800 w-[100vw]">
           <div class="flex flex-wrap">
             <div class="w-[100vw] pt-[6%] md:pt-[2%] px-[4%] mb-10 ">
               <div class="flex items-center text-3xl font-bold text-white gap-2">
