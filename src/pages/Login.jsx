@@ -3,24 +3,29 @@ import Swal from "sweetalert2";
 // import logo from "../images/logo.png";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { infoState } from "../atoms/infoState";
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [sapid, setSapid] = useState("");
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
+  const [info, setInfo] = useRecoilState(infoState);
+  const navigate= useNavigate();
   const togglePassword = (e) => {
     e.preventDefault();
     setPasswordShown(!passwordShown);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Email: ${email}, Password: ${password}`);
+    console.log(`Email: ${sapid}, Password: ${password}`);
     const userData = {
-      email,
+      sap_id:Number(sapid),
       password,
     };
     try {
-      const rawResponse = await fetch("/api/auth/signin", {
+      const rawResponse = await fetch("/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -29,11 +34,20 @@ const Login = () => {
         body: JSON.stringify(userData),
       });
       const content = await rawResponse.json();
-      if (content.type === "user") {
+      console.log(content);
+      if (content) {
         console.log("going to home");
-      } else if (content.type === "police") {
-        console.log("going to police");
-      } else {
+        setInfo({
+          sap_id: content.sap_id,
+          name: content.name,
+          ID: content.ID,
+        });
+        navigate("/home");
+      } 
+      // else if (content.type === "police") {
+      //   console.log("going to police");
+      // } 
+      else {
         Swal.fire({
           title: "Error!",
           text: "Entered credentials dont exist",
@@ -79,8 +93,8 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={sapid}
+                  onChange={(e) => setSapid(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />

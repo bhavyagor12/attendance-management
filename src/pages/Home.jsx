@@ -2,8 +2,13 @@ import React from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
+import { useRecoilValue } from "recoil";
+import { infoState } from "../atoms/infoState";
+import Table from "../components/Table";
 
 const Home = () => {
+  const info = useRecoilValue(infoState);
+  console.log(info)
   return (
     <div>
       <Nav />
@@ -13,6 +18,8 @@ const Home = () => {
         <SubjectCard />
         <SubjectCard />
       </div>
+      <div className="mt-24">{info.name}</div>
+      <Table />
     </div>
   );
 };
