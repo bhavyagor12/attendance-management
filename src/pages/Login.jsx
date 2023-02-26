@@ -68,7 +68,10 @@ const Login = () => {
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
       <div className="hidden md:flex w-[50vw] h-[100vh]">
-        <img src="" alt="hi" />
+        <img
+          src="https://images.pexels.com/photos/1370296/pexels-photo-1370296.jpeg"
+          alt="hi"
+        />
       </div>
       <div className="flex items-center justify-center h-[100vh] bg-white w-[100vw] md:w-[50vw]">
         <div className="max-w-md w-full space-y-8 border-1  border-gray-300 p-2 lg-[700px] shadow-xl shadow-gray-400 opacity-90">
