@@ -4,12 +4,14 @@ import { MDBDataTableV5 } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-export default function WithMultipleCheckboxes() {
+import axios from "axios";
+
+export default function WithMultipleCheckboxes({ lecture }) {
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
-        label: "Name",
-        field: "name",
+        label: "Sapid",
+        field: "sapid",
         width: 150,
         attributes: {
           "aria-controls": "DataTable",
@@ -17,261 +19,54 @@ export default function WithMultipleCheckboxes() {
         },
       },
       {
-        label: "Position",
-        field: "position",
+        label: "Name",
+        field: "name",
         width: 270,
-      },
-      {
-        label: "Office",
-        field: "office",
-        width: 200,
-      },
-      {
-        label: "Age",
-        field: "age",
-        sort: "asc",
-        width: 100,
-      },
-      {
-        label: "Start date",
-        field: "date",
-        sort: "asc",
-        width: 150,
-      },
-      {
-        label: "Salary",
-        field: "salary",
-        sort: "asc",
-        width: 100,
       },
     ],
     rows: [
       {
-        name: "Tiger Nixon",
-        position: "System Architect",
-        office: "Edinburgh",
-        age: "61",
-        date: "2011/04/25",
-        salary: "$320",
+        sapid: "60003200137",
+        name: "Ishaan Goat",
       },
       {
-        name: "Garrett Winters",
-        position: "Accountant",
-        office: "Tokyo",
-        age: "63",
-        date: "2011/07/25",
-        salary: "$170",
-      },
-      {
-        name: "Ashton Cox",
-        position: "Junior Technical Author",
-        office: "San Francisco",
-        age: "66",
-        date: "2009/01/12",
-        salary: "$86",
-      },
-      {
-        name: "Cedric Kelly",
-        position: "Senior Javascript Developer",
-        office: "Edinburgh",
-        age: "22",
-        date: "2012/03/29",
-        salary: "$433",
-      },
-      {
-        name: "Airi Satou",
-        position: "Accountant",
-        office: "Tokyo",
-        age: "33",
-        date: "2008/11/28",
-        salary: "$162",
-      },
-      {
-        name: "Brielle Williamson",
-        position: "Integration Specialist",
-        office: "New York",
-        age: "61",
-        date: "2012/12/02",
-        salary: "$372",
-      },
-      {
-        name: "Herrod Chandler",
-        position: "Sales Assistant",
-        office: "San Francisco",
-        age: "59",
-        date: "2012/08/06",
-        salary: "$137",
-      },
-      {
-        name: "Rhona Davidson",
-        position: "Integration Specialist",
-        office: "Tokyo",
-        age: "55",
-        date: "2010/10/14",
-        salary: "$327",
-      },
-      {
-        name: "Colleen Hurst",
-        position: "Javascript Developer",
-        office: "San Francisco",
-        age: "39",
-        date: "2009/09/15",
-        salary: "$205",
-      },
-      {
-        name: "Sonya Frost",
-        position: "Software Engineer",
-        office: "Edinburgh",
-        age: "23",
-        date: "2008/12/13",
-        salary: "$103",
-      },
-      {
-        name: "Suki Burks",
-        position: "Developer",
-        office: "London",
-        age: "53",
-        date: "2009/10/22",
-        salary: "$114",
-      },
-      {
-        name: "Prescott Bartlett",
-        position: "Technical Author",
-        office: "London",
-        age: "27",
-        date: "2011/05/07",
-        salary: "$145",
-      },
-      {
-        name: "Gavin Cortez",
-        position: "Team Leader",
-        office: "San Francisco",
-        age: "22",
-        date: "2008/10/26",
-        salary: "$235",
-      },
-      {
-        name: "Martena Mccray",
-        position: "Post-Sales support",
-        office: "Edinburgh",
-        age: "46",
-        date: "2011/03/09",
-        salary: "$324",
-      },
-      {
-        name: "Unity Butler",
-        position: "Marketing Designer",
-        office: "San Francisco",
-        age: "47",
-        date: "2009/12/09",
-        salary: "$85",
-      },
-      {
-        name: "Howard Hatfield",
-        position: "Office Manager",
-        office: "San Francisco",
-        age: "51",
-        date: "2008/12/16",
-        salary: "$164",
-      },
-      {
-        name: "Hope Fuentes",
-        position: "Secretary",
-        office: "San Francisco",
-        age: "41",
-        date: "2010/02/12",
-        salary: "$109",
-      },
-      {
-        name: "Vivian Harrell",
-        position: "Financial Controller",
-        office: "San Francisco",
-        age: "62",
-        date: "2009/02/14",
-        salary: "$452",
-      },
-      {
-        name: "Timothy Mooney",
-        position: "Office Manager",
-        office: "London",
-        age: "37",
-        date: "2008/12/11",
-        salary: "$136",
-      },
-      {
-        name: "Jackson Bradshaw",
-        position: "Director",
-        office: "New York",
-        age: "65",
-        date: "2008/09/26",
-        salary: "$645",
-      },
-      {
-        name: "Olivia Liang",
-        position: "Support Engineer",
-        office: "Singapore",
-        age: "64",
-        date: "2011/02/03",
-        salary: "$234",
-      },
-      {
-        name: "Bruno Nash",
-        position: "Software Engineer",
-        office: "London",
-        age: "38",
-        date: "2011/05/03",
-        salary: "$163",
-      },
-      {
-        name: "Sakura Yamamoto",
-        position: "Support Engineer",
-        office: "Tokyo",
-        age: "37",
-        date: "2009/08/19",
-        salary: "$139",
-      },
-      {
-        name: "Thor Walton",
-        position: "Developer",
-        office: "New York",
-        age: "61",
-        date: "2013/08/11",
-        salary: "$98",
-      },
-      {
-        name: "Finn Camacho",
-        position: "Support Engineer",
-        office: "San Francisco",
-        age: "47",
-        date: "2009/07/07",
-        salary: "$87",
-      },
-      {
-        name: "Serge Baldwin",
-        position: "Data Coordinator",
-        office: "Singapore",
-        age: "64",
-        date: "2012/04/09",
-        salary: "$138",
-      },
-      {
-        name: "Zenaida Frank",
-        position: "Software Engineer",
-        office: "New York",
-        age: "63",
-        date: "2010/01/04",
-        salary: "$125",
+        sapid: "60003200138",
+        name: "dhruv noob",
       },
     ],
   });
   const [checkbox1, setCheckbox1] = React.useState([]);
-
+  var saps = [];
   const showLogs2 = (e) => {
     setCheckbox1(e);
+    console.log(e);
+  };
+
+  const markAttendance = async () => {
+    if (checkbox1.length) {
+      checkbox1.map((r) => saps.push(Number(r.sapid)));
+      console.log(saps);
+      const res = await axios.post("http://localhost:9000/markAttendance", {
+        lecture_id: "fb7ad24b-8991-4e8b-a2b7-4e73314f63b6",
+        attendance: saps,
+      });
+      console.log(res);
+      saps = [];
+    } else {
+      console.log(checkbox1.sapid);
+    }
   };
 
   return (
     <div className="p-3">
+      <div className="flex items-center justify-end">
+        <button
+          className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+          onClick={markAttendance}
+        >
+          Mark Attendance
+        </button>
+      </div>
       <MDBDataTableV5
         hover
         entriesOptions={[5, 20, 25]}
@@ -292,21 +87,6 @@ export default function WithMultipleCheckboxes() {
         searchTop
         searchBottom={false}
       />
-
-      {/* <Result>
-        {' '}
-        {checkbox1 && (
-          <p>
-            {JSON.stringify(
-              checkbox1.map((e) => {
-                console.log(e);
-                delete e.checkbox;
-                return e;
-              }) && checkbox1
-            )}
-          </p>
-        )}
-      </Result> */}
     </div>
   );
 }
