@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [info, setInfo] = useRecoilState(infoState);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const togglePassword = (e) => {
     e.preventDefault();
     setPasswordShown(!passwordShown);
@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     console.log(`Email: ${sapid}, Password: ${password}`);
     const userData = {
-      sap_id:Number(sapid),
+      sap_id: Number(sapid),
       password,
     };
     try {
@@ -43,10 +43,10 @@ const Login = () => {
           ID: content.ID,
         });
         navigate("/home");
-      } 
+      }
       // else if (content.type === "police") {
       //   console.log("going to police");
-      // } 
+      // }
       else {
         Swal.fire({
           title: "Error!",
@@ -70,7 +70,7 @@ const Login = () => {
       <div className="hidden md:flex w-[50vw] h-[100vh]">
         <img src="" alt="hi" />
       </div>
-      <div className="flex items-center justify-center h-[100vh] bg-white w-[50vw]">
+      <div className="flex items-center justify-center h-[100vh] bg-white w-[100vw] md:w-[50vw]">
         <div className="max-w-md w-full space-y-8 border-1  border-gray-300 p-2 lg-[700px] shadow-xl shadow-gray-400 opacity-90">
           <div>
             <h2 className="mt-6 text-center text-xl md:text-2xl font-extrabold text-gray-700">
