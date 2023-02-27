@@ -1,18 +1,47 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { VscRocket } from "react-icons/vsc";
 import { useNavigate } from "react-router";
+import { useResetRecoilState } from "recoil";
+import { infoState } from "../atoms/infoState";
+import Swal from "sweetalert2";
 const Nav = () => {
   const navigate = useNavigate();
   const handleClicked = () => {
     navigate("/home");
   };
+  const resetValue= useResetRecoilState(infoState);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const rawResponse = await fetch("/logout", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(userData),
+      });
+        console.log("going to login");
+        resetValue();
+        navigate("/");
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Logout Unsuccessful",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+    }
+  };
   let Links = [
-    { name: "HOME", link: "/" },
-    { name: "ABOUT", link: "/" },
-    { name: "BLOG'S", link: "/" },
-    { name: "CONTACT", link: "/" },
+    { name: "HOME", link: "/", onclick: () => {navigate('/home')} },
+    { name: "MARK ATTENDANCE", link: "/markAttendance", onclick: () => {navigate('/markAttendance')} },
+    { name: "REPORTS", link: "/", onclick: () => {navigate('/home')} },
+    { name: "LOGOUT", link: "/", onclick: handleLogout  },
   ];
   let [open, setOpen] = useState(false);
   return (
@@ -48,12 +77,13 @@ const Nav = () => {
           >
             {Links.map((link) => (
               <li key={link.name} className="md:ml-8 text-xl md:my-0 my-7">
-                <a
-                  href={link.link}
+                <div
+                  // href={link.link}
                   className="text-gray-800 hover:text-gray-400 duration-500"
+                  onClick={link.onclick}
                 >
                   {link.name}
-                </a>
+                </div>
               </li>
             ))}
           </ul>

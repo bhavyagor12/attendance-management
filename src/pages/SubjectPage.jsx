@@ -34,7 +34,13 @@ const SubjectPage = () => {
       </div>
       <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-2">
         {lectures.map((lecture) => (
-          <LectureCard />
+          <LectureCard 
+          date={lecture.date_of_lecture}
+          type={lecture.type}
+          division={lecture.division}
+          batch={lecture.batch}
+          // attendance={lecture.attendance}
+          />
         ))}
       </div>
       <Table />

@@ -20,7 +20,7 @@ const Banner = () => {
             <p class="text-[12px] md:text-lg font-medium text-indigo-100 pt-[1%]">
               Hope you are having a great day!
             </p>
-            <p class="text-[12px] md:text-lgfont-medium text-indigo-100 pt-[1%]">SapID: {info.sap_id}</p>
+            <p class="text-[12px] md:text-lg font-medium text-indigo-100 pt-[1%]">SapID: {info.sap_id}</p>
           </div>
         </div>
       </div>

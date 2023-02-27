@@ -3,13 +3,52 @@ import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import Table from "../components/Table";
 import { TiTick } from "react-icons/ti";
+import axios from "axios";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
+  const[date, setDate] = useState("");
+  const[subjectId, setSubjectId] = useState("");
+  const[type, setType] = useState("");
+  const[division, setDivision] = useState("");
+  const[batch, setBatch] = useState("");
+  const[classs, setClass] = useState("");
 
   const handleClick = () => {
     setFetchLecture(!fetchLecture);
   };
   console.log(fetchLecture);
+  console.log(date)
+  const fetchLec = async (e) => {
+    e.preventDefault();
+    const userData = {
+      subject_id: subjectId,
+      date_of_lecture: date,
+      type,
+      division,
+      batch: Number(batch),
+    };
+    try {
+      const rawResponse = await fetch("/fetchLecture", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const content = await rawResponse.json();
+      console.log(content);
+      if (content) {
+        console.log("going to home");
+        // navigate("/home");
+      }
+      // else if (content.type === "police") {
+      //   console.log("going to police");
+      // }
+    } catch (error) {
+      console.log(error);
+  };
+}
   return (
     <div>
       <Nav />
@@ -37,6 +76,7 @@ const MarkAttendance = () => {
                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="date"
                   type="date"
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
               <div class="mb-6 flex gap-4">
@@ -48,6 +88,7 @@ const MarkAttendance = () => {
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="code"
                     type="text"
+                    onChange={(e) => setSubjectId(e.target.value)}
                   />
                 </div>
                 <div>
@@ -58,6 +99,7 @@ const MarkAttendance = () => {
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="type"
                     type="text"
+                    onChange={(e) => setType(e.target.value)}
                   />
                 </div>
               </div>
@@ -70,6 +112,7 @@ const MarkAttendance = () => {
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="class"
                     type="text"
+                    onChange={(e) => setClass(e.target.value)}
                   />
                 </div>
                 <div>
@@ -80,6 +123,7 @@ const MarkAttendance = () => {
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="division"
                     type="text"
+                    onChange={(e) => setDivision(e.target.value)}
                   />
                 </div>
                 <div>
@@ -90,6 +134,7 @@ const MarkAttendance = () => {
                     class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="batch"
                     type="text"
+                    onChange={(e) => setBatch(e.target.value)}
                   />
                 </div>
               </div>
@@ -97,6 +142,7 @@ const MarkAttendance = () => {
                 <button
                   className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
                   type="button"
+                  onClick={fetchLec}
                 >
                   Find Lecture
                 </button>

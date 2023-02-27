@@ -6,10 +6,14 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function WithMultipleCheckboxes({ lecture }) {
   const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/home')
+        console.log('clicked')
+    }
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
@@ -26,15 +30,23 @@ export default function WithMultipleCheckboxes({ lecture }) {
         field: "name",
         width: 270,
       },
+      {
+        label: "Position",
+        field: "position",
+        width: 270,
+      },
     ],
     rows: [
       {
         sapid: "60003200137",
         name: "Ishaan Goat",
+        position: <Link to="/">Link</Link>,
+        clickEvent: () => handleClick(),
       },
       {
         sapid: "60003200138",
         name: "dhruv noob",
+        position: <Link to="/home">Link</Link>,
       },
     ],
   });
@@ -95,6 +107,9 @@ export default function WithMultipleCheckboxes({ lecture }) {
         responsive
         searchTop
         searchBottom={false}
+        rowClick={(e) => {
+            console.log(e);
+        }}
       />
     </div>
   );
