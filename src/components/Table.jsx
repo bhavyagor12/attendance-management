@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBDataTableV5 } from "mdbreact";
+import { MDBDataTableV5, MDBNavLink } from "mdbreact";
 // import Result from '../components/result';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
@@ -8,47 +8,57 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function WithMultipleCheckboxes({ lecture }) {
+export default function WithMultipleCheckboxes({ data,columns }) {
   const navigate = useNavigate();
     const handleClick = () => {
         navigate('/home')
         console.log('clicked')
     }
+    // console.log(`hello`+data)
   const [datatable, setDatatable] = React.useState({
-    columns: [
-      {
-        label: "Sapid",
-        field: "sapid",
-        width: 150,
-        attributes: {
-          "aria-controls": "DataTable",
-          "aria-label": "Name",
-        },
-      },
-      {
-        label: "Name",
-        field: "name",
-        width: 270,
-      },
-      {
-        label: "Position",
-        field: "position",
-        width: 270,
-      },
-    ],
-    rows: [
-      {
-        sapid: "60003200137",
-        name: "Ishaan Goat",
+    columns: columns,
+    // [
+    //   {
+    //     label: "Sapid",
+    //     field: "sapid",
+    //     width: 150,
+    //     attributes: {
+    //       "aria-controls": "DataTable",
+    //       "aria-label": "Name",
+    //     },
+    //   },
+    //   {
+    //     label: "Name",
+    //     field: "name",
+    //     width: 270,
+    //   },
+    //   {
+    //     label: "Position",
+    //     field: "position",
+    //     width: 270,
+    //   },
+    // ],
+    rows: data.map((r) => {
+      return {
+        sapid: r.sapid,
+        name: r.name,
         position: <Link to="/">Link</Link>,
         clickEvent: () => handleClick(),
-      },
-      {
-        sapid: "60003200138",
-        name: "dhruv noob",
-        position: <Link to="/home">Link</Link>,
-      },
-    ],
+      };
+    }),
+    // [
+    //   {
+    //     sapid: "60003200137",
+    //     name: "Ishaan Goat",
+    //     position: <Link to="/">Link</Link>,
+    //     clickEvent: () => handleClick(),
+    //   },
+    //   {
+    //     sapid: "60003200138",
+    //     name: "dhruv noob",
+    //     position: <Link to="/home">Link</Link>,
+    //   },
+    // ],
   });
   const [checkbox1, setCheckbox1] = React.useState([]);
   var saps = [];
@@ -107,9 +117,6 @@ export default function WithMultipleCheckboxes({ lecture }) {
         responsive
         searchTop
         searchBottom={false}
-        rowClick={(e) => {
-            console.log(e);
-        }}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import Table from "../components/Table";
@@ -12,10 +12,34 @@ const MarkAttendance = () => {
   const[division, setDivision] = useState("");
   const[batch, setBatch] = useState("");
   const[classs, setClass] = useState("");
+  const [students, setStudents] = React.useState([]);
 
   const handleClick = () => {
     setFetchLecture(!fetchLecture);
   };
+  const getStudents = async () => {
+    const res = await axios.get("http://localhost:9000/getAllStudents");
+    setStudents(getStudentArray(res.data));
+};
+
+  const getStudentArray = (students) => {
+      let initialStudents = [];
+      initialStudents = students?.map((student) => {
+          return ({
+              sapid: student.sap_id,
+              name: student.name,
+              // email: student.email,
+              // year: student.year,
+              // department: student.department,
+              // division: student.division,
+          })
+      });
+      return initialStudents;
+  }
+  useEffect(() => {
+      getStudents();
+  }, [students]);
+  // console.log(students);
   console.log(fetchLecture);
   console.log(date)
   const fetchLec = async (e) => {
@@ -162,7 +186,9 @@ const MarkAttendance = () => {
           </div>
         </p>
       </div>
-      <Table />
+      <Table data={students}
+      columns= {[{label:"Sapid",field:"sapid",width: 150,attributes: {"aria-controls": "DataTable","aria-label": "Name",}},{label:"Name",field:"name",width: 150,attributes: {"aria-controls": "DataTable","aria-label": "Name",}}]}
+      />
     </div>
   );
 };
