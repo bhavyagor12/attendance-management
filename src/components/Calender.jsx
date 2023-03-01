@@ -3,13 +3,18 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { useNavigate } from "react-router-dom";
+import EventComponent from "./EventComponent";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 export default function Calender() {
+  const navigate = useNavigate();
   const [eventsData, setEventsData] = useState(events);
-
+  const handleClick = (event) => {
+    alert(event.title);
+  };
   const handleSelect = ({ start, end }) => {
     console.log(start);
     console.log(end);
@@ -42,7 +47,9 @@ export default function Calender() {
         defaultView="month"
         events={eventsData}
         style={{ height: "80vh", width: "80vw", padding: 10 }}
-        onSelectEvent={(event) => alert(event.title)}
+        onSelectEvent={(e) => {
+          handleClick(e);
+        }}
         onSelectSlot={handleSelect}
       />
     </div>

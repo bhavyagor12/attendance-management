@@ -8,13 +8,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function WithMultipleCheckboxes({ data,columns }) {
+export default function WithMultipleCheckboxes({ data, columns }) {
   const navigate = useNavigate();
-    const handleClick = () => {
-        navigate('/home')
-        console.log('clicked')
-    }
-    // console.log(`hello`+data)
+  const handleClick = () => {
+    navigate("/home");
+    console.log("clicked");
+  };
+  // console.log(`hello`+data)
   const [datatable, setDatatable] = React.useState({
     columns: columns,
     // [

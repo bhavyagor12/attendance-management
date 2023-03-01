@@ -4,7 +4,13 @@ import { MDBDataTableV5 } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { useNavigate } from "react-router-dom";
 export default function WithMultipleCheckboxes() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/home");
+    console.log("clicked");
+  };
   const [datatable, setDatatable] = React.useState({
     columns: [
       {
@@ -22,10 +28,12 @@ export default function WithMultipleCheckboxes() {
       {
         sapid: "60003200162",
         name: "Ishaan Goat",
+        clickEvent: () => handleClick(),
       },
       {
         sapid: "60003200173",
         name: "dhruv noob",
+        clickEvent: () => handleClick(),
       },
     ],
   });
