@@ -4,7 +4,6 @@ import moment from "moment";
 import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useNavigate } from "react-router-dom";
-import EventComponent from "./EventComponent";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);

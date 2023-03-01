@@ -25,7 +25,7 @@ const Login = () => {
       password,
     };
     try {
-      const rawResponse = await fetch("/login", {
+      const rawResponse = await fetch("http://localhost:9000/login", {
         method: "POST",
         headers: {
           Accept: "application/json",

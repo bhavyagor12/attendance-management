@@ -5,12 +5,30 @@ import SubjectCard from "../components/SubjectCard";
 import Table from "../components/Table";
 import axios from "axios";
 import Calender from "../components/Calender";
+import { useRecoilValue } from "recoil";
+import { infoState } from "../atoms/infoState";
 
 const Home = () => {
+  const info = useRecoilValue(infoState);
+  let facultyID = info?.ID;
   const [subjects, setSubjects] = React.useState([]);
   const getData = async () => {
-    const res = await axios.get("http://localhost:9000/getAllSubjects");
-    setSubjects(res.data);
+    try {
+      const rawResponse = await fetch(
+        `http://localhost:9000/getSubjectbyFacultyID/${facultyID}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const subjects = await rawResponse.json();
+      setSubjects(subjects);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     getData();
@@ -29,7 +47,7 @@ const Home = () => {
         </p>
       </div>
 
-      <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-2">
+      <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
         {subjects.map((subject) => (
           <SubjectCard
             name={subject.name}

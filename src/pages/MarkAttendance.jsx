@@ -3,7 +3,7 @@ import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import Table from "../components/Table";
 import { TiTick } from "react-icons/ti";
-
+import axios from "axios";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [date, setDate] = useState("");
@@ -39,9 +39,7 @@ const MarkAttendance = () => {
   useEffect(() => {
     getStudents();
   }, [students]);
-  // console.log(students);
-  console.log(fetchLecture);
-  console.log(date);
+
   const fetchLec = async (e) => {
     e.preventDefault();
     const userData = {
@@ -52,7 +50,7 @@ const MarkAttendance = () => {
       batch: Number(batch),
     };
     try {
-      const rawResponse = await fetch("/fetchLecture", {
+      const rawResponse = await fetch("http://localhost:9000/fetchLecture", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -61,7 +59,7 @@ const MarkAttendance = () => {
         body: JSON.stringify(userData),
       });
       const content = await rawResponse.json();
-      console.log(content);
+      console.log(content.ID);
       if (content) {
         console.log("going to home");
         // navigate("/home");
