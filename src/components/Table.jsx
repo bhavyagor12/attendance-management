@@ -42,8 +42,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
       return {
         sapid: r.sapid,
         name: r.name,
-        position: <Link to="/">Link</Link>,
-        clickEvent: () => handleClick(),
+        // clickEvent: () => handleClick(),
       };
     }),
     // [
@@ -72,7 +71,8 @@ export default function WithMultipleCheckboxes({ data, columns }) {
       checkbox1.map((r) => saps.push(Number(r.sapid)));
       console.log(saps);
       const res = await axios.post("http://localhost:9000/markAttendance", {
-        lecture_id: "fb7ad24b-8991-4e8b-a2b7-4e73314f63b6",
+        lecture_id: "ea818591-a0b7-4e45-ba14-a2a1c2ecce50",
+        subject_id: "dc74e59c-b524-4972-b991-263f665715f9",
         attendance: saps,
       });
       Swal.fire({
