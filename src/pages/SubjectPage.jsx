@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
 import Table from "../components/TableNoTick";
 const SubjectPage = () => {

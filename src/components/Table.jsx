@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { MDBDataTableV5, MDBNavLink } from "mdbreact";
+import { MDBDataTableV5} from "mdbreact";
 // import Result from '../components/result';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 export default function WithMultipleCheckboxes({ data, columns }) {
   const [studentsData, setStundentsData] = useState([]);

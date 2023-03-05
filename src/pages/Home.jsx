@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
-import Table from "../components/Table";
-import axios from "axios";
 import Calender from "../components/Calender";
 import { useRecoilValue } from "recoil";
 import { infoState } from "../atoms/infoState";

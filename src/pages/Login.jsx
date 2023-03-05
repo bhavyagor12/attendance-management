@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { infoState } from "../atoms/infoState";
 const Login = () => {

@@ -3,13 +3,11 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useNavigate } from "react-router-dom";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 export default function Calender() {
-  const navigate = useNavigate();
   const [eventsData, setEventsData] = useState(events);
   const handleClick = (event) => {
     alert(event.title);
@@ -39,11 +37,11 @@ export default function Calender() {
         </button>
       </div>
       <Calendar
-        views={["day", "agenda", "week", "month"]}
+        views={["day", "agenda", "week"]}
         selectable
         localizer={localizer}
         defaultDate={new Date()}
-        defaultView="month"
+        defaultView="week"
         events={eventsData}
         style={{ height: "80vh", width: "80vw", padding: 10 }}
         onSelectEvent={(e) => {
