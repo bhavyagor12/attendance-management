@@ -12,6 +12,10 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   const [studentsData, setStundentsData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   const [sapIDs, setSapIDs] = useState([]);
+  let location = useLocation();
+  // console.log(location.state.subjectId);
+  const lectureID = location.state.lectureId;
+  console.log(lectureID);
 
   useEffect(() => {
     if (data.length !== 0 && columns) {
@@ -59,7 +63,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
 
   const markAttendance = async () => {
     const res = await axios.post("http://localhost:9000/markAttendance", {
-      lecture_id: "ea818591-a0b7-4e45-ba14-a2a1c2ecce50",
+      lecture_id: lectureID,
       subject_id: "dc74e59c-b524-4972-b991-263f665715f9",
       attendance: sapIDs,
     });

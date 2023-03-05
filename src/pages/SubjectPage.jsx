@@ -7,6 +7,7 @@ import LectureCard from "../components/LectureCard";
 import Table from "../components/TableNoTick";
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
+  const [students, setStudents] = React.useState([]);
   let location = useLocation();
   // console.log(location.state.subjectId);
   const subjectId = location.state.subjectId;
@@ -19,6 +20,26 @@ const SubjectPage = () => {
   };
   useEffect(() => {
     getData();
+  }, []);
+
+  const getStudents = async () => {
+    const res = await axios.get("http://localhost:9000/getAllStudents");
+    setStudents(getStudentArray(res.data));
+    // console.log(res.data);
+  };
+
+  const getStudentArray = (students) => {
+    let initialStudents = [];
+    initialStudents = students?.map((student) => {
+      return {
+        sapid: student.sap_id,
+        name: student.name,
+      };
+    });
+    return initialStudents;
+  };
+  useEffect(() => {
+    getStudents();
   }, []);
   return (
     <div>
@@ -44,7 +65,33 @@ const SubjectPage = () => {
           />
         ))}
       </div>
-      <Table />
+      {students ? (
+        <Table
+          data={students}
+          columns={[
+            {
+              label: "Sapid",
+              field: "sapid",
+              width: 150,
+              attributes: {
+                "aria-controls": "DataTable",
+                "aria-label": "Name",
+              },
+            },
+            {
+              label: "Name",
+              field: "name",
+              width: 150,
+              attributes: {
+                "aria-controls": "DataTable",
+                "aria-label": "Name",
+              },
+            },
+          ]}
+        />
+      ) : (
+        <div>Loadinggg</div>
+      )}
     </div>
   );
 };
