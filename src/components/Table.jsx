@@ -38,22 +38,30 @@ export default function WithMultipleCheckboxes({ data, columns }) {
 
   // console.log(`hello`+data)
   const addSapID = (e) => {
-    setSapIDs(...e.sapid);
-  };
-  const [checkbox1, setCheckbox1] = React.useState([]);
-  var saps = [];
-  const showLogs2 = (e) => {
-    setCheckbox1(e);
-    console.log(e);
+    if (e.length === data.length && sapIDs.length !== data.length) {
+      let saps = [];
+      console.log(e);
+      e.map((r) => saps.push(Number(r.sapid)));
+      setSapIDs(saps);
+    } else if (sapIDs.length !== data.length && !sapIDs.includes(e.sapid)) {
+      setSapIDs((current) => [...current, e.sapid]);
+    } else if (sapIDs.includes(e.sapid)) {
+      const index = sapIDs.indexOf(e.sapid);
+      sapIDs.splice(index, 1);
+      setSapIDs((current) => [...current]);
+    } else {
+      setSapIDs([]);
+    }
   };
 
+  console.log(sapIDs);
+  const [checkbox1, setCheckbox1] = React.useState([]);
+
   const markAttendance = async () => {
-    checkbox1.map((r) => saps.push(Number(r.sapid)));
-    console.log(saps);
     const res = await axios.post("http://localhost:9000/markAttendance", {
       lecture_id: "ea818591-a0b7-4e45-ba14-a2a1c2ecce50",
       subject_id: "dc74e59c-b524-4972-b991-263f665715f9",
-      attendance: saps,
+      attendance: sapIDs,
     });
     if (res) {
       Swal.fire({
@@ -71,8 +79,6 @@ export default function WithMultipleCheckboxes({ data, columns }) {
         confirmButtonText: "retry",
       });
     }
-
-    saps = [];
   };
 
   const [datatable, setDatatable] = React.useState({
@@ -111,7 +117,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
               addSapID(e);
             }}
             getValueAllCheckBoxes={(e) => {
-              showLogs2(e);
+              addSapID(e);
             }}
             multipleCheckboxes
             responsive
