@@ -3,7 +3,6 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
@@ -13,16 +12,14 @@ export default function Calender() {
     alert(event.title);
   };
   const handleSelect = ({ start, end }) => {
-    console.log(start);
-    console.log(end);
     const title = window.prompt("New Event name");
     if (title)
       setEventsData([
         ...eventsData,
         {
+          title,
           start,
           end,
-          title,
         },
       ]);
   };
@@ -37,11 +34,13 @@ export default function Calender() {
         </button>
       </div>
       <Calendar
-        views={["day", "agenda", "week"]}
+        views={["day", "week"]}
         selectable
         localizer={localizer}
         defaultDate={new Date()}
         defaultView="week"
+        startAccessor="start"
+        endAccessor="end"
         events={eventsData}
         style={{ height: "80vh", width: "80vw", padding: 10 }}
         onSelectEvent={(e) => {
