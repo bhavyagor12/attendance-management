@@ -9,18 +9,18 @@ const SubjectCard = ({ name, year, semester, subjectId }) => {
   };
   return (
     <div onClick={handleClick}>
-      <div class=" flex py-8  border rounded-lg shadow bg-gray-800 border-gray-700">
+      <div className=" flex py-8  border rounded-lg shadow bg-gray-800 border-gray-700">
         <div className="mx-4">
-          <h5 class="mb-2 text-2xl font-semibold tracking-tight text-white ">
+          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-white ">
             {name}
           </h5>
-          <h4 class="mb-2 text-2xl font-semibold tracking-tight text-white ">
+          <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white ">
             6000321
           </h4>
         </div>
         <div className=" px-8 mx-4">
-          <p class="font-normal text-gray-300 w-[100%] ">Year: {year}</p>
-          <p class="font-normal text-gray-300 ">Semester: {semester}</p>
+          <p className="font-normal text-gray-300 w-[100%] ">Year: {year}</p>
+          <p className="font-normal text-gray-300 ">Semester: {semester}</p>
         </div>
       </div>
     </div>

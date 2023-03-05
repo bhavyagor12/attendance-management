@@ -28,11 +28,11 @@ const SubjectPage = () => {
         <h1 className="h2 mb-4">Lectures</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of conducted lectures,{" "}
-          <span class="font-bold text-gray-900">Click on them</span> to view
+          <span className="font-bold text-gray-900">Click on them</span> to view
           student data
         </p>
       </div>
-      <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-2">
+      <div className="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-2">
         {lectures.map((lecture) => (
           <LectureCard 
           date={lecture.date_of_lecture}

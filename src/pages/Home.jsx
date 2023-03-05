@@ -42,12 +42,12 @@ const Home = () => {
         <h1 className="h2 mb-4">Subjects</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of Subjects you teach,{" "}
-          <span class="font-bold text-gray-900">Click on them</span> to see a
+          <span className="font-bold text-gray-900">Click on them</span> to see a
           list of lectures
         </p>
       </div>
 
-      <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
+      <div className="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
         {subjects.map((subject) => (
           <SubjectCard
             name={subject.name}
@@ -62,7 +62,7 @@ const Home = () => {
         <h1 className="h2 mb-4">Time - Table</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of lectures you have,{" "}
-          <span class="font-bold text-gray-900">Click on them</span> to mark
+          <span className="font-bold text-gray-900">Click on them</span> to mark
           attendance
         </p>
       </div>
