@@ -12,12 +12,12 @@ const Nav = () => {
   const handleClicked = () => {
     navigate("/home");
   };
-  const resetValue= useResetRecoilState(infoState);
+  const resetValue = useResetRecoilState(infoState);
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const rawResponse = await fetch("/logout", {
+      const rawResponse = await fetch("http://localhost:9000/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -25,9 +25,9 @@ const Nav = () => {
         },
         // body: JSON.stringify(userData),
       });
-        console.log("going to login");
-        resetValue();
-        navigate("/");
+      console.log("going to login");
+      resetValue();
+      navigate("/");
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -38,10 +38,28 @@ const Nav = () => {
     }
   };
   let Links = [
-    { name: "HOME", link: "/", onclick: () => {navigate('/home')} },
-    { name: "MARK ATTENDANCE", link: "/markAttendance", onclick: () => {navigate('/markAttendance')} },
-    { name: "REPORTS", link: "/", onclick: () => {navigate('/home')} },
-    { name: "LOGOUT", link: "/", onclick: handleLogout  },
+    {
+      name: "HOME",
+      link: "/",
+      onclick: () => {
+        navigate("/home");
+      },
+    },
+    {
+      name: "MARK ATTENDANCE",
+      link: "/markAttendance",
+      onclick: () => {
+        navigate("/markAttendance");
+      },
+    },
+    {
+      name: "REPORTS",
+      link: "/",
+      onclick: () => {
+        navigate("/home");
+      },
+    },
+    { name: "LOGOUT", link: "/", onclick: handleLogout },
   ];
   let [open, setOpen] = useState(false);
   return (

@@ -20,6 +20,7 @@ const MarkAttendance = () => {
   const getStudents = async () => {
     const res = await axios.get("http://localhost:9000/getAllStudents");
     setStudents(getStudentArray(res.data));
+    // console.log(res.data);
   };
 
   const getStudentArray = (students) => {
@@ -28,17 +29,13 @@ const MarkAttendance = () => {
       return {
         sapid: student.sap_id,
         name: student.name,
-        // email: student.email,
-        // year: student.year,
-        // department: student.department,
-        // division: student.division,
       };
     });
     return initialStudents;
   };
   useEffect(() => {
     getStudents();
-  }, [students]);
+  }, []);
 
   const fetchLec = async (e) => {
     e.preventDefault();
@@ -184,23 +181,33 @@ const MarkAttendance = () => {
           </div>
         </p>
       </div>
-      <Table
-        data={students}
-        columns={[
-          {
-            label: "Sapid",
-            field: "sapid",
-            width: 150,
-            attributes: { "aria-controls": "DataTable", "aria-label": "Name" },
-          },
-          {
-            label: "Name",
-            field: "name",
-            width: 150,
-            attributes: { "aria-controls": "DataTable", "aria-label": "Name" },
-          },
-        ]}
-      />
+      {students ? (
+        <Table
+          data={students}
+          columns={[
+            {
+              label: "Sapid",
+              field: "sapid",
+              width: 150,
+              attributes: {
+                "aria-controls": "DataTable",
+                "aria-label": "Name",
+              },
+            },
+            {
+              label: "Name",
+              field: "name",
+              width: 150,
+              attributes: {
+                "aria-controls": "DataTable",
+                "aria-label": "Name",
+              },
+            },
+          ]}
+        />
+      ) : (
+        <div>Loadinggg</div>
+      )}
     </div>
   );
 };
