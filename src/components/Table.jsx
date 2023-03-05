@@ -6,7 +6,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function WithMultipleCheckboxes({ data, columns }) {
   const [studentsData, setStundentsData] = useState([]);
@@ -30,6 +30,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   }, [data]);
 
   const navigate = useNavigate();
+  // console.log(data)
   const handleClick = () => {
     navigate("/home");
     console.log("clicked");

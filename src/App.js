@@ -8,7 +8,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/markAttendance" element={<MarkAttendance />} />
+          <Route path="/markAttendance/:lectureId" element={<MarkAttendance />} />
           <Route path="/subject/:subjectId" element={<SubjectPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />

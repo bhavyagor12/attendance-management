@@ -4,6 +4,7 @@ import Nav from "../components/Navbar";
 import Table from "../components/Table";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [date, setDate] = useState("");
@@ -13,6 +14,9 @@ const MarkAttendance = () => {
   const [batch, setBatch] = useState("");
   const [classs, setClass] = useState("");
   const [students, setStudents] = React.useState([]);
+  let location = useLocation();
+  // console.log(location.state.subjectId);
+  const lectureID = location.state.lectureId;
 
   const handleClick = () => {
     setFetchLecture(!fetchLecture);

@@ -1,12 +1,21 @@
 import axios from "axios";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LectureCard = ({date,division,type,batch}) => {
+const LectureCard = ({date,division,type,batch,ID}) => {
   const [attendance, setAttendance] = React.useState([]);
+  const navigate = useNavigate();
+  const lectureID = ID;
+  console.log(lectureID);
+  const handleClick = () => {
+    navigate(`/markAttendance/${lectureID}`, {
+      state: { lectureId: `${lectureID}` },
+    });
+  }
   const fetchAttendance = async () => {
     // e.preventDefault();
     try {
-      const rawResponse = await fetch("http://localhost:9000/getLectureAttendance/ea818591-a0b7-4e45-ba14-a2a1c2ecce50", {
+      const rawResponse = await fetch(`http://localhost:9000/getLectureAttendance/${lectureID}`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -25,7 +34,7 @@ const LectureCard = ({date,division,type,batch}) => {
     fetchAttendance();
   }, []);
   return (
-    <div>
+    <div onClick={handleClick}>
       <div class=" flex py-8  border rounded-lg shadow bg-gray-800 border-gray-700">
         <div className="mx-4">
           <h5 class="mb-2 text-2xl font-semibold tracking-tight text-white ">

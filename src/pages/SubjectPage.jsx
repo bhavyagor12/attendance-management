@@ -39,6 +39,7 @@ const SubjectPage = () => {
           type={lecture.type}
           division={lecture.division}
           batch={lecture.batch}
+          ID={lecture.ID}
           // attendance={lecture.attendance}
           />
         ))}
