@@ -40,8 +40,8 @@ const Home = () => {
         <h1 className="h2 mb-4">Subjects</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of Subjects you teach,{" "}
-          <span className="font-bold text-gray-900">Click on them</span> to see a
-          list of lectures
+          <span className="font-bold text-gray-900">Click on them</span> to see
+          a list of lectures
         </p>
       </div>
 

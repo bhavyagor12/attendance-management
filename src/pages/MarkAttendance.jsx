@@ -5,6 +5,7 @@ import Table from "../components/Table";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import ReactLoading from "react-loading";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [date, setDate] = useState("");
@@ -14,7 +15,7 @@ const MarkAttendance = () => {
   const [batch, setBatch] = useState("");
   const [classs, setClass] = useState("");
   const [students, setStudents] = React.useState([]);
-  
+
   const getStudents = async () => {
     const res = await axios.get("http://localhost:9000/getAllStudents");
     setStudents(getStudentArray(res.data));
@@ -208,7 +209,12 @@ const MarkAttendance = () => {
           ]}
         />
       ) : (
-        <div>Loadinggg</div>
+        <ReactLoading
+          type="spinningBubbles"
+          color="#236F21"
+          height={667}
+          width={375}
+        />
       )}
     </div>
   );

@@ -5,7 +5,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { useNavigate } from "react-router-dom";
-export default function WithMultipleCheckboxes({data,columns}) {
+import ReactLoading from "react-loading";
+export default function WithMultipleCheckboxes({ data, columns }) {
   const [studentsData, setStundentsData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   const [sapIDs, setSapIDs] = useState([]);
@@ -13,12 +14,12 @@ export default function WithMultipleCheckboxes({data,columns}) {
 
   const handleClick = (e) => {
     console.log("clicked");
-    console.log(e.sapid)
-    console.log(e.name)
+    console.log(e.sapid);
+    console.log(e.name);
     navigate(`/student/${e.sapid}`, {
       state: { sapId: `${e.sapid}`, name: `${e.name}` },
     });
-  }
+  };
 
   useEffect(() => {
     if (data.length !== 0 && columns) {
@@ -50,9 +51,7 @@ export default function WithMultipleCheckboxes({data,columns}) {
 
   return (
     <div className="p-8">
-      
-
-    {datatable.rows.length !== 0 ? (
+      {datatable.rows.length !== 0 ? (
         <div className="p-8">
           <MDBDataTableV5
             hover
@@ -66,7 +65,12 @@ export default function WithMultipleCheckboxes({data,columns}) {
           />
         </div>
       ) : (
-        <div>loading</div>
+        <ReactLoading
+          type="spinningBubbles"
+          color="#236F21"
+          height={667}
+          width={375}
+        />
       )}
     </div>
   );

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MDBDataTableV5} from "mdbreact";
+import { MDBDataTableV5 } from "mdbreact";
 // import Result from '../components/result';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import {useNavigate,useLocation } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import ReactLoading from "react-loading";
 export default function WithMultipleCheckboxes({ data, columns }) {
   const [studentsData, setStundentsData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
@@ -130,7 +130,12 @@ export default function WithMultipleCheckboxes({ data, columns }) {
           />
         </div>
       ) : (
-        <div>loading</div>
+        <ReactLoading
+          type="spinningBubbles"
+          color="#236F21"
+          height={667}
+          width={375}
+        />
       )}
     </div>
   );
