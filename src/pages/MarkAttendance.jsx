@@ -14,13 +14,7 @@ const MarkAttendance = () => {
   const [batch, setBatch] = useState("");
   const [classs, setClass] = useState("");
   const [students, setStudents] = React.useState([]);
-  let location = useLocation();
-  // console.log(location.state.subjectId);
-  const lectureID = location.state.lectureId;
-
-  const handleClick = () => {
-    setFetchLecture(!fetchLecture);
-  };
+  
   const getStudents = async () => {
     const res = await axios.get("http://localhost:9000/getAllStudents");
     setStudents(getStudentArray(res.data));
@@ -40,6 +34,10 @@ const MarkAttendance = () => {
   useEffect(() => {
     getStudents();
   }, []);
+
+  const handleClick = () => {
+    setFetchLecture(!fetchLecture);
+  };
 
   const fetchLec = async (e) => {
     e.preventDefault();
