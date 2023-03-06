@@ -6,7 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { modalState } from "../atoms/modalState";
 import { useRecoilState } from "recoil";
 import EventModal from "./EventModal";
-moment.locale("en-GB");
+moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
 
 export default function Calender() {
