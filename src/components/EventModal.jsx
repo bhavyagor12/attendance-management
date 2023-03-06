@@ -10,26 +10,26 @@ export default function EventModal() {
   const [endTime, setEndTime] = useState(startTime);
   const cancelButtonRef = useRef(null);
   useEffect(() => {
-    var today = new Date(
-      new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
-    );
-    const dateForDateTimeInputValue = (date) =>
-      new Date(date.getTime() + date.getTimezoneOffset() * -60 * 1000)
-        .toISOString()
-        .slice(0, 19);
+    function timestampToDatetimeInputString(timestamp, item) {
+      if (item === "start") {
+        const date = new Date(timestamp + _getTimeZoneOffsetInMs());
+        return date.toISOString().slice(0, 19);
+      } else {
+        const date = new Date(
+          timestamp + _getTimeZoneOffsetInMs() + 1 * (60 * 60 * 1000)
+        );
+        return date.toISOString().slice(0, 19);
+      }
+    }
 
-    var startTime = dateForDateTimeInputValue(today);
-    const dateForDateTimeInputValue1 = (date) =>
-      new Date(
-        date.getTime() +
-          date.getTimezoneOffset() * -60 * 1000 +
-          1 * (60 * 60 * 1000)
-      )
-        .toISOString()
-        .slice(0, 19);
-    var endTime = dateForDateTimeInputValue1(today);
-    setStartTime(startTime);
-    setEndTime(endTime);
+    function _getTimeZoneOffsetInMs() {
+      return new Date().getTimezoneOffset() * -60 * 1000;
+    }
+
+    const start = timestampToDatetimeInputString(Date.now(), "start");
+    const end = timestampToDatetimeInputString(Date.now(), "end");
+    setStartTime(start);
+    setEndTime(end);
   }, []);
 
   const startChange = (e) => {
@@ -37,7 +37,8 @@ export default function EventModal() {
     setStartTime(cringeFormat);
   };
   const endChange = (e) => {
-    console.log(e.target.value);
+    var cringeFormat = e.target.value;
+    setEndTime(cringeFormat);
   };
 
   return (
