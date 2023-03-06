@@ -1,17 +1,23 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  CalendarIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 import { modalState } from "../atoms/modalState";
 import { useRecoilState } from "recoil";
-
 export default function EventModal() {
   const [modal, setModal] = useRecoilState(modalState);
-
+  const [startTime, setStartTime] = useState();
+  // new Date().toISOString().slice(0, 16)
+  const [endTime, setEndTime] = useState(startTime);
   const cancelButtonRef = useRef(null);
-
+  const startChange = (e) => {
+    var cringeFormat = e.target.value;
+    // console.log(new Date(cringeFormat));
+    console.log(cringeFormat);
+    setStartTime(cringeFormat);
+  };
+  const endChange = (e) => {
+    console.log(e.target.value);
+  };
   return (
     <Transition.Root show={modal} as={Fragment}>
       <Dialog
@@ -45,8 +51,8 @@ export default function EventModal() {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pt-4 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                  <div className="flex items-center">
+                    <div className="flex h-12 w-12  items-center justify-center rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
                       <CalendarIcon
                         className="h-6 w-6 text-green-600"
                         aria-hidden="true"
@@ -59,13 +65,43 @@ export default function EventModal() {
                       >
                         Create Event
                       </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
-                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center mt-4 px-2 flex flex-col">
+                    <div className="flex flex-col items-start my-1">
+                      <label>Event Name</label>
+                      <input
+                        type="text"
+                        name="eventName"
+                        id="eventName"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="Event Name"
+                      />
+                    </div>
+
+                    <div className="flex flex-col items-start my-1">
+                      <label>Start Time</label>
+                      <input
+                        defaultValue={startTime}
+                        onChange={startChange}
+                        type="datetime-local"
+                        name="StartTime"
+                        id="StartTime"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="Start Time"
+                      />
+                    </div>
+                    <div className="flex flex-col items-start my-1">
+                      <label>End Time</label>
+                      <input
+                        defaultValue={endTime}
+                        onChange={endChange}
+                        type="datetime-local"
+                        name="EndTime"
+                        id="EndTime"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="End Time"
+                      />
                     </div>
                   </div>
                 </div>
