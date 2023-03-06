@@ -13,7 +13,8 @@ export default function Calender() {
   const [eventsData, setEventsData] = useState(events);
   const [modal, setModal] = useRecoilState(modalState);
   const handleClick = (event) => {
-    alert(event.title);
+    console.log(event.start);
+    console.log(event.end);
   };
   const handleSelect = ({ start, end }) => {
     // const title = window.prompt("New Event name");
