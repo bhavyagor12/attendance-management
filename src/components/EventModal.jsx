@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { modalState } from "../atoms/modalState";
@@ -9,15 +9,37 @@ export default function EventModal() {
   // new Date().toISOString().slice(0, 16)
   const [endTime, setEndTime] = useState(startTime);
   const cancelButtonRef = useRef(null);
+  useEffect(() => {
+    var today = new Date(
+      new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+    );
+    const dateForDateTimeInputValue = (date) =>
+      new Date(date.getTime() + date.getTimezoneOffset() * -60 * 1000)
+        .toISOString()
+        .slice(0, 19);
+
+    var startTime = dateForDateTimeInputValue(today);
+    const dateForDateTimeInputValue1 = (date) =>
+      new Date(
+        date.getTime() +
+          date.getTimezoneOffset() * -60 * 1000 +
+          1 * (60 * 60 * 1000)
+      )
+        .toISOString()
+        .slice(0, 19);
+    var endTime = dateForDateTimeInputValue1(today);
+    setStartTime(startTime);
+    setEndTime(endTime);
+  }, []);
+
   const startChange = (e) => {
     var cringeFormat = e.target.value;
-    // console.log(new Date(cringeFormat));
-    console.log(cringeFormat);
     setStartTime(cringeFormat);
   };
   const endChange = (e) => {
     console.log(e.target.value);
   };
+
   return (
     <Transition.Root show={modal} as={Fragment}>
       <Dialog
