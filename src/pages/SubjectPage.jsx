@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
 import Table from "../components/TableNoTick";
+import Filters from "../components/Filters";
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
   const [students, setStudents] = React.useState([]);
@@ -65,6 +66,7 @@ const SubjectPage = () => {
           />
         ))}
       </div>
+      <Filters />
       {students ? (
         <Table
           data={students}

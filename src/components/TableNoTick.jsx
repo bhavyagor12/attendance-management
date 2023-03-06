@@ -14,12 +14,12 @@ export default function WithMultipleCheckboxes({ data, columns }) {
 
   const handleClick = (e) => {
     console.log("clicked");
-    console.log(e.sapid);
-    console.log(e.name);
+    console.log(e.sapid)
+    console.log(e.name)
     navigate(`/student/${e.sapid}`, {
       state: { sapId: `${e.sapid}`, name: `${e.name}` },
     });
-  };
+  }
 
   useEffect(() => {
     if (data.length !== 0 && columns) {
