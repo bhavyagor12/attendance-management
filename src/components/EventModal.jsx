@@ -3,35 +3,58 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { modalState } from "../atoms/modalState";
 import { useRecoilState } from "recoil";
-export default function EventModal() {
+import { eventState } from "../atoms/eventState";
+export default function EventModal({ startD, endD }) {
   const [modal, setModal] = useRecoilState(modalState);
+  const [eventName, setEventName] = useState("");
   const [startTime, setStartTime] = useState();
-  // new Date().toISOString().slice(0, 16)
   const [endTime, setEndTime] = useState(startTime);
+  const [eventsData, setEventsData] = useRecoilState(eventState);
+  const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null);
+  function _getTimeZoneOffsetInMs() {
+    return new Date().getTimezoneOffset() * -60 * 1000;
+  }
+  function timestampToDatetimeInputString(timestamp, item) {
+    if (item === "start") {
+      const date = new Date(timestamp + _getTimeZoneOffsetInMs());
+      return date.toISOString().slice(0, 16);
+    } else {
+      const date = new Date(
+        timestamp + _getTimeZoneOffsetInMs() + 1 * (60 * 60 * 1000)
+      );
+      return date.toISOString().slice(0, 16);
+    }
+  }
   useEffect(() => {
-    function timestampToDatetimeInputString(timestamp, item) {
-      if (item === "start") {
-        const date = new Date(timestamp + _getTimeZoneOffsetInMs());
-        return date.toISOString().slice(0, 19);
-      } else {
-        const date = new Date(
-          timestamp + _getTimeZoneOffsetInMs() + 1 * (60 * 60 * 1000)
-        );
-        return date.toISOString().slice(0, 19);
-      }
+    if (startD === null && endD === null) {
+      const start = timestampToDatetimeInputString(Date.now(), "start");
+      const end = timestampToDatetimeInputString(Date.now(), "end");
+      setStartTime(start);
+      setEndTime(end);
+    } else {
+      const start = timestampToDatetimeInputString(startD.getTime(), "start");
+      const end = timestampToDatetimeInputString(endD.getTime(), "start");
+      setStartTime(start);
+      setEndTime(end);
     }
-
-    function _getTimeZoneOffsetInMs() {
-      return new Date().getTimezoneOffset() * -60 * 1000;
-    }
-
-    const start = timestampToDatetimeInputString(Date.now(), "start");
-    const end = timestampToDatetimeInputString(Date.now(), "end");
-    setStartTime(start);
-    setEndTime(end);
   }, []);
-
+  const onSubmit = () => {
+    if (eventName === "") {
+      // alert("Please enter a valid event name");
+      setError(true);
+    } else {
+      setEventsData([
+        ...eventsData,
+        {
+          title: eventName,
+          start: new Date(startTime),
+          end: new Date(endTime),
+        },
+      ]);
+      setModal(false);
+    }
+  };
   const startChange = (e) => {
     var cringeFormat = e.target.value;
     setStartTime(cringeFormat);
@@ -94,12 +117,24 @@ export default function EventModal() {
                     <div className="flex flex-col items-start my-1">
                       <label>Event Name</label>
                       <input
+                        onChange={(e) => {
+                          setEventName(e.target.value);
+                          setError(false);
+                          if(e.target.value === ""){
+                            setError(true);
+                          }
+                        }}
                         type="text"
                         name="eventName"
                         id="eventName"
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
                         placeholder="Event Name"
                       />
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter a valid event name
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex flex-col items-start my-1">
@@ -132,7 +167,7 @@ export default function EventModal() {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setModal(false)}
+                    onClick={onSubmit}
                   >
                     Create
                   </button>
