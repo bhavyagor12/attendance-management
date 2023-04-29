@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
 import Table from "../components/TableNoTick";
 import Filters from "../components/Filters";
+import Example from "../components/TableNew";
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
   const [students, setStudents] = React.useState([]);
@@ -67,7 +68,7 @@ const SubjectPage = () => {
         ))}
       </div>
       <Filters />
-      {students ? (
+      {/* {students ? (
         <Table
           data={students}
           columns={[
@@ -93,7 +94,8 @@ const SubjectPage = () => {
         />
       ) : (
         <div>Loadinggg</div>
-      )}
+      )} */}
+      <Example callApi="getAllStudents" />
     </div>
   );
 };
