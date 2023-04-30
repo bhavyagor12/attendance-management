@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import { useState } from "react";
 
-const App = () => {
+const Filters = () => {
   const [year, setYear] = useState("");
   const [division, setDivision] = useState("");
 
@@ -13,15 +13,15 @@ const App = () => {
     setDivision(value);
   };
   return (
-    <div className="flex gap-8">
+    <div className="flex items-center justify-center gap-8">
       <Select
         style={{ width: 250 }}
         showSearch
         id="year"
+        defaultValue="firstYear"
         placeholder="Select year"
         optionFilterProp="children"
         onChange={onChange}
-        defaultValue={year}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
@@ -48,6 +48,7 @@ const App = () => {
         style={{ width: 250 }}
         showSearch
         id="division"
+        defaultValue="divisionA"
         placeholder="Select division"
         optionFilterProp="children"
         onChange={onChange1}
@@ -65,6 +66,13 @@ const App = () => {
           },
         ]}
       />
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type="button"
+      >
+        Get Data
+      </button>
+
       {/* <Select
     style={{ width: 250, marginLeft: 65 }}
     showSearch
@@ -89,4 +97,4 @@ const App = () => {
     </div>
   );
 };
-export default App;
+export default Filters;

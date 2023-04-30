@@ -47,9 +47,9 @@ const Nav = () => {
 
     {
       name: "REPORTS",
-      link: "/",
+      link: "/report",
       onclick: () => {
-        navigate("/home");
+        navigate("/report");
       },
     },
     { name: "LOGOUT", link: "/", onclick: handleLogout },

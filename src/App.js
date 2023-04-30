@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import MarkAttendance from "./pages/MarkAttendance";
+import LecturePage from "./pages/LecturePage";
 import SubjectPage from "./pages/SubjectPage";
 import StudentPage from "./pages/StudentPage";
 import ReportPage from "./pages/ReportPage";
@@ -10,7 +10,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/markAttendance/:lectureId" element={<MarkAttendance />} />
+          <Route path="/lecturePage/:lectureId" element={<LecturePage />} />
           <Route path="/subject/:subjectId" element={<SubjectPage />} />
           <Route path="/student/:sapId" element={<StudentPage />} />
           <Route path="/report" element={<ReportPage />} />

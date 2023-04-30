@@ -1,8 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { subjectState } from "../atoms/subjectState";
 const SubjectCard = ({ name, year, semester, subjectId }) => {
+  const [subject, setSubject] = useRecoilState(subjectState);
   const navigate = useNavigate();
   const handleClick = () => {
+    setSubject(subjectId);
     navigate(`/subject/${subjectId}`, {
       state: { subjectId: `${subjectId}` },
     });

@@ -1,6 +1,6 @@
-import {atom} from 'recoil';
+import { atom } from "recoil";
 
 export const modalState = atom({
-    key: "modal",
-    default: false,
-  });
+  key: "modal",
+  default: false,
+});

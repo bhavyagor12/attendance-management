@@ -1,27 +1,30 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LectureCard = ({date,division,type,batch,ID}) => {
+const LectureCard = ({ date, division, type, batch, ID }) => {
   const [attendance, setAttendance] = React.useState([]);
   const navigate = useNavigate();
   const lectureID = ID;
   console.log(lectureID);
   const handleClick = () => {
-    navigate(`/markAttendance/${lectureID}`, {
+    navigate(`/lecturePage/${lectureID}`, {
       state: { lectureId: `${lectureID}` },
     });
-  }
+  };
   const fetchAttendance = async () => {
     // e.preventDefault();
     try {
-      const rawResponse = await fetch(`http://localhost:9000/getLectureAttendance/${lectureID}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(userData),
-      });
+      const rawResponse = await fetch(
+        `http://localhost:9000/getLectureAttendance/${lectureID}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(userData),
+        }
+      );
       const content = await rawResponse.json();
       console.log(content.map((student) => student.attendance));
       setAttendance(content.map((student) => student.attendance));
@@ -45,7 +48,9 @@ const LectureCard = ({date,division,type,batch,ID}) => {
         </div>
         <div className=" px-8 mx-4">
           <p className="font-normal text-gray-300 w-[100%] ">Type: {type} </p>
-          <p className="font-normal text-gray-300 ">Students attended: {attendance.length} </p>
+          <p className="font-normal text-gray-300 ">
+            Students attended: {attendance.length}{" "}
+          </p>
         </div>
       </div>
     </div>

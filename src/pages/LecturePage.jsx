@@ -6,6 +6,7 @@ import { TiTick } from "react-icons/ti";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import ReactLoading from "react-loading";
+import Example from "../components/MainTable";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [date, setDate] = useState("");
@@ -15,7 +16,7 @@ const MarkAttendance = () => {
   const [batch, setBatch] = useState("");
   const [classs, setClass] = useState("");
   const [students, setStudents] = React.useState([]);
-  
+
   const getStudents = async () => {
     const res = await axios.get("http://localhost:9000/getAllStudents");
     setStudents(getStudentArray(res.data));
@@ -75,15 +76,15 @@ const MarkAttendance = () => {
     <div>
       <Nav />
       <Banner />
-      <div className="flex items-center justify-center mt-2">
+      {/* <div className="flex items-center justify-center mt-2">
         <button
           className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
           onClick={handleClick}
         >
           {!fetchLecture ? <div>Fetch lecture</div> : <div>Close</div>}
         </button>
-      </div>
-      {fetchLecture && (
+      </div> */}
+      {/* {fetchLecture && (
         <div className="flex items-center justify-center mt-4">
           <div className="w-full max-w-md">
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border-2">
@@ -172,7 +173,7 @@ const MarkAttendance = () => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-2">Students Table</h1>
         <p className="flex items-center justify-center gap-2 text-sm md:text-xl text-gray-600">
@@ -184,38 +185,8 @@ const MarkAttendance = () => {
           </div>
         </p>
       </div>
-      {students ? (
-        <Table
-          data={students}
-          columns={[
-            {
-              label: "Sapid",
-              field: "sapid",
-              width: 150,
-              attributes: {
-                "aria-controls": "DataTable",
-                "aria-label": "Name",
-              },
-            },
-            {
-              label: "Name",
-              field: "name",
-              width: 150,
-              attributes: {
-                "aria-controls": "DataTable",
-                "aria-label": "Name",
-              },
-            },
-          ]}
-        />
-      ) : (
-        <ReactLoading
-          type="spinningBubbles"
-          color="#236F21"
-          height={667}
-          width={375}
-        />
-      )}
+
+      <Example attendanceMark={true} callApi="getAllStudents" />
     </div>
   );
 };
