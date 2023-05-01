@@ -2,11 +2,14 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { modalState } from "../atoms/modalState";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { eventState } from "../atoms/eventState";
+import { infoState } from "../atoms/infoState";
 export default function EventModal({ startD, endD }) {
+  const userInfo = useRecoilValue(infoState);
   const [modal, setModal] = useRecoilState(modalState);
-  const [eventName, setEventName] = useState("");
+  const [SubjectCode, setSubjectCode] = useState("");
+  const [SubjectName, setSubjectName] = useState("");
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState(startTime);
   const [eventsData, setEventsData] = useRecoilState(eventState);
@@ -39,15 +42,43 @@ export default function EventModal({ startD, endD }) {
       setEndTime(end);
     }
   }, []);
-  const onSubmit = () => {
-    if (eventName === "") {
+  const onSubmit = async () => {
+    if (SubjectCode === "") {
       // alert("Please enter a valid event name");
       setError(true);
     } else {
+      var bdy = {
+        date_of_lecture: startTime,
+        start_time: startTime,
+        end_time: endTime,
+        subject_id: SubjectCode,
+        faculty_id: userInfo.ID,
+      };
+      console.log({ bdy });
+      try {
+        const rawResponse = await fetch("http://localhost:9000/lecture", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            date_of_lecture: startTime,
+            start_time: startTime,
+            end_time: endTime,
+            subject_id: SubjectCode,
+            faculty_id: userInfo.ID,
+          }),
+        });
+        const content = await rawResponse.json();
+        console.log(content);
+      } catch (error) {
+        console.log("lmao noob");
+      }
       setEventsData([
         ...eventsData,
         {
-          title: eventName,
+          title: SubjectName,
           start: new Date(startTime),
           end: new Date(endTime),
         },
@@ -109,34 +140,57 @@ export default function EventModal({ startD, endD }) {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Create Event
+                        Create Lecture
                       </Dialog.Title>
                     </div>
                   </div>
                   <div className="text-center mt-4 px-2 flex flex-col">
                     <div className="flex flex-col items-start my-1">
-                      <label>Event Name</label>
+                      <label>Subject Code</label>
                       <input
                         onChange={(e) => {
-                          setEventName(e.target.value);
+                          setSubjectCode(e.target.value);
                           setError(false);
-                          if(e.target.value === ""){
+                          if (e.target.value === "") {
                             setError(true);
                           }
                         }}
                         type="text"
-                        name="eventName"
-                        id="eventName"
+                        name="SubjectCode"
+                        id="SubjectCode"
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
-                        placeholder="Event Name"
+                        placeholder="Subject Code"
                       />
+
                       {error && (
                         <div className="text-red-400 text-sm">
-                          please enter a valid event name
+                          please enter valid subject code
                         </div>
                       )}
                     </div>
+                    <div className="flex flex-col items-start my-1">
+                      <label>Subject Name</label>
+                      <input
+                        onChange={(e) => {
+                          setSubjectName(e.target.value);
+                          setError(false);
+                          if (e.target.value === "") {
+                            setError(true);
+                          }
+                        }}
+                        type="text"
+                        name="SubjectName"
+                        id="SubjectName"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="Subject Name"
+                      />
 
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter a valid subject name
+                        </div>
+                      )}
+                    </div>
                     <div className="flex flex-col items-start my-1">
                       <label>Start Time</label>
                       <input

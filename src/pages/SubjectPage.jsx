@@ -4,10 +4,6 @@ import Nav from "../components/Navbar";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
-import Table from "../components/TableNoTick";
-import Filters from "../components/Filters";
-import Example from "../components/MainTable";
-import { useRecoilState } from "recoil";
 
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
@@ -30,7 +26,6 @@ const SubjectPage = () => {
       <Nav />
       <Banner />
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
-        <h1 className="h2 mb-4">Lectures</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of conducted lectures,{" "}
           <span className="font-bold text-gray-900">Click on them</span> to view
@@ -45,6 +40,8 @@ const SubjectPage = () => {
             division={lecture.division}
             batch={lecture.batch}
             ID={lecture.ID}
+            startTime={lecture.start_time}
+            endTime={lecture.end_time}
             // attendance={lecture.attendance}
           />
         ))}

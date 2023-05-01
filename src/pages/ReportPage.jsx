@@ -1,12 +1,11 @@
 import React from "react";
 import Nav from "../components/Navbar";
-import Banner from "../components/Banner";
 import Filters from "../components/Filters";
 import Example from "../components/MainTable";
 import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
 const ReportPage = () => {
-  const [filters, setFilters] = useRecoilState(filtersState);
+  const [filters] = useRecoilState(filtersState);
   return (
     <div>
       <Nav />

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
-import Table from "../components/Table";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import ReactLoading from "react-loading";
 import Example from "../components/MainTable";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
@@ -14,7 +11,6 @@ const MarkAttendance = () => {
   const [type, setType] = useState("");
   const [division, setDivision] = useState("");
   const [batch, setBatch] = useState("");
-  const [classs, setClass] = useState("");
   const [students, setStudents] = React.useState([]);
 
   const getStudents = async () => {

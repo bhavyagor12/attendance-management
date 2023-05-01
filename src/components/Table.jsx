@@ -35,10 +35,6 @@ export default function WithMultipleCheckboxes({ data, columns }) {
 
   const navigate = useNavigate();
   // console.log(data)
-  const handleClick = () => {
-    navigate("/home");
-    console.log("clicked");
-  };
 
   // console.log(`hello`+data)
   const addSapID = (e) => {
