@@ -53,6 +53,7 @@ const Home = () => {
             semester={subject.semester}
             // department={subject.department}
             subjectId={subject.ID}
+            code={subject.subject_code}
           />
         ))}
       </div>

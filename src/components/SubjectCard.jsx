@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { subjectState } from "../atoms/subjectState";
-const SubjectCard = ({ name, year, semester, subjectId }) => {
+const SubjectCard = ({ name, year, semester, subjectId, code }) => {
   const [subject, setSubject] = useRecoilState(subjectState);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -19,7 +19,7 @@ const SubjectCard = ({ name, year, semester, subjectId }) => {
             {name}
           </h5>
           <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white ">
-            6000321
+            {code}
           </h4>
         </div>
         <div className=" px-8 mx-4">
