@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import events from "./events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { modalState } from "../atoms/modalState";
 import { useRecoilState } from "recoil";
 import EventModal from "./EventModal";
 import { eventState } from "../atoms/eventState";
+import { useNavigate } from "react-router-dom";
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
 
 export default function Calender() {
+  const navigate = useNavigate();
   const [eventsData, setEventsData] = useRecoilState(eventState);
   const [modal, setModal] = useRecoilState(modalState);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
+
   const handleClick = (event) => {
-    console.log(event.title);
-    console.log(event.start);
-    console.log(event.end);
+    navigate(`/lecture/${event.id}`);
   };
   const onButtonClick = () => {
     setStartTime(null);

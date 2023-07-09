@@ -3,13 +3,54 @@ import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
 import Calender from "../components/Calender";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { infoState } from "../atoms/infoState";
+import { eventState } from "../atoms/eventState";
+import axios from "axios";
 
 const Home = () => {
   const info = useRecoilValue(infoState);
   let facultyID = info?.ID;
   const [subjects, setSubjects] = React.useState([]);
+  const [eventsData, setEventsData] = useRecoilState(eventState);
+
+  const getAllLectures = async () => {
+    try {
+      const response = await axios.get("http://localhost:9000/getAllLectures");
+      const allLectures = response.data;
+      console.log(allLectures);
+
+      const updatedEventsData = []; // Initialize as an empty array to clear existing events
+
+      allLectures.forEach((lecture) => {
+        if (lecture.start_time) {
+          const start_time = lecture.start_time;
+          const end_time = lecture.end_time;
+          const title = lecture.subject.name;
+          const id = lecture.ID;
+          // Create a new event object using the lecture details
+          const newEvent = {
+            id: id,
+            title: title,
+            start: new Date(start_time),
+            end: new Date(end_time),
+          };
+          // Add the new event to the updatedEventsData array
+          updatedEventsData.push(newEvent);
+        }
+      });
+
+      setEventsData(updatedEventsData); // Update the eventsData state with the updatedEventsData array
+      console.log(updatedEventsData); // Check the updated eventsData array with lectures added
+    } catch (error) {
+      console.error("Error fetching lectures:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAllLectures();
+  }, []);
+
   const getData = async () => {
     try {
       const rawResponse = await fetch(

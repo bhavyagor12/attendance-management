@@ -10,7 +10,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/lecturePage/:lectureId" element={<LecturePage />} />
+          <Route path="/lecture/:lectureId" element={<LecturePage />} />
           <Route path="/subject/:subjectId" element={<SubjectPage />} />
           <Route path="/student/:sapId" element={<StudentPage />} />
           <Route path="/report" element={<ReportPage />} />

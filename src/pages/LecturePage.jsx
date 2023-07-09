@@ -13,6 +13,10 @@ const MarkAttendance = () => {
   const [batch, setBatch] = useState("");
   const [students, setStudents] = React.useState([]);
 
+  // const fetchLectureAttendance = async () => {
+  //   const res = await axios.post(`http://localhost:9000/lecture`);
+  // };
+
   const getStudents = async () => {
     const res = await axios.get("http://localhost:9000/getAllStudents");
     setStudents(getStudentArray(res.data));
