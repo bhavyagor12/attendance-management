@@ -1,56 +1,36 @@
-import { Select } from "antd";
+import { Select, Input } from "antd";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
 
 const Filters = () => {
-  const [year, setYear] = useState(0);
-  const [division, setDivision] = useState("");
+  const [year, setYear] = useState("2024");
+  const [division, setDivision] = useState("A");
   const [filters, setFilters] = useRecoilState(filtersState);
 
-  const onChange = (value) => {
+  const yearOnchange = (value) => {
     setYear(value);
   };
 
-  const onChange1 = (value) => {
+  const divOnchange = (value) => {
     setDivision(value);
   };
-
-  useEffect(() => {
+  const onButtonClick = () => {
     setFilters({ year, division });
+    console.log(year, division);
+  };
+  useEffect(() => {
+    setFilters({ division });
   }, [year, division]);
 
   return (
     <div className="flex items-center justify-center gap-8">
-      <Select
-        style={{ width: 250 }}
-        showSearch
+      <Input
+        placeholder="PassOut Year"
         id="year"
-        defaultValue="2026"
-        placeholder="Select year"
-        optionFilterProp="children"
-        onChange={onChange}
-        filterOption={(input, option) =>
-          (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-        }
-        options={[
-          {
-            value: "2026",
-            label: "first year",
-          },
-          {
-            value: "2025",
-            label: "second year",
-          },
-          {
-            value: "2024",
-            label: "third year",
-          },
-          {
-            value: "2023",
-            label: "fourth year",
-          },
-        ]}
+        defaultValue={year}
+        onChange={yearOnchange}
+        style={{ width: 75 }}
       />
       <Select
         style={{ width: 250 }}
@@ -59,7 +39,7 @@ const Filters = () => {
         defaultValue="A"
         placeholder="Select division"
         optionFilterProp="children"
-        onChange={onChange1}
+        onChange={divOnchange}
         filterOption={(input, option) =>
           (option?.label ?? "").toString().includes(input.toString())
         }
@@ -72,11 +52,20 @@ const Filters = () => {
             value: "B",
             label: "division B",
           },
+          {
+            value: "C",
+            label: "division C",
+          },
+          {
+            value: "D",
+            label: "division D",
+          },
         ]}
       />
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         type="button"
+        onClick={onButtonClick}
       >
         Get Data
       </button>
