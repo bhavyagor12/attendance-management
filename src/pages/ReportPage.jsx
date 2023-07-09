@@ -15,7 +15,7 @@ const ReportPage = () => {
       </div>
       <Example
         attendanceMark={false}
-        callApi="getAllStudents"
+        callApi="getClassAttendance"
         filters={filters}
       />
     </div>
