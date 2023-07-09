@@ -78,8 +78,8 @@ const Nav = () => {
       </div>
       <div className="flex items-center justify-end">
         <ul
-          className={`justify-center items-center md:flex md:mt-5  md:pb-0 pb-12 absolute md:static bg-white pl-8   left-0 w-full  transition-all duration-500 ease-in ${
-            open ? "top-20 " : "top-[-490px]"
+          className={`justify-center items-center md:flex md:pb-0 pb-12 absolute md:static bg-white pl-8 left-0 w-full transition-all duration-500 ease-in cursor-pointer ${
+            open ? "top-20" : "top-[-490px]"
           }`}
         >
           {Links.map((link) => (
