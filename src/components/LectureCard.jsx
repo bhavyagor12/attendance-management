@@ -18,7 +18,7 @@ const LectureCard = ({
   const lectureID = ID;
   console.log(lectureID);
   const handleClick = () => {
-    navigate(`/lecturePage/${lectureID}`, {
+    navigate(`/lecture/${lectureID}`, {
       state: { lectureId: `${lectureID}` },
     });
   };
