@@ -37,7 +37,7 @@ const Example = ({ attendanceMark, callApi }) => {
       ]);
     } else {
       const classData = {
-        year: filters.year,
+        year: Number(filters.year),
         division: filters.division,
       };
 
