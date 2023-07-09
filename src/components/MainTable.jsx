@@ -37,8 +37,8 @@ const Example = ({ attendanceMark, callApi }) => {
       ]);
     } else {
       const classData = {
-        year: 2024,
-        division: "B",
+        year: filters.year,
+        division: filters.division,
       };
 
       axios
