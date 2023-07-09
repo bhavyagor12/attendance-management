@@ -68,11 +68,11 @@ const LectureCard = ({
           <p className="font-bold text-gray-300 ">Start Time:</p>
           <p className="font-normal text-gray-300 w-[100%]">
             {" "}
-            {startTime.slice(-5)}{" "}
+            {startTime && startTime.slice(-5)}{" "}
           </p>
           <p className="font-bold text-gray-300 ">End Time:</p>
           <p className="font-normal text-gray-300 w-[100%]">
-            {endTime.slice(-5)}{" "}
+            {endTime && endTime.slice(-5)}{" "}
           </p>
         </div>
       </div>

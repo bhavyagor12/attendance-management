@@ -1,9 +1,12 @@
 import { Select } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { filtersState } from "../atoms/filtersState";
 
 const Filters = () => {
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(0);
   const [division, setDivision] = useState("");
+  const [filters, setFilters] = useRecoilState(filtersState);
 
   const onChange = (value) => {
     setYear(value);
@@ -12,13 +15,18 @@ const Filters = () => {
   const onChange1 = (value) => {
     setDivision(value);
   };
+
+  useEffect(() => {
+    setFilters({ year, division });
+  }, [year, division]);
+
   return (
     <div className="flex items-center justify-center gap-8">
       <Select
         style={{ width: 250 }}
         showSearch
         id="year"
-        defaultValue="firstYear"
+        defaultValue="2026"
         placeholder="Select year"
         optionFilterProp="children"
         onChange={onChange}
@@ -27,19 +35,19 @@ const Filters = () => {
         }
         options={[
           {
-            value: "firstYear",
+            value: "2026",
             label: "first year",
           },
           {
-            value: "secondYear",
+            value: "2025",
             label: "second year",
           },
           {
-            value: "thirdYear",
+            value: "2024",
             label: "third year",
           },
           {
-            value: "fourthYear",
+            value: "2023",
             label: "fourth year",
           },
         ]}
@@ -48,7 +56,7 @@ const Filters = () => {
         style={{ width: 250 }}
         showSearch
         id="division"
-        defaultValue="divisionA"
+        defaultValue="A"
         placeholder="Select division"
         optionFilterProp="children"
         onChange={onChange1}
@@ -57,11 +65,11 @@ const Filters = () => {
         }
         options={[
           {
-            value: "divisionA",
+            value: "A",
             label: "division A",
           },
           {
-            value: "divisionB",
+            value: "B",
             label: "division B",
           },
         ]}
