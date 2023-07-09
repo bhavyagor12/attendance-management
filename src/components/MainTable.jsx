@@ -47,6 +47,43 @@ const Example = ({ attendanceMark, callApi }) => {
         .then((response) => {
           const content = response.data;
           console.log(content);
+          console.log(content.AttendanceList[0].SubjectAttendance.map((lecture) => {
+            return {
+              accessorKey: lecture.SubjectName,
+              header: lecture.SubjectName,
+              size: 120,
+            };
+          }))
+          setData(getDefaulterArray(content));
+          setColumns([
+            {
+              accessorKey: "sapid",
+              header: "sapid",
+              size: 120,
+            },
+            {
+              accessorKey: "name",
+              header: "name",
+              size: 120,
+            },
+            // content.AttendanceList.SubjectAttendance.map((lecture) => {
+            //   return {
+            //     accessorKey: lecture.SubjectName,
+            //     header: lecture.SubjectName,
+            //     size: 120,
+            //   };
+            // }),
+            {
+              accessorKey: "grand_attendance",
+              header: "grand_attendance",
+              size: 120,
+            },
+            {
+              accessorKey: "status",
+              header: "status",
+              size: 120,
+            },
+          ])
         })
         .catch((error) => {
           console.log(error);
@@ -69,10 +106,25 @@ const Example = ({ attendanceMark, callApi }) => {
 
   const getStudentArray = (data) => {
     let initialStudents = [];
-    initialStudents = data?.map((student) => {
+    initialStudents = data?.AttendanceList.map((student) => {
       return {
         sapid: student.sap_id,
         name: student.name,
+      };
+    });
+    return initialStudents;
+  };
+
+  useEffect(() => {
+    getStudents();
+  }, []);
+
+  const getDefaulterArray = (data) => {
+    let initialStudents = [];
+    initialStudents = data?.map((student) => {
+      return {
+        sapid: student.student_id,
+        name: student.student_name,
       };
     });
     return initialStudents;
@@ -133,7 +185,7 @@ const Example = ({ attendanceMark, callApi }) => {
 
   return (
     <>
-      {data.length > 0 && columns.length > 0 && (
+      { columns.length > 0 && (
         <MaterialReactTable
           columns={columns}
           data={data} //fallback to state={{ isLoading: true }}

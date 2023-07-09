@@ -58,7 +58,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   const [checkbox1, setCheckbox1] = React.useState([]);
 
   const markAttendance = async () => {
-    const res = await axios.post("http://localhost:9000/markAttendance", {
+    const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureID,
       subject_id: "dc74e59c-b524-4972-b991-263f665715f9",
       attendance: sapIDs,
