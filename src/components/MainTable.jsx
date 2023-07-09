@@ -6,6 +6,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
@@ -46,13 +47,6 @@ const Example = ({ attendanceMark, callApi }) => {
         .then((response) => {
           const content = response.data;
           console.log(content);
-          console.log(content.AttendanceList[0].SubjectAttendance.map((lecture) => {
-            return {
-              accessorKey: lecture.SubjectName,
-              header: lecture.SubjectName,
-              size: 120,
-            };
-          }))
           setData(getDefaulterArray(content));
           setColumns([
             {
@@ -65,13 +59,26 @@ const Example = ({ attendanceMark, callApi }) => {
               header: "name",
               size: 120,
             },
-            // content.AttendanceList.SubjectAttendance.map((lecture) => {
-            //   return {
-            //     accessorKey: lecture.SubjectName,
-            //     header: lecture.SubjectName,
-            //     size: 120,
-            //   };
-            // }),
+            {
+              accessorKey: "cns",
+              header: "cns",
+              size: 120,
+            },
+            {
+              accessorKey: "uiux",
+              header: "uiux",
+              size: 120,
+            },
+            {
+              accessorKey: "dwm",
+              header: "dwm",
+              size: 120,
+            },
+            {
+              accessorKey: "iacv",
+              header: "iacv",
+              size: 120,
+            },
             {
               accessorKey: "grand_attendance",
               header: "grand_attendance",
@@ -105,7 +112,7 @@ const Example = ({ attendanceMark, callApi }) => {
 
   const getStudentArray = (data) => {
     let initialStudents = [];
-    initialStudents = data?.AttendanceList.map((student) => {
+    initialStudents = data?.map((student) => {
       return {
         sapid: student.sap_id,
         name: student.name,
@@ -120,7 +127,7 @@ const Example = ({ attendanceMark, callApi }) => {
 
   const getDefaulterArray = (data) => {
     let initialStudents = [];
-    initialStudents = data?.map((student) => {
+    initialStudents = data?.AttendanceList.map((student) => {
       return {
         sapid: student.student_id,
         name: student.student_name,
