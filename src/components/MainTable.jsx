@@ -6,7 +6,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
@@ -16,6 +16,7 @@ import { filtersState } from "../atoms/filtersState";
 const Example = ({ attendanceMark, callApi }) => {
   const [subject, setSubject] = useRecoilState(subjectState);
   const [data, setData] = React.useState([]);
+  const [values, setValues] = React.useState([]);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
@@ -37,8 +38,8 @@ const Example = ({ attendanceMark, callApi }) => {
       ]);
     } else {
       const classData = {
-        year: filters.year,
-        division: filters.division,
+        year: 2024,
+        division: "B",
       };
 
       axios
@@ -65,14 +66,14 @@ const Example = ({ attendanceMark, callApi }) => {
               size: 120,
             },
           ]);
-          // content.AttendanceList[0].SubjectAttendance.map((subject) => {
-          //   const subj = {
-          //     accessorKey: subject.SubjectName,
-          //     header: subject.SubjectName,
-          //     size: 120,
-          //   };
-          //   setColumns((columns) => [...columns, subj]);
-          // });
+          content.AttendanceList[0].SubjectAttendance.map((subject) => {
+            const subj = {
+              accessorKey: subject.SubjectName,
+              header: subject.SubjectName,
+              size: 120,
+            };
+            setColumns((columns) => [...columns, subj]);
+          });
           setColumns((columns) => [
             ...columns,
             {
@@ -124,13 +125,21 @@ const Example = ({ attendanceMark, callApi }) => {
   const getDefaulterArray = (data) => {
     let initialStudents = [];
     initialStudents = data?.AttendanceList.map((student) => {
-      const returnjson={
-        sapid: student.student_id,
-        name: student.student_name,
-        grand_attendance: student.GrandAttendance,
-        status: student.Status,
-      }
-      return returnjson;
+      const jsonObject = {};
+      setValues([student.student_id, student.student_name]);
+      student.SubjectAttendance.map((subject) =>
+        setValues((values) => [...values, subject.Attendance])
+      );
+      setValues((values) => [...values, student.GrandAttendance]);
+      setValues((values) => [...values, student.Status]);
+      // console.log(values);
+      columns.forEach((key, index) => {
+        jsonObject[key.accessorKey] = values[index];
+      });
+      // console.log(JSON.stringify(jsonObject, null, 2));
+      JSON.stringify(jsonObject, null, 2);
+      // console.log(typeof jsonObject); 
+      return jsonObject; 
     });
     return initialStudents;
   };

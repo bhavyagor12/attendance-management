@@ -9,7 +9,7 @@ const Filters = () => {
   const [filters, setFilters] = useRecoilState(filtersState);
 
   const yearOnchange = (value) => {
-    setYear(value);
+    setYear(parseInt(value));
   };
 
   const divOnchange = (value) => {
@@ -20,7 +20,7 @@ const Filters = () => {
     console.log(year, division);
   };
   useEffect(() => {
-    setFilters({ division });
+    setFilters({ year, division });
   }, [year, division]);
 
   return (
