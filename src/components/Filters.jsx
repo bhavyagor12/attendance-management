@@ -46,19 +46,19 @@ const Filters = () => {
         options={[
           {
             value: "A",
-            label: "division A",
+            label: "A",
           },
           {
             value: "B",
-            label: "division B",
+            label: "B",
           },
           {
             value: "C",
-            label: "division C",
+            label: "C",
           },
           {
             value: "D",
-            label: "division D",
+            label: "D",
           },
         ]}
       />
