@@ -168,7 +168,7 @@ export default function EventModal({ startD, endD }) {
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-col items-start my-1">
+                    {/* <div className="flex flex-col items-start my-1">
                       <label>Subject Name</label>
                       <input
                         onChange={(e) => {
@@ -190,7 +190,7 @@ export default function EventModal({ startD, endD }) {
                           please enter a valid subject name
                         </div>
                       )}
-                    </div>
+                    </div> */}
                     <div className="flex flex-col items-start my-1">
                       <label>Start Time</label>
                       <input

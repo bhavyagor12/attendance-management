@@ -20,6 +20,34 @@ const Example = ({ attendanceMark, callApi }) => {
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
+  const [rowSelection, setRowSelection] = useState({});
+
+  const fetchAttendance = async () => {
+    // e.preventDefault();
+    try {
+      const rawResponse = await fetch(
+        `http://localhost:9000/getLectureAttendance/48451d17-76fd-4ca2-afb6-2c83fddf30d6`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          // body: JSON.stringify(userData),
+        }
+      );
+      const content = await rawResponse.json();
+      // setAttendance(content.map((student) => student.attendance));
+      let jsonobj = {};
+      content.map((student) => {
+        jsonobj[student] = true;
+      });
+      setRowSelection(jsonobj);
+      console.log(jsonobj);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getStudents = async () => {
     if (callApi === "getAllStudents") {
       const res = await axios.get(`http://localhost:9000/${callApi}`);
@@ -36,6 +64,7 @@ const Example = ({ attendanceMark, callApi }) => {
           size: 200,
         },
       ]);
+      await fetchAttendance();
     } else {
       const classData = {
         year: 2024,
@@ -104,7 +133,9 @@ const Example = ({ attendanceMark, callApi }) => {
       setLectureId("1");
     }
   }, []);
-
+  useEffect(() => {
+    console.log(rowSelection);
+  }, [rowSelection]);
   // console.log(location.state.subjectId);
 
   const getStudentArray = (data) => {
@@ -138,8 +169,8 @@ const Example = ({ attendanceMark, callApi }) => {
       });
       // console.log(JSON.stringify(jsonObject, null, 2));
       JSON.stringify(jsonObject, null, 2);
-      // console.log(typeof jsonObject); 
-      return jsonObject; 
+      // console.log(typeof jsonObject);
+      return jsonObject;
     });
     return initialStudents;
   };
@@ -205,6 +236,9 @@ const Example = ({ attendanceMark, callApi }) => {
           data={data} //fallback to state={{ isLoading: true }}
           enableRowSelection={attendanceMark}
           positionToolbarAlertBanner="bottom"
+          getRowId={(originalRow) => originalRow.sapid}
+          onRowSelectionChange={setRowSelection}
+          state={{ rowSelection }}
           renderTopToolbarCustomActions={({ table }) => (
             <Box
               sx={{
@@ -226,6 +260,7 @@ const Example = ({ attendanceMark, callApi }) => {
                 </Button>
               ) : (
                 <>
+                  {table.setRowSelection}
                   <Button
                     disabled={
                       table.getPrePaginationRowModel().rows.length === 0
@@ -240,7 +275,6 @@ const Example = ({ attendanceMark, callApi }) => {
                   >
                     Mark All Present
                   </Button>
-
                   <Button
                     disabled={
                       !table.getIsSomeRowsSelected() &&

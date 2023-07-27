@@ -34,14 +34,14 @@ export default function Calender() {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-center mb-4">
-        <button
+        {/* <button
           className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-8 mx-2 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
           onClick={() => {
             onButtonClick();
           }}
         >
           Add Lecture
-        </button>
+        </button> */}
       </div>
       {modal ? <EventModal startD={startTime} endD={endTime} /> : null}
       <Calendar

@@ -76,9 +76,20 @@ const Home = () => {
   return (
     <div>
       <Nav />
-      <Banner />
+      {/* <Banner /> */}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
-        <h1 className="h2 mb-4">Subjects</h1>
+        <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Time - Table</h1>
+        <p className=" text-sm md:text-xl text-gray-600">
+          Here is a list of lectures you have,{" "}
+          <span className="font-bold text-gray-900">Click on them</span> to mark
+          attendance
+        </p>
+      </div>
+      <div className="flex items-center justify-center overflow-hidden">
+        <Calender />
+      </div>
+      <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4 ">
+        <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Subjects</h1>
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of Subjects you teach,{" "}
           <span className="font-bold text-gray-900">Click on them</span> to see
@@ -97,17 +108,6 @@ const Home = () => {
             code={subject.subject_code}
           />
         ))}
-      </div>
-      <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
-        <h1 className="h2 mb-4">Time - Table</h1>
-        <p className=" text-sm md:text-xl text-gray-600">
-          Here is a list of lectures you have,{" "}
-          <span className="font-bold text-gray-900">Click on them</span> to mark
-          attendance
-        </p>
-      </div>
-      <div className="flex items-center justify-center overflow-hidden">
-        <Calender />
       </div>
       {/* <Table /> */}
       {/* <Table /> */}
