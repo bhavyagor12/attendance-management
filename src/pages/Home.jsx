@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
 import Calender from "../components/Calender";

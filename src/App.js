@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import LoginPage from "./pages/LoginPage";
 import LecturePage from "./pages/LecturePage";
 import SubjectPage from "./pages/SubjectPage";
 import StudentPage from "./pages/StudentPage";
@@ -15,7 +15,7 @@ function App() {
           <Route path="/student/:sapId" element={<StudentPage />} />
           <Route path="/report" element={<ReportPage />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </div>

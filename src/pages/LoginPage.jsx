@@ -6,7 +6,8 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { infoState } from "../atoms/infoState";
-const Login = () => {
+import { Login } from "../utils/services";
+const LoginPage = () => {
   const [sapid, setSapid] = useState("");
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
@@ -18,22 +19,11 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(`sap ID: ${sapid}, Password: ${password}`);
     const userData = {
       sap_id: Number(sapid),
       password,
     };
-    try {
-      const rawResponse = await fetch("http://localhost:9000/login", {  
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      const content = await rawResponse.json();
-      console.log(content);
+      const content= await Login(userData);
       if (content!=="AuthError") {
         setInfo({
           sap_id: content.sap_id,
@@ -50,14 +40,6 @@ const Login = () => {
           confirmButtonText: "Retry",
         });
       }
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Entered credentials dont exist",
-        icon: "error",
-        confirmButtonText: "Retry",
-      });
-    }
   };
 console.log(info)
   return (
@@ -140,4 +122,4 @@ console.log(info)
   );
 };
 
-export default Login;
+export default LoginPage;
