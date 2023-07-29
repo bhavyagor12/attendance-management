@@ -12,7 +12,23 @@ export const Login = async (userData) => {
       body: JSON.stringify(userData),
     });
     const content = await rawResponse.json();
-    return content;
+    let info=null
+    if (content!=="AuthError") {
+        info=({
+        sap_id: content.sap_id,
+        name: content.name,
+        ID: content.ID,
+      });
+    }
+    else {
+      Swal.fire({
+        title: "Error!",
+        text: "Entered credentials dont exist",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+    }
+    return info;
   } catch (error) {
     Swal.fire({
       title: "Error!",

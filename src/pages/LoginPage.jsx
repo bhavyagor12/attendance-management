@@ -23,25 +23,14 @@ const LoginPage = () => {
       sap_id: Number(sapid),
       password,
     };
-      const content= await Login(userData);
-      if (content!=="AuthError") {
-        setInfo({
-          sap_id: content.sap_id,
-          name: content.name,
-          ID: content.ID,
-        });
-        navigate("/home");
+      const infol= await Login(userData);
+      if(infol){
+        setInfo(infol);
+      navigate("/home");
       }
-      else {
-        Swal.fire({
-          title: "Error!",
-          text: "Entered credentials dont exist",
-          icon: "error",
-          confirmButtonText: "Retry",
-        });
-      }
+      
+      
   };
-console.log(info)
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
       <div className="hidden md:flex w-[50vw] h-[100vh]">
