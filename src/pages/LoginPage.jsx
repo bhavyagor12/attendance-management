@@ -28,8 +28,6 @@ const LoginPage = () => {
         setInfo(infol);
       navigate("/home");
       }
-      
-      
   };
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
