@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
+import { getLecturesBySubject } from "../utils/services";
 
 const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
-
   let location = useLocation();
   const subjectId = location.state.subjectId;
-  const getData = async () => {
-    const res = await axios.get(
-      `http://localhost:9000/getLecturesBySubject/${subjectId}`
-    );
-    console.log(res.data);
-    setLectures(res.data);
+  const initLecs = async () => {
+    const lecs= await getLecturesBySubject(subjectId);
+    setLectures(lecs);
   };
   useEffect(() => {
-    getData();
+    initLecs();
   }, []);
 
   return (
