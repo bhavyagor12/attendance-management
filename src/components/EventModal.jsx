@@ -5,6 +5,8 @@ import { modalState } from "../atoms/modalState";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { eventState } from "../atoms/eventState";
 import { infoState } from "../atoms/infoState";
+import { timestampToDatetimeInputString } from "../utils/helpers";
+import { createLecture } from "../utils/services";
 export default function EventModal({ startD, endD }) {
   const userInfo = useRecoilValue(infoState);
   const [modal, setModal] = useRecoilState(modalState);
@@ -15,21 +17,7 @@ export default function EventModal({ startD, endD }) {
   const [eventsData, setEventsData] = useRecoilState(eventState);
   const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null);
-  function _getTimeZoneOffsetInMs() {
-    return new Date().getTimezoneOffset() * -60 * 1000;
-  }
-  function timestampToDatetimeInputString(timestamp, item) {
-    if (item === "start") {
-      const date = new Date(timestamp + _getTimeZoneOffsetInMs());
-      return date.toISOString().slice(0, 16);
-    } else {
-      const date = new Date(
-        timestamp + _getTimeZoneOffsetInMs() + 1 * (60 * 60 * 1000)
-      );
-      return date.toISOString().slice(0, 16);
-    }
-  }
-  useEffect(() => {
+  function timeSet() {
     if (startD === null && endD === null) {
       const start = timestampToDatetimeInputString(Date.now(), "start");
       const end = timestampToDatetimeInputString(Date.now(), "end");
@@ -41,13 +29,16 @@ export default function EventModal({ startD, endD }) {
       setStartTime(start);
       setEndTime(end);
     }
+  }
+  useEffect(() => {
+    timeSet();
   }, []);
   const onSubmit = async () => {
     if (SubjectCode === "") {
       // alert("Please enter a valid event name");
       setError(true);
     } else {
-      var bdy = {
+      let bdy = {
         date_of_lecture: startTime,
         start_time: startTime,
         end_time: endTime,
@@ -55,30 +46,11 @@ export default function EventModal({ startD, endD }) {
         faculty_id: userInfo.ID,
       };
       console.log({ bdy });
-      try {
-        const rawResponse = await fetch("http://localhost:9000/lecture", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            date_of_lecture: startTime,
-            start_time: startTime,
-            end_time: endTime,
-            subject_id: SubjectCode,
-            faculty_id: userInfo.ID,
-          }),
-        });
-        const content = await rawResponse.json();
-        console.log(content);
-      } catch (error) {
-        console.log("lmao noob");
-      }
+      createLecture(bdy);
       setEventsData([
         ...eventsData,
         {
-          title: SubjectName,
+          title: SubjectName,//TODO: somehow get the subject name
           start: new Date(startTime),
           end: new Date(endTime),
         },

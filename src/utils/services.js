@@ -4,14 +4,6 @@ import axios from "axios";
 export const Login = async (userData) => {
   try {
     const response= await axios.post("http://localhost:9000/login",userData)
-    // const rawResponse = await fetch("http://localhost:9000/login", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(userData),
-    // });
     const content = await response.data;
     let info=null
     if (content!=="AuthError") {
@@ -77,7 +69,17 @@ export const getSubjectsByFaculty = async (facultyID) => {
     const subjects = await response.data;
     return subjects;
   } catch (error) {
+    console.log(error);
     return null;
+  }
+}
+
+export const createLecture = async (lecture) => {
+  try {
+    const response= await axios.post("http://localhost:9000/lecture",JSON.stringify(lecture))
+    const content = await response.data;
+    console.log(content);
+  } catch (error) {
     console.log(error);
   }
 }
