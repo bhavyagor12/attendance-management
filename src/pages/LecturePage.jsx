@@ -4,6 +4,7 @@ import Nav from "../components/Navbar";
 import { TiTick } from "react-icons/ti";
 import axios from "axios";
 import Example from "../components/MainTable";
+import Papa from '../components/Papa.js'
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [date, setDate] = useState("");
@@ -72,6 +73,7 @@ const MarkAttendance = () => {
     <div>
       <Nav />
       <Banner />
+      <Papa />
       {/* <div className="flex items-center justify-center mt-2">
         <button
           className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
