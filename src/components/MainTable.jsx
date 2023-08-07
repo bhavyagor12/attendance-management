@@ -22,107 +22,88 @@ const Example = ({ attendanceMark, callApi }) => {
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
 
-  const fetchAttendance = async () => {
-    // e.preventDefault();
+  const fetchData = async (lectureId) => {
+    try {
+      let apiUrl = "";
+      let fetchMethod = "GET";
+
+      if (callApi === "getAllStudents") {
+        apiUrl = `http://localhost:9000/${callApi}`;
+      } else {
+        apiUrl = "http://localhost:9000/getClassAttendance";
+        fetchMethod = "POST";
+      }
+
+      const response = await axios({
+        method: fetchMethod,
+        url: apiUrl,
+        data:
+          callApi === "getAllStudents" ? null : { year: 2024, division: "B" },
+      });
+
+      const content = response.data;
+
+      let newData = [];
+      let newColumns = [
+        { accessorKey: "sapid", header: "sapid", size: 120 },
+        { accessorKey: "name", header: "Name", size: 200 },
+      ];
+
+      if (callApi !== "getAllStudents") {
+        content.AttendanceList[0].SubjectAttendance.forEach((subject) => {
+          newColumns.push({
+            accessorKey: subject.SubjectName,
+            header: subject.SubjectName,
+            size: 120,
+          });
+        });
+
+        newColumns.push(
+          {
+            accessorKey: "grand_attendance",
+            header: "grand_attendance",
+            size: 120,
+          },
+          { accessorKey: "status", header: "status", size: 120 }
+        );
+
+        newData = getDefaulterArray(content);
+      } else {
+        newData = getStudentArray(content);
+      }
+
+      setData(newData);
+      setColumns(newColumns);
+
+      await fetchAttendance(lectureId, content);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAttendance = async (lectureId, content) => {
     try {
       const rawResponse = await fetch(
-        `http://localhost:9000/getLectureAttendance/48451d17-76fd-4ca2-afb6-2c83fddf30d6`,
+        `http://localhost:9000/getLectureAttendance/${lectureId}`,
         {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          // body: JSON.stringify(userData),
         }
       );
-      const content = await rawResponse.json();
-      // setAttendance(content.map((student) => student.attendance));
-      let jsonobj = {};
-      content.map((student) => {
+      const attendanceContent = await rawResponse.json();
+
+      const jsonobj = {};
+      attendanceContent.forEach((student) => {
         jsonobj[student] = true;
       });
+
       setRowSelection(jsonobj);
-      console.log(jsonobj);
     } catch (error) {
       console.log(error);
     }
-  };
-  const getStudents = async () => {
-    if (callApi === "getAllStudents") {
-      const res = await axios.get(`http://localhost:9000/${callApi}`);
-      setData(getStudentArray(res.data));
-      setColumns([
-        {
-          accessorKey: "sapid",
-          header: "sapid",
-          size: 120,
-        },
-        {
-          accessorKey: "name",
-          header: "Name",
-          size: 200,
-        },
-      ]);
-      await fetchAttendance();
-    } else {
-      const classData = {
-        year: 2024,
-        division: "B",
-      };
-
-      axios
-        .post("http://localhost:9000/getClassAttendance", classData)
-        .then((response) => {
-          const content = response.data;
-          setData(getDefaulterArray(content));
-          //   content.AttendanceList[0].SubjectAttendance.map((subject) => {
-          //     return {
-          //       accessorKey: subject.SubjectName,
-          //       header: subject.SubjectName,
-          //       size: 120,
-          //     };
-          //   })
-          setColumns([
-            {
-              accessorKey: "sapid",
-              header: "sapid",
-              size: 120,
-            },
-            {
-              accessorKey: "name",
-              header: "name",
-              size: 120,
-            },
-          ]);
-          content.AttendanceList[0].SubjectAttendance.map((subject) => {
-            const subj = {
-              accessorKey: subject.SubjectName,
-              header: subject.SubjectName,
-              size: 120,
-            };
-            setColumns((columns) => [...columns, subj]);
-          });
-          setColumns((columns) => [
-            ...columns,
-            {
-              accessorKey: "grand_attendance",
-              header: "grand_attendance",
-              size: 120,
-            },
-            {
-              accessorKey: "status",
-              header: "status",
-              size: 120,
-            },
-          ]);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
-    // console.log(res.data);
   };
   let location = useLocation();
   const navigate = useNavigate();
@@ -132,7 +113,9 @@ const Example = ({ attendanceMark, callApi }) => {
     } else {
       setLectureId("1");
     }
-  }, []);
+    fetchData(location?.state?.lectureId);
+  }, [location]);
+
   useEffect(() => {
     console.log(rowSelection);
   }, [rowSelection]);
@@ -148,10 +131,6 @@ const Example = ({ attendanceMark, callApi }) => {
     });
     return initialStudents;
   };
-
-  useEffect(() => {
-    getStudents();
-  }, []);
 
   const getDefaulterArray = (data) => {
     let initialStudents = [];
@@ -174,10 +153,6 @@ const Example = ({ attendanceMark, callApi }) => {
     });
     return initialStudents;
   };
-
-  useEffect(() => {
-    getStudents();
-  }, []);
 
   const csvOptions = {
     fieldSeparator: ",",
@@ -246,16 +221,14 @@ const Example = ({ attendanceMark, callApi }) => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}
-            >
+              }}>
               {!attendanceMark ? (
                 <Button
                   color="primary"
                   //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
                   onClick={handleExportData}
                   startIcon={<FileDownloadIcon />}
-                  variant="contained"
-                >
+                  variant="contained">
                   Download CSV
                 </Button>
               ) : (
@@ -271,8 +244,7 @@ const Example = ({ attendanceMark, callApi }) => {
                       // handleExportRows(table.getPrePaginationRowModel().rows);
                     }}
                     startIcon={<FileUploadIcon />}
-                    variant="contained"
-                  >
+                    variant="contained">
                     Mark All Present
                   </Button>
                   <Button
@@ -286,8 +258,7 @@ const Example = ({ attendanceMark, callApi }) => {
                       // handleExportRows(table.getSelectedRowModel().rows)
                     }
                     startIcon={<FileDownloadIcon />}
-                    variant="contained"
-                  >
+                    variant="contained">
                     Mark Selected Rows
                   </Button>
                 </>

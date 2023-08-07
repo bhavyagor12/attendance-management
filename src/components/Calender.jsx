@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -18,7 +18,9 @@ export default function Calender() {
   const [endTime, setEndTime] = useState(null);
 
   const handleClick = (event) => {
-    navigate(`/lecture/${event.id}`);
+    navigate(`/lecture/${event.id}`, {
+      state: { lectureId: `${event.id}` },
+    });
   };
   // const onButtonClick = () => {
   //   setStartTime(null);
