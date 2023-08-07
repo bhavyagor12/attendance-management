@@ -2,6 +2,17 @@ export function _getTimeZoneOffsetInMs() {
   return new Date().getTimezoneOffset() * -60 * 1000;
 }
 
+export const getCsvSapIds = (csvData) => {
+  const extractedSapIds = csvData
+    .map((innerArray) => {
+      const value = innerArray[0];
+      return value !== "" ? parseInt(value, 10) : null;
+    })
+    .filter((value) => value !== null);
+  console.log(extractedSapIds);
+  return extractedSapIds;
+};
+
 export function timestampToDatetimeInputString(timestamp, item) {
   if (item === "start") {
     const date = new Date(timestamp + _getTimeZoneOffsetInMs());
@@ -13,30 +24,6 @@ export function timestampToDatetimeInputString(timestamp, item) {
     return date.toISOString().slice(0, 16);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // export const makeAttendanceForTeacher = (subjectsList) => {
 //   //goal of the function is to get a subjectsList from backend in this format

@@ -98,3 +98,20 @@ export const getLecturesBySubject = async (subjectID) => {
     console.log(error);
   }
 };
+
+export const markLectureAttendance = async (
+  lectureId,
+  subjectId,
+  stundentArr
+) => {
+  try {
+    const res = await axios.put("http://localhost:9000/markAttendance", {
+      lecture_id: lectureId || "",
+      subject_id: subjectId,
+      attendance: stundentArr,
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

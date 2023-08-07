@@ -1,6 +1,11 @@
 import Papa from "papaparse";
+import React, { useState } from "react";
+import { getCsvSapIds } from "../utils/helpers";
+import { markLectureAttendance } from "../utils/services";
 
-function csvconvert() {
+function Csvconvert({ lectureId, subjectId }) {
+  const [sapIds, setSapIds] = useState([]);
+
   return (
     <div className="App">
       <input
@@ -12,14 +17,22 @@ function csvconvert() {
           if (files) {
             console.log(files[0]);
             Papa.parse(files[0], {
-              complete: function(results) {
-                console.log("Finished:", results);
-              }}
-            )
+              complete: function (results) {
+                console.log(results.data);
+                setSapIds(getCsvSapIds(results.data));
+              },
+            });
           }
         }}
       />
+      {sapIds.length > 0 && (
+        <button
+          className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
+          onClick={() => markLectureAttendance(lectureId, subjectId, sapIds)}>
+          Mark Attendance
+        </button>
+      )}
     </div>
   );
 }
-export default csvconvert;
+export default Csvconvert;

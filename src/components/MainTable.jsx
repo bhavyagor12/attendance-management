@@ -15,7 +15,7 @@ import { filtersState } from "../atoms/filtersState";
 
 const Example = ({ attendanceMark, callApi }) => {
   const [subject, setSubject] = useRecoilState(subjectState);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState(null);
   const [values, setValues] = React.useState([]);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
@@ -134,26 +134,30 @@ const Example = ({ attendanceMark, callApi }) => {
 
   const getDefaulterArray = (data) => {
     let initialStudents = [];
+
     initialStudents = data?.AttendanceList.map((student) => {
       const jsonObject = {};
-      setValues([student.student_id, student.student_name]);
-      student.SubjectAttendance.map((subject) =>
-        setValues((values) => [...values, subject.Attendance])
-      );
-      setValues((values) => [...values, student.GrandAttendance]);
-      setValues((values) => [...values, student.Status]);
-      // console.log(values);
-      columns.forEach((key, index) => {
-        jsonObject[key.accessorKey] = values[index];
+
+      const valuesToUpdate = [];
+      valuesToUpdate.push(student.student_id);
+      valuesToUpdate.push(student.student_name);
+
+      student.SubjectAttendance.forEach((subject) => {
+        valuesToUpdate.push(subject.Attendance);
       });
-      // console.log(JSON.stringify(jsonObject, null, 2));
-      JSON.stringify(jsonObject, null, 2);
-      // console.log(typeof jsonObject);
+
+      valuesToUpdate.push(student.GrandAttendance);
+      valuesToUpdate.push(student.Status);
+
+      columns.forEach((key, index) => {
+        jsonObject[key.accessorKey] = valuesToUpdate[index];
+      });
+
       return jsonObject;
     });
+
     return initialStudents;
   };
-
   const csvOptions = {
     fieldSeparator: ",",
     quoteStrings: '"',
@@ -202,10 +206,11 @@ const Example = ({ attendanceMark, callApi }) => {
       });
     }
   };
+  console.log(data);
 
   return (
     <>
-      {columns.length > 0 && (
+      {data !== null && (
         <MaterialReactTable
           columns={columns}
           data={data} //fallback to state={{ isLoading: true }}
