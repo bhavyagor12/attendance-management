@@ -18,12 +18,12 @@ const ReportTable = () => {
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
-  console.log(
-    filters.year,
-    filters.division,
-    filters.startDate,
-    filters.endDate
-  );
+  // console.log(
+  //   filters.year,
+  //   filters.division,
+  //   filters.startDate,
+  //   filters.endDate
+  // );
   const fetchData = async (lectureId) => {
     try {
       let fetchMethod = "POST";
@@ -32,25 +32,25 @@ const ReportTable = () => {
       const response = await axios({
         method: fetchMethod,
         url: apiUrl,
-        data: {
+        data: JSON.stringify({
           year: filters.year,
           division: filters.division,
           start_date: filters.startDate,
           end_date: filters.endDate,
-        },
+        }),
       });
       const content = response.data;
-      console.log(content)
+      // console.log(content)
       let newData = [];
       let newColumns = [
         { accessorKey: "sapid", header: "sapid", size: 120 },
         { accessorKey: "name", header: "Name", size: 200 },
       ];
 
-      content.AttendanceList[0].SubjectAttendance.forEach((subject) => {
+      content.subjects.forEach((subject) => {
         newColumns.push({
-          accessorKey: subject.SubjectName,
-          header: subject.SubjectName,
+          accessorKey: subject,
+          header: subject,
           size: 120,
         });
       });
@@ -64,9 +64,11 @@ const ReportTable = () => {
         { accessorKey: "status", header: "status", size: 120 }
       );
 
-      newData = getDefaulterArray(content);
+      newData = getDefaulterArray(content,newColumns);
       setData(newData);
       setColumns(newColumns);
+      console.log(newData);
+      console.log(newColumns)
     } catch (error) {
       console.log(error);
     }
@@ -83,28 +85,22 @@ const ReportTable = () => {
     fetchData(location?.state?.lectureId);
   }, [location, filters]);
 
-  useEffect(() => {
-    console.log(rowSelection);
-  }, [rowSelection]);
-
-  const getDefaulterArray = (data) => {
+  const getDefaulterArray = (data,newColumns) => {
     let initialStudents = [];
 
-    initialStudents = data?.AttendanceList.map((student) => {
+    initialStudents = data?.students.map((student) => {
       const jsonObject = {};
-
+      // console.log(student)
       const valuesToUpdate = [];
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
-
-      student.SubjectAttendance.forEach((subject) => {
-        valuesToUpdate.push(subject.Attendance);
+      student.subject_attendance.forEach((subject) => {
+        valuesToUpdate.push(subject.attendance);
       });
-
-      valuesToUpdate.push(student.GrandAttendance);
-      valuesToUpdate.push(student.Status);
-
-      columns.forEach((key, index) => {
+      valuesToUpdate.push(student.grand_attendance);
+      valuesToUpdate.push(student.defaulter);
+      newColumns.forEach((key, index) => {
+        // console.log(key,index)
         jsonObject[key.accessorKey] = valuesToUpdate[index];
       });
 
@@ -172,7 +168,6 @@ const ReportTable = () => {
           positionToolbarAlertBanner="bottom"
           getRowId={(originalRow) => originalRow.sapid}
           onRowSelectionChange={setRowSelection}
-          state={{ rowSelection }}
           renderTopToolbarCustomActions={({ table }) => (
             <Box
               sx={{
