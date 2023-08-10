@@ -21,7 +21,7 @@ const Example = ({ attendanceMark, callApi }) => {
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
-
+  console.log(filters.year, filters.division, filters.startDate, filters.endDate);
   const fetchData = async (lectureId) => {
     try {
       let apiUrl = "";
@@ -38,7 +38,7 @@ const Example = ({ attendanceMark, callApi }) => {
         method: fetchMethod,
         url: apiUrl,
         data:
-          callApi === "getAllStudents" ? null : { year: 2024, division: "B" },
+          callApi === "getAllStudents" ? null : { year: filters.year, division: filters.division, start_date: filters.startDate, end_date: filters.endDate},
       });
 
       const content = response.data;
