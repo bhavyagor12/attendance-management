@@ -4,6 +4,7 @@ import Filters from "../components/Filters";
 import Example from "../components/MainTable";
 import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
+import ReportTable from "../components/ReportTable";
 const ReportPage = () => {
   const [filters] = useRecoilState(filtersState);
   return (
@@ -13,21 +14,10 @@ const ReportPage = () => {
         <h1 className="text-4xl font-bold text-black">Report Page</h1>
         <Filters />
       </div>
-      <Example
-        attendanceMark={false}
-        callApi="getClassAttendance"
-        filters={filters}
-      />
+      <ReportTable filters={filters}/>
+        
     </div>
   );
 };
 
 export default ReportPage;
-
-//getdefaulterslistbyclass -- columns = subjects row= name, attendance per subject () (high priority)
-//showstudentdetails -- columns = subjects row= name, attendance per subject but for only one student, in detail (low p[riority])
-//
-//
-//
-//
-//

@@ -5,104 +5,73 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import axios from "axios";
-import { useRecoilState} from "recoil";
+import { useRecoilState } from "recoil";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
-//defining columns outside of the component is fine, is stable
-const Example = ({ attendanceMark, callApi }) => {
+
+const ReportTable = () => {
   const [subject, setSubject] = useRecoilState(subjectState);
   const [data, setData] = React.useState(null);
-  const [values, setValues] = React.useState([]);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
-  console.log(filters.year, filters.division, filters.startDate, filters.endDate);
+  console.log(
+    filters.year,
+    filters.division,
+    filters.startDate,
+    filters.endDate
+  );
   const fetchData = async (lectureId) => {
     try {
-      let apiUrl = "";
-      let fetchMethod = "GET";
-
-      if (callApi === "getAllStudents") {
-        apiUrl = `http://localhost:9000/${callApi}`;
-      } else {
-        apiUrl = "http://localhost:9000/getClassAttendance";
-        fetchMethod = "POST";
-      }
+      let fetchMethod = "POST";
+      let apiUrl = "http://localhost:9000/getClassAttendance";
 
       const response = await axios({
         method: fetchMethod,
         url: apiUrl,
-        data:
-          callApi === "getAllStudents" ? null : { year: filters.year, division: filters.division, start_date: filters.startDate, end_date: filters.endDate},
+        data: {
+          year: filters.year,
+          division: filters.division,
+          start_date: filters.startDate,
+          end_date: filters.endDate,
+        },
       });
-
       const content = response.data;
-
+      console.log(content)
       let newData = [];
       let newColumns = [
         { accessorKey: "sapid", header: "sapid", size: 120 },
         { accessorKey: "name", header: "Name", size: 200 },
       ];
 
-      if (callApi !== "getAllStudents") {
-        content.AttendanceList[0].SubjectAttendance.forEach((subject) => {
-          newColumns.push({
-            accessorKey: subject.SubjectName,
-            header: subject.SubjectName,
-            size: 120,
-          });
+      content.AttendanceList[0].SubjectAttendance.forEach((subject) => {
+        newColumns.push({
+          accessorKey: subject.SubjectName,
+          header: subject.SubjectName,
+          size: 120,
         });
-
-        newColumns.push(
-          {
-            accessorKey: "grand_attendance",
-            header: "grand_attendance",
-            size: 120,
-          },
-          { accessorKey: "status", header: "status", size: 120 }
-        );
-
-        newData = getDefaulterArray(content);
-      } else {
-        newData = getStudentArray(content);
-      }
-
-      setData(newData);
-      setColumns(newColumns);
-
-      // await fetchAttendance(lectureId, content);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchAttendance = async (lectureId, content) => {
-    try {
-      const rawResponse = await fetch(
-        `http://localhost:9000/getLectureAttendance/${lectureId}`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const attendanceContent = await rawResponse.json();
-
-      const jsonobj = {};
-      attendanceContent.forEach((student) => {
-        jsonobj[student] = true;
       });
 
-      setRowSelection(jsonobj);
+      newColumns.push(
+        {
+          accessorKey: "grand_attendance",
+          header: "grand_attendance",
+          size: 120,
+        },
+        { accessorKey: "status", header: "status", size: 120 }
+      );
+
+      newData = getDefaulterArray(content);
+      setData(newData);
+      setColumns(newColumns);
     } catch (error) {
       console.log(error);
     }
   };
+
   let location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -112,22 +81,11 @@ const Example = ({ attendanceMark, callApi }) => {
       setLectureId("1");
     }
     fetchData(location?.state?.lectureId);
-  }, [location]);
+  }, [location, filters]);
 
   useEffect(() => {
     console.log(rowSelection);
   }, [rowSelection]);
-
-  const getStudentArray = (data) => {
-    let initialStudents = [];
-    initialStudents = data?.map((student) => {
-      return {
-        sapid: student.sap_id,
-        name: student.name,
-      };
-    });
-    return initialStudents;
-  };
 
   const getDefaulterArray = (data) => {
     let initialStudents = [];
@@ -210,7 +168,7 @@ const Example = ({ attendanceMark, callApi }) => {
         <MaterialReactTable
           columns={columns}
           data={data} //fallback to state={{ isLoading: true }}
-          enableRowSelection={attendanceMark}
+          enableRowSelection={false}
           positionToolbarAlertBanner="bottom"
           getRowId={(originalRow) => originalRow.sapid}
           onRowSelectionChange={setRowSelection}
@@ -222,48 +180,17 @@ const Example = ({ attendanceMark, callApi }) => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}>
-              {!attendanceMark ? (
-                <Button
-                  color="primary"
-                  //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
-                  onClick={handleExportData}
-                  startIcon={<FileDownloadIcon />}
-                  variant="contained">
-                  Download CSV
-                </Button>
-              ) : (
-                <>
-                  {table.setRowSelection}
-                  <Button
-                    disabled={
-                      table.getPrePaginationRowModel().rows.length === 0
-                    }
-                    //export all rows, including from the next page, (still respects filtering and sorting)
-                    onClick={() => {
-                      markAttendance(table.getPrePaginationRowModel().rows);
-                      // handleExportRows(table.getPrePaginationRowModel().rows);
-                    }}
-                    startIcon={<FileUploadIcon />}
-                    variant="contained">
-                    Mark All Present
-                  </Button>
-                  <Button
-                    disabled={
-                      !table.getIsSomeRowsSelected() &&
-                      !table.getIsAllRowsSelected()
-                    }
-                    //only export selected rows
-                    onClick={
-                      () => markAttendance(table.getSelectedRowModel().rows)
-                      // handleExportRows(table.getSelectedRowModel().rows)
-                    }
-                    startIcon={<FileDownloadIcon />}
-                    variant="contained">
-                    Mark Selected Rows
-                  </Button>
-                </>
-              )}
+              }}
+            >
+              <Button
+                color="primary"
+                //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
+                onClick={handleExportData}
+                startIcon={<FileDownloadIcon />}
+                variant="contained"
+              >
+                Download CSV
+              </Button>
             </Box>
           )}
         />
@@ -272,4 +199,4 @@ const Example = ({ attendanceMark, callApi }) => {
   );
 };
 
-export default Example;
+export default ReportTable;

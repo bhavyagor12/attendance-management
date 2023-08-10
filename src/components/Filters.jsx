@@ -6,10 +6,11 @@ import { filtersState } from "../atoms/filtersState";
 const { RangePicker } = DatePicker;
 const Filters = () => {
   const [year, setYear] = useState("2024");
-  const [division, setDivision] = useState("A");
+  const [division, setDivision] = useState("B");
   const [filters, setFilters] = useRecoilState(filtersState);
-  const[startDate, setStartDate] = useState(null);
-  const[endDate, setEndDate] = useState(null);
+  const[startDate, setStartDate] = useState("2024-06-01");
+  const[endDate, setEndDate] = useState("2024-09-01");
+
   const yearOnchange = (value) => {
     setYear(parseInt(value));
   };
@@ -24,14 +25,8 @@ const Filters = () => {
   }
 
   const onButtonClick = () => {
-    setFilters({ year, division });
-    console.log(year, division);
-  };
-  useEffect(() => {
-    console.log(filters)
     setFilters({ year, division, startDate, endDate });
-  }, [year, division, startDate, endDate]);
-
+  };
   return (
     <div className="flex items-center justify-center gap-8">
       <Input
@@ -45,7 +40,7 @@ const Filters = () => {
         style={{ width: 250 }}
         showSearch
         id="division"
-        defaultValue="A"
+        defaultValue="B"
         placeholder="Select division"
         optionFilterProp="children"
         onChange={divOnchange}
