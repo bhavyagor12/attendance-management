@@ -18,6 +18,7 @@ const ReportTable = () => {
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
+  const [defaulter, setDefaulter] = useState([]);
   // console.log(
   //   filters.year,
   //   filters.division,
@@ -166,6 +167,9 @@ const ReportTable = () => {
           data={data} //fallback to state={{ isLoading: true }}
           enableRowSelection={false}
           positionToolbarAlertBanner="bottom"
+          muiTableBodyCellProps={{sx:{
+            color: "red",
+          }}}
           getRowId={(originalRow) => originalRow.sapid}
           onRowSelectionChange={setRowSelection}
           renderTopToolbarCustomActions={({ table }) => (
