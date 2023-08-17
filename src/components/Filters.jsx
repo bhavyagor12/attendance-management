@@ -5,7 +5,7 @@ import { filtersState } from "../atoms/filtersState";
 
 const { RangePicker } = DatePicker;
 const Filters = () => {
-  const [year, setYear] = useState(2024);
+  const [year, setYear] = useState(3);
   const [division, setDivision] = useState("B");
   const [filters, setFilters] = useRecoilState(filtersState);
   const[startDate, setStartDate] = useState("2024-06-01");

@@ -20,7 +20,7 @@ const SubjectPage = () => {
   return (
     <div>
       <Nav />
-      <Banner />
+      {/* <Banner /> */}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of conducted lectures,{" "}

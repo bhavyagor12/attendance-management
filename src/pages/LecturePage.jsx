@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import { TiTick } from "react-icons/ti";
-import axios from "axios";
-import Example from "../components/MainTable";
 import Papa from "../components/Papa.js";
 import { useLocation } from "react-router-dom";
+import AttendanceTable from "../components/AttendanceTable";
 
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
@@ -66,7 +65,7 @@ const MarkAttendance = () => {
   return (
     <div>
       <Nav />
-      <Banner />
+      {/* <Banner /> */}
       <Papa lectureId={lectureId} subjectId={subjectId} />
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-2">Students Table</h1>
@@ -80,7 +79,7 @@ const MarkAttendance = () => {
         </p>
       </div>
 
-      <Example attendanceMark={true} callApi="getAllStudents" />
+      <AttendanceTable />
     </div>
   );
 };

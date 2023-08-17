@@ -41,7 +41,7 @@ const ReportTable = () => {
         }),
       });
       const content = response.data;
-      // console.log(content)
+      console.log(content)
       let newData = [];
       let newColumns = [
         { accessorKey: "sapid", header: "sapid", size: 120 },
@@ -65,11 +65,11 @@ const ReportTable = () => {
         { accessorKey: "status", header: "status", size: 120 }
       );
 
-      newData = getDefaulterArray(content,newColumns);
+      newData = getDefaulterArray(content, newColumns);
       setData(newData);
       setColumns(newColumns);
       console.log(newData);
-      console.log(newColumns)
+      console.log(newColumns);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +86,7 @@ const ReportTable = () => {
     fetchData(location?.state?.lectureId);
   }, [location, filters]);
 
-  const getDefaulterArray = (data,newColumns) => {
+  const getDefaulterArray = (data, newColumns) => {
     let initialStudents = [];
 
     initialStudents = data?.students.map((student) => {
@@ -128,36 +128,6 @@ const ReportTable = () => {
   const handleExportData = () => {
     csvExporter.generateCsv(data);
   };
-
-  const markAttendance = async (rows) => {
-    let sapIDs = [];
-    rows.map((row) => {
-      sapIDs.push(row.original.sapid);
-    });
-    console.log(subject);
-    const res = await axios.put("http://localhost:9000/markAttendance", {
-      lecture_id: lectureId || "",
-      subject_id: subject,
-      attendance: sapIDs,
-    });
-    console.log(res);
-    if (res) {
-      Swal.fire({
-        title: "Success!",
-        text: "Marked Attendance",
-        icon: "success",
-        confirmButtonText: "Done",
-      });
-      navigate("/home");
-    } else {
-      Swal.fire({
-        title: "Failure!",
-        text: "Some error",
-        icon: "error",
-        confirmButtonText: "retry",
-      });
-    }
-  };
   // console.log(data);
   return (
     <>
@@ -167,9 +137,11 @@ const ReportTable = () => {
           data={data} //fallback to state={{ isLoading: true }}
           enableRowSelection={false}
           positionToolbarAlertBanner="bottom"
-          muiTableBodyCellProps={{sx:{
-            color: "red",
-          }}}
+          // muiTableBodyCellProps={{
+          //   sx: {
+          //     color: "red",
+          //   },
+          // }}
           getRowId={(originalRow) => originalRow.sapid}
           onRowSelectionChange={setRowSelection}
           renderTopToolbarCustomActions={({ table }) => (

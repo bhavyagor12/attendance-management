@@ -110,6 +110,7 @@ export const markLectureAttendance = async (
       subject_id: subjectId,
       attendance: stundentArr,
     });
+    
     return res.data;
   } catch (error) {
     console.log(error);

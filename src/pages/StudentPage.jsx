@@ -7,7 +7,7 @@ const StudentPage = () => {
   return (
     <div>
         <Nav />
-        <Banner />
+        {/* <Banner /> */}
         <div class="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
             <StudentSubject />
             <StudentSubject />

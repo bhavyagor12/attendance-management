@@ -1,7 +1,6 @@
 import React from "react";
 import Nav from "../components/Navbar";
 import Filters from "../components/Filters";
-import Example from "../components/MainTable";
 import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
 import ReportTable from "../components/ReportTable";
