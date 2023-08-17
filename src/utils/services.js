@@ -82,7 +82,7 @@ export const createLecture = async (lecture) => {
       JSON.stringify(lecture)
     );
     const content = await response.data;
-    console.log(content);
+    return content;
   } catch (error) {
     console.log(error);
   }
@@ -108,7 +108,7 @@ export const markLectureAttendance = async (
       lecture_id: lectureId || "",
       attendance: stundentArr,
     });
-    
+
     return res.data;
   } catch (error) {
     console.log(error);

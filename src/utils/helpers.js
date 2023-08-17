@@ -25,6 +25,10 @@ export function timestampToDatetimeInputString(timestamp, item) {
   }
 }
 
+export function timeHelperBachaLe(timestamp) {
+  const date = new Date(timestamp + _getTimeZoneOffsetInMs());
+  return date.toISOString().slice(0, 16);
+}
 // export const makeAttendanceForTeacher = (subjectsList) => {
 //   //goal of the function is to get a subjectsList from backend in this format
 

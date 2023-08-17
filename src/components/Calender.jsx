@@ -3,21 +3,57 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { modalState } from "../atoms/modalState";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import EventModal from "./EventModal";
 import { eventState } from "../atoms/eventState";
 import { useNavigate } from "react-router-dom";
+import { createLecture } from "../utils/services";
+import { infoState } from "../atoms/infoState";
+import { timeHelperBachaLe } from "../utils/helpers";
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
 
+const eventPropGetter = (event) => {
+  if (event?.type === undefined) {
+    return {
+      style: {
+        backgroundColor: "#34313197",
+      },
+    };
+  }
+  const color = event.type === "theory" ? "#AA5656" : "#0080FB";
+  return {
+    style: {
+      backgroundColor: color,
+    },
+  };
+};
+
 export default function Calender() {
+  const userInfo = useRecoilValue(infoState);
   const navigate = useNavigate();
   const [eventsData, setEventsData] = useRecoilState(eventState);
   const [modal, setModal] = useRecoilState(modalState);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
 
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
+    if (event.type === "theory" || event.type === "practical") {
+      const startDate = timeHelperBachaLe(event.start.getTime());
+      const endDate = timeHelperBachaLe(event.end.getTime());
+      const lecture = {
+        date_of_lecture: startDate,
+        start_time: startDate,
+        end_time: endDate,
+        subject_id: event.id,
+        faculty_id: userInfo.ID,
+      };
+      const l = await createLecture(lecture);
+      navigate(`/lecture/${l.ID}`, {
+        state: { lectureId: `${l.ID}` },
+      });
+      return;
+    }
     navigate(`/lecture/${event.id}`, {
       state: { lectureId: `${event.id}` },
     });
@@ -57,9 +93,11 @@ export default function Calender() {
         events={eventsData}
         style={{ height: "80vh", width: "80vw", padding: 10 }}
         onSelectEvent={(e) => {
+          console.log(e);
           handleClick(e);
         }}
         onSelectSlot={handleSelect}
+        eventPropGetter={eventPropGetter}
       />
     </div>
   );
