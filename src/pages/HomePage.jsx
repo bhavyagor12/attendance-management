@@ -14,15 +14,15 @@ const HomePage = () => {
   const [eventsData, setEventsData] = useRecoilState(eventState);
 
   const initLectures = async () => {
-    const lecs=await getAllLectures();
-    if(lecs.length>0){
+    const lecs = await getAllLectures();
+    if (lecs.length > 0) {
       setEventsData(lecs);
     }
   };
 
   const initSubjects = async () => {
-    const subs=await getSubjectsByFaculty(facultyID);
-    if(subs){
+    const subs = await getSubjectsByFaculty(facultyID);
+    if (subs) {
       setSubjects(subs);
     }
   };
@@ -67,8 +67,6 @@ const HomePage = () => {
           />
         ))}
       </div>
-      {/* <Table /> */}
-      {/* <Table /> */}
     </div>
   );
 };

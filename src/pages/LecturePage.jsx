@@ -5,53 +5,21 @@ import { TiTick } from "react-icons/ti";
 import Papa from "../components/Papa.js";
 import { useLocation } from "react-router-dom";
 import AttendanceTable from "../components/AttendanceTable";
-
+import { Button } from "@mui/material";
+import { deleteLecture } from "../utils/services";
+import { useNavigate } from "react-router-dom";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
-  const [date, setDate] = useState("");
-  const [subjectId, setSubjectId] = useState("");
   const [lectureId, setLectureId] = useState("");
-  const [type, setType] = useState("");
-  const [division, setDivision] = useState("");
-  const [batch, setBatch] = useState("");
-  const [students, setStudents] = React.useState([]);
-
+  const navigate = useNavigate();
+  const handleDeleteLeture = async () => {
+    await deleteLecture(lectureId).then((res) => {
+      navigate("/home");
+    });
+  };
   const handleClick = () => {
     setFetchLecture(!fetchLecture);
   };
-
-  const fetchLec = async (e) => {
-    e.preventDefault();
-    const userData = {
-      subject_id: subjectId,
-      date_of_lecture: date,
-      type,
-      division,
-      batch: Number(batch),
-    };
-    try {
-      const rawResponse = await fetch("http://localhost:9000/fetchLecture", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-      const content = await rawResponse.json();
-      console.log(content.ID);
-      if (content) {
-        console.log("going to home");
-        // navigate("/home");
-      }
-      // else if (content.type === "police") {
-      //   console.log("going to police");
-      // }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   let location = useLocation();
 
   useEffect(() => {
@@ -65,8 +33,7 @@ const MarkAttendance = () => {
   return (
     <div>
       <Nav />
-      {/* <Banner /> */}
-      <Papa lectureId={lectureId} subjectId={subjectId} />
+      <Papa lectureId={lectureId} />
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-2">Students Table</h1>
         <p className="flex items-center justify-center gap-2 text-sm md:text-xl text-gray-600">
@@ -78,7 +45,13 @@ const MarkAttendance = () => {
           </div>
         </p>
       </div>
-
+      <Button
+        onClick={handleDeleteLeture}
+        variant="contained"
+        sx={{ backgroundColor: "red", margin: "1rem" }}
+      >
+        Delete Lecture
+      </Button>
       <AttendanceTable />
     </div>
   );
