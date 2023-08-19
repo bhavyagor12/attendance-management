@@ -8,20 +8,44 @@ import AttendanceTable from "../components/AttendanceTable";
 import { Button } from "@mui/material";
 import { deleteLecture } from "../utils/services";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const MarkAttendance = () => {
   const [fetchLecture, setFetchLecture] = useState(false);
   const [lectureId, setLectureId] = useState("");
   const navigate = useNavigate();
   const handleDeleteLeture = async () => {
-    await deleteLecture(lectureId).then((res) => {
-      navigate("/home");
-    });
+    try {
+      const response = await fetch(`http://localhost:9000/lecture/${lectureId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        console.log('Lecture deleted successfully');
+        Swal.fire({
+          title: "Success!",
+          text: "Lecture Deleted",
+          icon: "success",
+          confirmButtonText: "Done",
+        });
+        navigate("/home");
+      } else {
+        console.log('Failed to delete lecture');
+        Swal.fire({
+          title: "Failure!",
+          text: "Some error",
+          icon: "error",
+          confirmButtonText: "retry",
+        });
+      }
+    } catch (error) {
+      console.log('Error occurred:', error);
+    }
   };
   const handleClick = () => {
     setFetchLecture(!fetchLecture);
   };
   let location = useLocation();
-
+  console.log(lectureId)
   useEffect(() => {
     if (location?.state?.lectureId !== null) {
       setLectureId(location?.state?.lectureId);
