@@ -38,6 +38,7 @@ const SubjectPage = () => {
             ID={lecture.ID}
             startTime={lecture.start_time}
             endTime={lecture.end_time}
+            year={lecture.year_of_graduation}
             // attendance={lecture.attendance}
           />
         ))}

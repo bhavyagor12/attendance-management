@@ -9,6 +9,7 @@ const LectureCard = ({
   ID,
   startTime,
   endTime,
+  year
 }) => {
   const [attendance, setAttendance] = React.useState([]);
   const [datte, setDatte] = React.useState(null);
@@ -54,6 +55,9 @@ const LectureCard = ({
           <h5 className="mb-2 text-2xl font-semibold tracking-tight text-white ">
             Date : {datte?.toString().slice(0, 15)}
           </h5>
+          <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white flex justify-between">
+            <div>Year : {year}</div>
+          </h4>
           <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white flex justify-between">
             <div>Division : {division}</div> <div>Batch : {batch}</div>
           </h4>

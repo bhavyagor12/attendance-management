@@ -12,11 +12,15 @@ export default function EventModal({ startD, endD }) {
   const [modal, setModal] = useRecoilState(modalState);
   const [SubjectCode, setSubjectCode] = useState("");
   const [SubjectName, setSubjectName] = useState("");
+  const [division, setDivision] = useState("A");
+  const [year, setYear] = useState("FE");
+  // const [type, setType] = useState("Lecture");
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState(startTime);
   const [eventsData, setEventsData] = useRecoilState(eventState);
   const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null);
+  console.log(year)
   function timeSet() {
     if (startD === null && endD === null) {
       const start = timestampToDatetimeInputString(Date.now(), "start");
@@ -43,6 +47,8 @@ export default function EventModal({ startD, endD }) {
         start_time: startTime,
         end_time: endTime,
         subject_id: SubjectCode,
+        division: division,
+        year_of_graduation: year,
         faculty_id: userInfo.ID,
       };
       console.log({ bdy });
@@ -117,6 +123,35 @@ export default function EventModal({ startD, endD }) {
                     </div>
                   </div>
                   <div className="text-center mt-4 px-2 flex flex-col">
+                  <div className="flex flex-col items-start my-1">
+                      <label>Year</label>
+                      <select
+                      onChange={(e) => {
+                        setYear(e.target.value);
+                        setError(false);
+                        if (e.target.value === "") {
+                          setError(true);
+                        }
+                      }}
+                      name="Year"
+                      id="Year"
+                      className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                      // value={year} // Make sure to set the value here if you want to show a default value
+                    >
+                      <option value="">Select an option</option> {/* Empty value for default selection */}
+                      <option value="1">FE</option>
+                      <option value="2">SE</option>
+                      <option value="3">TE</option>
+                      <option value="4">BE</option>
+                      {/* Add more options as needed */}
+                    </select>
+
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter valid year
+                        </div>
+                      )}
+                    </div>
                     <div className="flex flex-col items-start my-1">
                       <label>Subject Code</label>
                       <input
@@ -137,6 +172,29 @@ export default function EventModal({ startD, endD }) {
                       {error && (
                         <div className="text-red-400 text-sm">
                           please enter valid subject code
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-start my-1">
+                      <label>Division</label>
+                      <input
+                        onChange={(e) => {
+                          setDivision(e.target.value);
+                          setError(false);
+                          if (e.target.value === "") {
+                            setError(true);
+                          }
+                        }}
+                        type="text"
+                        name="Dvision"
+                        id="Division"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="Division"
+                      />
+
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter valid division
                         </div>
                       )}
                     </div>
