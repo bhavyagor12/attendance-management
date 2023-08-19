@@ -138,7 +138,7 @@ export default function EventModal({ startD, endD }) {
                       className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
                       // value={year} // Make sure to set the value here if you want to show a default value
                     >
-                      <option value="">Select an option</option> {/* Empty value for default selection */}
+                      <option value="">Select Year</option> {/* Empty value for default selection */}
                       <option value="1">FE</option>
                       <option value="2">SE</option>
                       <option value="3">TE</option>
