@@ -38,6 +38,7 @@ export default function Calender() {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [classInfo, setClassInfo] = useRecoilState(classInfoState);
+  console.log(eventsData);
   const handleClick = async (event) => {
     setClassInfo({
       year: event.year,
@@ -45,7 +46,6 @@ export default function Calender() {
       batch: event.batch,
     });
     if (event.type === "theory" || event.type === "practical") {
-      console.log(event);
       const startDate = timeHelperBachaLe(event.start.getTime());
       const endDate = timeHelperBachaLe(event.end.getTime());
       const lecture = {
@@ -56,11 +56,14 @@ export default function Calender() {
         faculty_id: userInfo.ID,
         division: event.division,
         batch: event.batch,
+        type: event.type,
+        year: event.year,
       };
       const l = await createLecture(lecture);
       navigate(`/lecture/${l.ID}`, {
         state: { lectureId: `${l.ID}` },
       });
+
       return;
     }
     navigate(`/lecture/${event.id}`, {

@@ -46,7 +46,8 @@ export function getDaysDateTime(day, time) {
   const today = new Date();
   const currentDayOfWeek = today.getDay(); // Sunday is 0, Monday is 1, and so on.
   const daysUntilDay =
-    currentDayOfWeek === day - 1 ? 6 : day - currentDayOfWeek;
+    currentDayOfWeek === day - 1 ? 1 : day - currentDayOfWeek;
+  console.log(day)
   // Calculate the date of Monday by subtracting the number of days from today.
   const dayDate = new Date(today);
   dayDate.setDate(today.getDate() + daysUntilDay);
@@ -57,7 +58,6 @@ export function getDaysDateTime(day, time) {
 }
 export async function timeTableEventsHelper(facultyID) {
   const ttevents = await getTimeTable(facultyID);
-  console.log(ttevents);
   let events = [];
   ttevents?.map((ttevent) => {
     const id = ttevent.subject_code;
@@ -76,7 +76,7 @@ export async function timeTableEventsHelper(facultyID) {
       type,
       batch,
       division,
-      year
+      year,
     };
     events.push(event);
   });

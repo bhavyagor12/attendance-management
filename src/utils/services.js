@@ -77,7 +77,6 @@ export const getAllLectures = async () => {
   try {
     const response = await axios.get("http://localhost:9000/getAllLectures");
     const allLectures = response.data;
-    console.log(allLectures);
     // Initialize as an empty array to clear existing events
     allLectures.forEach((lecture) => {
       if (lecture.start_time) {
