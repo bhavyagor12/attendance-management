@@ -32,6 +32,44 @@ export const Login = async (userData) => {
   }
 };
 
+export const Register = async (teacherData) => {
+  try {
+    const response = await axios.post("http://localhost:9000/register", teacherData);
+    const content = await response.data;
+    let info = null;
+    if (content !== "AuthError") {
+      info = {
+        sap_id: content.sap_id,
+        name: content.name,
+        ID: content.password,
+      };
+      Swal.fire({
+        title: "Success!",
+        text: "Registered Successfully",
+        icon: "success",
+        confirmButtonText: "Proceed!",
+      });
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "Entered credentials dont exist",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+    }
+    return info;
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Error!",
+      text: "internal error",
+      icon: "error",
+      confirmButtonText: "Retry",
+    });
+  }
+};
+
+
 export const getAllLectures = async () => {
   let updatedEventsData = [];
   try {
