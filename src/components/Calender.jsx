@@ -39,24 +39,27 @@ export default function Calender() {
 
   const handleClick = async (event) => {
     if (event.type === "theory" || event.type === "practical") {
-      const startDate = timeHelperBachaLe(event.start.getTime());
-      const endDate = timeHelperBachaLe(event.end.getTime());
-      const lecture = {
-        date_of_lecture: startDate,
-        start_time: startDate,
-        end_time: endDate,
-        subject_id: event.id,
-        faculty_id: userInfo.ID,
-      };
-      const l = await createLecture(lecture);
-      navigate(`/lecture/${l.ID}`, {
-        state: { lectureId: `${l.ID}` },
-      });
+      console.log(event);
+      // const startDate = timeHelperBachaLe(event.start.getTime());
+      // const endDate = timeHelperBachaLe(event.end.getTime());
+      // const lecture = {
+      //   date_of_lecture: startDate,
+      //   start_time: startDate,
+      //   end_time: endDate,
+      //   subject_code: event.id,
+      //   faculty_id: userInfo.ID,
+      //   division: event.division,
+      //   batch: event.batch,
+      // };
+      // const l = await createLecture(lecture);
+      // navigate(`/lecture/${l.ID}`, {
+      //   state: { lectureId: `${l.ID}` },
+      // });
       return;
     }
-    navigate(`/lecture/${event.id}`, {
-      state: { lectureId: `${event.id}` },
-    });
+    // navigate(`/lecture/${event.id}`, {
+    //   state: { lectureId: `${event.id}` },
+    // });
   };
   // const onButtonClick = () => {
   //   setStartTime(null);

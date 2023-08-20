@@ -58,11 +58,11 @@ const HomePage = () => {
       <div className="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
         {subjects.map((subject) => (
           <SubjectCard
-            key={subject.ID}
+            key={subject.subject_code}
             name={subject.name}
             year={subject.year}
             semester={subject.semester}
-            subjectId={subject.ID}
+            subjectId={subject.subject_code}
             code={subject.subject_code}
           />
         ))}

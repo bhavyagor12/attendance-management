@@ -1,6 +1,6 @@
-import {atom} from 'recoil';
+import { atom } from "recoil";
 import events from "../components/events";
 export const eventState = atom({
-    key: "events",
-    default: events,
-  });
+  key: "events",
+  default: [],
+});

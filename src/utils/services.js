@@ -34,7 +34,10 @@ export const Login = async (userData) => {
 
 export const Register = async (teacherData) => {
   try {
-    const response = await axios.post("http://localhost:9000/register", teacherData);
+    const response = await axios.post(
+      "http://localhost:9000/register",
+      teacherData
+    );
     const content = await response.data;
     let info = null;
     if (content !== "AuthError") {
@@ -69,7 +72,6 @@ export const Register = async (teacherData) => {
   }
 };
 
-
 export const getAllLectures = async () => {
   let updatedEventsData = [];
   try {
@@ -83,12 +85,16 @@ export const getAllLectures = async () => {
         const end_time = lecture.end_time;
         const title = lecture.subject.name;
         const id = lecture.ID;
+        const division = lecture.division;
+        const batch = lecture.batch;
         // Create a new event object using the lecture details
         const newEvent = {
           id: id,
           title: title,
           start: new Date(start_time),
           end: new Date(end_time),
+          division: division,
+          batch: batch,
         };
         // Add the new event to the updatedEventsData array
         updatedEventsData.push(newEvent);
@@ -137,10 +143,7 @@ export const getLecturesBySubject = async (subjectID) => {
   }
 };
 
-export const markLectureAttendance = async (
-  lectureId,
-  stundentArr
-) => {
+export const markLectureAttendance = async (lectureId, stundentArr) => {
   try {
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
@@ -162,7 +165,7 @@ export const deleteLecture = async (lectureId) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getTimeTable = async (facultyID) => {
   try {
@@ -173,4 +176,4 @@ export const getTimeTable = async (facultyID) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
