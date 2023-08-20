@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { createLecture } from "../utils/services";
 import { infoState } from "../atoms/infoState";
 import { timeHelperBachaLe } from "../utils/helpers";
+import { classInfoState } from "../atoms/classInfoState";
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
 
@@ -36,30 +37,35 @@ export default function Calender() {
   const [modal, setModal] = useRecoilState(modalState);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-
+  const [classInfo, setClassInfo] = useRecoilState(classInfoState);
   const handleClick = async (event) => {
+    setClassInfo({
+      year: event.year,
+      division: event.division,
+      batch: event.batch,
+    });
     if (event.type === "theory" || event.type === "practical") {
       console.log(event);
-      // const startDate = timeHelperBachaLe(event.start.getTime());
-      // const endDate = timeHelperBachaLe(event.end.getTime());
-      // const lecture = {
-      //   date_of_lecture: startDate,
-      //   start_time: startDate,
-      //   end_time: endDate,
-      //   subject_code: event.id,
-      //   faculty_id: userInfo.ID,
-      //   division: event.division,
-      //   batch: event.batch,
-      // };
-      // const l = await createLecture(lecture);
-      // navigate(`/lecture/${l.ID}`, {
-      //   state: { lectureId: `${l.ID}` },
-      // });
+      const startDate = timeHelperBachaLe(event.start.getTime());
+      const endDate = timeHelperBachaLe(event.end.getTime());
+      const lecture = {
+        date_of_lecture: startDate,
+        start_time: startDate,
+        end_time: endDate,
+        subject_code: event.id,
+        faculty_id: userInfo.ID,
+        division: event.division,
+        batch: event.batch,
+      };
+      const l = await createLecture(lecture);
+      navigate(`/lecture/${l.ID}`, {
+        state: { lectureId: `${l.ID}` },
+      });
       return;
     }
-    // navigate(`/lecture/${event.id}`, {
-    //   state: { lectureId: `${event.id}` },
-    // });
+    navigate(`/lecture/${event.id}`, {
+      state: { lectureId: `${event.id}` },
+    });
   };
   // const onButtonClick = () => {
   //   setStartTime(null);

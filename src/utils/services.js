@@ -87,6 +87,7 @@ export const getAllLectures = async () => {
         const id = lecture.ID;
         const division = lecture.division;
         const batch = lecture.batch;
+        const year = lecture.subject.year;
         // Create a new event object using the lecture details
         const newEvent = {
           id: id,
@@ -95,6 +96,7 @@ export const getAllLectures = async () => {
           end: new Date(end_time),
           division: division,
           batch: batch,
+          year: year,
         };
         // Add the new event to the updatedEventsData array
         updatedEventsData.push(newEvent);
@@ -158,12 +160,32 @@ export const markLectureAttendance = async (lectureId, stundentArr) => {
 
 export const deleteLecture = async (lectureId) => {
   try {
-    const res = await axios.put("http://localhost:9000/deleteLecture", {
-      lecture_id: lectureId || "",
+    const response = await fetch(`http://localhost:9000/lecture/${lectureId}`, {
+      method: "DELETE",
     });
-    return res.data;
+
+    if (response.ok) {
+      console.log("Lecture deleted successfully");
+      Swal.fire({
+        title: "Success!",
+        text: "Lecture Deleted",
+        icon: "success",
+        confirmButtonText: "Done",
+      });
+      return true;
+    } else {
+      console.log("Failed to delete lecture");
+      Swal.fire({
+        title: "Failure!",
+        text: "Some error",
+        icon: "error",
+        confirmButtonText: "retry",
+      });
+      return false;
+    }
   } catch (error) {
-    console.log(error);
+    console.log("Error occurred:", error);
+    return false;
   }
 };
 
@@ -173,6 +195,23 @@ export const getTimeTable = async (facultyID) => {
       `http://localhost:9000/getAllTimeTableEntries/${facultyID}`
     );
     return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getStudentsbyClassInfo = async (classInfo) => {
+  try {
+    let fetchMethod = "GET",
+        apiUrl = `http://localhost:9000/getAllStudents?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`
+        // apiUrl = `http://localhost:9000/getAllStudents`;
+    const response = await axios({
+      method: fetchMethod,
+      url: apiUrl,
+    });
+
+    const content = response.data;
+    return content;
   } catch (error) {
     console.log(error);
   }

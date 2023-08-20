@@ -48,7 +48,7 @@ export default function EventModal({ startD, endD }) {
         end_time: endTime,
         subject_id: SubjectCode,
         division: division,
-        year_of_graduation: year,
+        year: year,
         faculty_id: userInfo.ID,
       };
       console.log({ bdy });

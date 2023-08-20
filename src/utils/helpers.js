@@ -65,26 +65,21 @@ export async function timeTableEventsHelper(facultyID) {
     const start = getDaysDateTime(ttevent.day, ttevent.start_time);
     const end = getDaysDateTime(ttevent.day, ttevent.end_time);
     const type = ttevent.type;
+    const batch = ttevent.batch;
+    const division = ttevent.division;
+    const year = ttevent.year;
     const event = {
       id,
       title,
       start,
       end,
       type,
+      batch,
+      division,
+      year
     };
     events.push(event);
   });
   return events;
 }
-// day
-// start time
-// emd time
-// subject code
-// type
-//subject
 
-// id: string;
-// start: Date;
-// end: Date;
-// title: string;
-// type: string;

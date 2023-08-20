@@ -11,6 +11,7 @@ const SubjectPage = () => {
   const subjectId = location.state.subjectId;
   const initLecs = async () => {
     const lecs= await getLecturesBySubject(subjectId);
+    console.log(lecs)
     setLectures(lecs);
   };
   useEffect(() => {
@@ -38,7 +39,7 @@ const SubjectPage = () => {
             ID={lecture.ID}
             startTime={lecture.start_time}
             endTime={lecture.end_time}
-            year={lecture.year_of_graduation}
+            year={lecture.subject.year}
             // attendance={lecture.attendance}
           />
         ))}

@@ -5,49 +5,40 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
+import { getStudentsbyClassInfo } from "../utils/services";
+import { classInfoState } from "../atoms/classInfoState";
 const AttendanceTable = () => {
-  const [subject, setSubject] = useRecoilState(subjectState);
+  const [subject, setSubject] = useRecoilState(subjectState); //TODO : Fix
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
+  const classInfo = useRecoilValue(classInfoState);
   console.log(
     filters.year,
     filters.division,
     filters.startDate,
     filters.endDate
   );
+  console.log(classInfo)
   const fetchData = async (lectureId) => {
-    try {
-      let fetchMethod = "GET",
-        apiUrl = `http://localhost:9000/getAllStudents`;
+    const content = await getStudentsbyClassInfo(classInfo);
+    let newData = [];
+    let newColumns = [
+      { accessorKey: "sapid", header: "sapid", size: 120 },
+      { accessorKey: "name", header: "Name", size: 200 },
+    ];
+    newData = getStudentArray(content);
 
-      const response = await axios({
-        method: fetchMethod,
-        url: apiUrl,
-      });
-
-      const content = response.data;
-
-      let newData = [];
-      let newColumns = [
-        { accessorKey: "sapid", header: "sapid", size: 120 },
-        { accessorKey: "name", header: "Name", size: 200 },
-      ];
-      newData = getStudentArray(content);
-
-      setData(newData);
-      setColumns(newColumns);
-      await fetchAttendance(lectureId);
-    } catch (error) {
-      console.log(error);
-    }
+    setData(newData);
+    setColumns(newColumns);
+    await fetchAttendance(lectureId);
   };
 
   const fetchAttendance = async (lectureId) => {
