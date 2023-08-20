@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { infoState } from "../atoms/infoState";
 import { eventState } from "../atoms/eventState";
 import { getAllLectures, getSubjectsByFaculty } from "../utils/services";
+import { timeTableEventsHelper } from "../utils/helpers";
 
 const HomePage = () => {
   const info = useRecoilValue(infoState);
@@ -13,11 +14,11 @@ const HomePage = () => {
   const [subjects, setSubjects] = React.useState([]);
   const [eventsData, setEventsData] = useRecoilState(eventState);
 
-  const initLectures = async () => {
+  const initTT = async () => {
     const lecs = await getAllLectures();
-    if (lecs.length > 0) {
-      setEventsData(lecs);
-    }
+    const events = await timeTableEventsHelper(facultyID);
+    let lets = [...lecs, ...events];
+    setEventsData(lets);
   };
 
   const initSubjects = async () => {
@@ -27,14 +28,13 @@ const HomePage = () => {
     }
   };
   useEffect(() => {
-    initLectures();
+    initTT();
     initSubjects();
   }, []);
 
   return (
     <div>
       <Nav />
-      {/* <Banner /> */}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Time - Table</h1>
         <p className=" text-sm md:text-xl text-gray-600">
@@ -58,10 +58,10 @@ const HomePage = () => {
       <div className="my-auto flex flex-wrap justify-around pt-2 pb-12 gap-24">
         {subjects.map((subject) => (
           <SubjectCard
+            key={subject.ID}
             name={subject.name}
             year={subject.year}
             semester={subject.semester}
-            // department={subject.department}
             subjectId={subject.ID}
             code={subject.subject_code}
           />

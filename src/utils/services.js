@@ -125,3 +125,14 @@ export const deleteLecture = async (lectureId) => {
     console.log(error);
   }
 }
+
+export const getTimeTable = async (facultyID) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:9000/getAllTimeTableEntries/${facultyID}`
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -1,3 +1,5 @@
+import { getTimeTable } from "./services";
+
 export function _getTimeZoneOffsetInMs() {
   return new Date().getTimezoneOffset() * -60 * 1000;
 }
@@ -29,49 +31,60 @@ export function timeHelperBachaLe(timestamp) {
   const date = new Date(timestamp + _getTimeZoneOffsetInMs());
   return date.toISOString().slice(0, 16);
 }
-// export const makeAttendanceForTeacher = (subjectsList) => {
-//   //goal of the function is to get a subjectsList from backend in this format
 
-//   {
-//     events: {
-//       monday: [
-//         {
-//           id: 1,
-//           name: "Homework",
-//           type: "custom",
-//           startTime: moment("2018-02-23T11:30:00"),
-//           endTime: moment("2018-02-23T13:30:00"),
-//         },
+export function getDaysDateTime(day, time) {
+  const mapDayToNumber = {
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+  };
+  day = mapDayToNumber[day.toLowerCase()];
+  const today = new Date();
+  const currentDayOfWeek = today.getDay(); // Sunday is 0, Monday is 1, and so on.
+  const daysUntilDay =
+    currentDayOfWeek === day - 1 ? 6 : day - currentDayOfWeek;
+  // Calculate the date of Monday by subtracting the number of days from today.
+  const dayDate = new Date(today);
+  dayDate.setDate(today.getDate() + daysUntilDay);
+  const date = new Date(dayDate.toDateString() + " " + time);
+  // console.log(date);
+  // console.log(dayDate.toDateString());
+  return date;
+}
+export async function timeTableEventsHelper(facultyID) {
+  const ttevents = await getTimeTable(facultyID);
+  console.log(ttevents);
+  let events = [];
+  ttevents?.map((ttevent) => {
+    const id = ttevent.subject_code;
+    const title = ttevent.subject_name;
+    const start = getDaysDateTime(ttevent.day, ttevent.start_time);
+    const end = getDaysDateTime(ttevent.day, ttevent.end_time);
+    const type = ttevent.type;
+    const event = {
+      id,
+      title,
+      start,
+      end,
+      type,
+    };
+    events.push(event);
+  });
+  return events;
+}
+// day
+// start time
+// emd time
+// subject code
+// type
+//subject
 
-//         {
-//           id: 2,
-//           name: "Classwork",
-//           type: "custom",
-//           startTime: moment("2018-02-23T09:30:00"),
-//           endTime: moment("2018-02-23T11:00:00"),
-//         },
-//         {
-//           id: 3,
-//           name: "Test",
-//           type: "custom",
-//           startTime: moment("2018-02-22T14:30:00"),
-//           endTime: moment("2018-02-22T15:30:00"),
-//         },
-//         {
-//           id: 4,
-//           name: "Test",
-//           type: "custom",
-//           startTime: moment("2018-02-22T15:30:00"),
-//           endTime: moment("2018-02-22T16:30:00"),
-//         },
-//       ];
-//     }
-//   }
-
-//   const hello = {
-//     title: "Sad Hour",
-//     id: "123",
-//     start: new Date(2023, 2, 6, 17, 0, 0),
-//     end: new Date(2023, 2, 6, 17, 30, 0),
-//   };
-// };
+// id: string;
+// start: Date;
+// end: Date;
+// title: string;
+// type: string;
