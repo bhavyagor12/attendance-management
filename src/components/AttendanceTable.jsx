@@ -86,7 +86,7 @@ const AttendanceTable = ({subjectCode}) => {
     });
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
-      subject_id: subject,
+      subject_code: "DWM69",
       attendance: sapIDs,
     });
     if (res) {
@@ -124,8 +124,7 @@ const AttendanceTable = ({subjectCode}) => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}
-            >
+              }}>
               {table.setRowSelection}
               <Button
                 disabled={table.getPrePaginationRowModel().rows.length === 0}
@@ -135,8 +134,7 @@ const AttendanceTable = ({subjectCode}) => {
                   // handleExportRows(table.getPrePaginationRowModel().rows);
                 }}
                 startIcon={<FileUploadIcon />}
-                variant="contained"
-              >
+                variant="contained">
                 Mark All Present
               </Button>
               <Button
@@ -150,8 +148,7 @@ const AttendanceTable = ({subjectCode}) => {
                   // handleExportRows(table.getSelectedRowModel().rows)
                 }
                 startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
+                variant="contained">
                 Mark Selected Rows
               </Button>
             </Box>

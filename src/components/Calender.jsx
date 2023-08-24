@@ -99,7 +99,6 @@ export default function Calender() {
       navigate(`/lecture/${l.ID}`, {
         state: { lectureId: `${l.ID}` },
       });
-
       return;
     }
     navigate(`/lecture/${event.id}`, {
@@ -118,7 +117,6 @@ export default function Calender() {
         <Calendar
           views={["day", "week"]}
           onNavigate={async (newDate) => {
-
             await initTT(newDate);
           }}
           selectable
