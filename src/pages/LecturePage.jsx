@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 const MarkAttendance = () => {
   const [lectureId, setLectureId] = useState("");
   const [lecture, setLecture] = useState({});
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const handleDeleteLeture = async () => {
     if (deleteLecture(lectureId)) {
@@ -32,6 +33,12 @@ const MarkAttendance = () => {
       setLectureId("1");
     }
   }, [location]);
+
+  useEffect(() => {
+    if (lecture?.subject_code && lecture?.subject_code !== "") {
+      setLoading(false);
+    }
+  }, [lecture])
 
   return (
     <div>
@@ -55,7 +62,7 @@ const MarkAttendance = () => {
       >
         Delete Lecture
       </Button>
-      <AttendanceTable subjectCode={lecture.subject_code}/>
+      {!loading && <AttendanceTable subjectCode={lecture.subject_code}/>}
     </div>
   );
 };

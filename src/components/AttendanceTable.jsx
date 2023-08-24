@@ -21,7 +21,7 @@ const AttendanceTable = ({subjectCode}) => {
   const [rowSelection, setRowSelection] = useState({});
   const classInfo = useRecoilValue(classInfoState);
   const fetchData = async (lectureId) => {
-    const content = await getStudentsbySubject(subjectCode);
+    const content = await getStudentsbySubject(classInfo,subjectCode);
     let newData = [];
     let newColumns = [
       { accessorKey: "sapid", header: "sapid", size: 120 },

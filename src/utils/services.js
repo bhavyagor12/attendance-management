@@ -216,10 +216,10 @@ export const getStudentsbyClassInfo = async (classInfo) => {
   }
 };
 
-export const getStudentsbySubject = async (subjectCode) => {
+export const getStudentsbySubject = async (classInfo,subjectCode) => {
   try {
     let fetchMethod = "GET",
-        apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}`
+        apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`
         // apiUrl = `http://localhost:9000/getAllStudents`;
     const response = await axios({
       method: fetchMethod,
