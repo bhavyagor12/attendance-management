@@ -32,6 +32,12 @@ const RegisterPage = () => {
       navigate("/login");
       }
   };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate("/login");
+  }
+
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
       <div className="hidden md:flex w-[50vw] h-[100vh]">
@@ -119,6 +125,17 @@ const RegisterPage = () => {
                 onClick={handleSubmit}
               >
                 Register
+              </button>
+            </div>
+            <h2 className="text-center text-xl font-extrabold text-gray-700">
+              Already Registered?
+            </h2>
+            <div className="flex items-center justify-center">
+              <button
+                className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                onClick={handleClick}
+              >
+                Login
               </button>
             </div>
           </form>
