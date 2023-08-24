@@ -144,11 +144,12 @@ export const getLecturesBySubject = async (subjectID) => {
   }
 };
 
-export const markLectureAttendance = async (lectureId, stundentArr) => {
+export const markLectureAttendance = async (lectureId, stundentArr, subjectCode) => {
   try {
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
       attendance: stundentArr,
+      subject_code: subjectCode || "",
     });
 
     return res.data;

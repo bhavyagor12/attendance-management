@@ -43,7 +43,7 @@ const MarkAttendance = () => {
   return (
     <div>
       <Nav />
-      <Papa lectureId={lectureId} />
+      {!loading && <Papa lectureId={lectureId} subjectCode={lecture.subject_code} />}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-2">Students Table</h1>
         <p className="flex items-center justify-center gap-2 text-sm md:text-xl text-gray-600">
