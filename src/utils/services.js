@@ -72,10 +72,10 @@ export const Register = async (teacherData) => {
   }
 };
 
-export const getAllLectures = async () => {
+export const getAllLectures = async (facultyId) => {
   let updatedEventsData = [];
   try {
-    const response = await axios.get("http://localhost:9000/getAllLectures");
+    const response = await axios.get(`http://localhost:9000/getLecturesByFaculty/${facultyId}`);
     const allLectures = response.data;
     // Initialize as an empty array to clear existing events
     allLectures.forEach((lecture) => {

@@ -58,7 +58,7 @@ export default function Calender() {
     return combinedArray;
   }
   const initTT = async (currDate) => {
-    const lecs = await getAllLectures();
+    const lecs = await getAllLectures(userInfo.ID);
     const events = await timeTableEventsHelper(userInfo.ID, currDate);
     let lecsPlusEvents = combineEventsAndLectures(events, lecs);
     setEventsData(lecsPlusEvents);
