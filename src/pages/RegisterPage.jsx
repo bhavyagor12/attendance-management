@@ -52,7 +52,7 @@ const RegisterPage = () => {
           </div>
           <form className="mt-8 space-y-6 gap-2">
             <input type="hidden" name="remember" value="true" />
-            <div className="rounded-md shadow-sm -space-y-px gap-y-4">
+            <div className="rounded-md shadow-sm">
               <div className="mb-4">
                 <label htmlFor="sap_id" className="sr-only">
                   Sap Id
