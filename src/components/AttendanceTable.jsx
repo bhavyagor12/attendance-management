@@ -131,7 +131,7 @@ const AttendanceTable = ({ subjectCode }) => {
                 flexWrap: "wrap",
               }}>
               {table.setRowSelection}
-              <Button
+              {/* <Button
                 disabled={table.getPrePaginationRowModel().rows.length === 0}
                 //export all rows, including from the next page, (still respects filtering and sorting)
                 onClick={() => {
@@ -141,7 +141,7 @@ const AttendanceTable = ({ subjectCode }) => {
                 startIcon={<FileUploadIcon />}
                 variant="contained">
                 Mark All Present
-              </Button>
+              </Button> */}
               <Button
                 disabled={
                   !table.getIsSomeRowsSelected() &&
@@ -152,9 +152,9 @@ const AttendanceTable = ({ subjectCode }) => {
                   () => markAttendance(table.getSelectedRowModel().rows)
                   // handleExportRows(table.getSelectedRowModel().rows)
                 }
-                startIcon={<FileDownloadIcon />}
+                startIcon={<FileUploadIcon />}
                 variant="contained">
-                Mark Selected Rows
+                Mark Attendance
               </Button>
             </Box>
           )}
