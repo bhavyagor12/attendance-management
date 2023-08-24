@@ -127,7 +127,7 @@ const RegisterPage = () => {
                 Register
               </button>
             </div>
-            <h2 className="text-center text-xl font-extrabold text-gray-700">
+            <h2 className="text-center text-l font-bold text-gray-700">
               Already Registered?
             </h2>
             <div className="flex items-center justify-center">
