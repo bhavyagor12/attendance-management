@@ -144,7 +144,11 @@ export const getLecturesBySubject = async (subjectID) => {
   }
 };
 
-export const markLectureAttendance = async (lectureId, stundentArr, subjectCode) => {
+export const markLectureAttendance = async (
+  lectureId,
+  stundentArr,
+  subjectCode
+) => {
   try {
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
@@ -203,8 +207,8 @@ export const getTimeTable = async (facultyID) => {
 export const getStudentsbyClassInfo = async (classInfo) => {
   try {
     let fetchMethod = "GET",
-        apiUrl = `http://localhost:9000/getAllStudents?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`
-        // apiUrl = `http://localhost:9000/getAllStudents`;
+      apiUrl = `http://localhost:9000/getAllStudents?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
+    // apiUrl = `http://localhost:9000/getAllStudents`;
     const response = await axios({
       method: fetchMethod,
       url: apiUrl,
@@ -217,11 +221,11 @@ export const getStudentsbyClassInfo = async (classInfo) => {
   }
 };
 
-export const getStudentsbySubject = async (classInfo,subjectCode) => {
+export const getStudentsbySubject = async (classInfo, subjectCode) => {
   try {
     let fetchMethod = "GET",
-        apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`
-        // apiUrl = `http://localhost:9000/getAllStudents`;
+      apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
+    // apiUrl = `http://localhost:9000/getAllStudents`;
     const response = await axios({
       method: fetchMethod,
       url: apiUrl,
@@ -237,8 +241,8 @@ export const getStudentsbySubject = async (classInfo,subjectCode) => {
 export const getLectureById = async (lectureId) => {
   try {
     let fetchMethod = "GET",
-        apiUrl = `http://localhost:9000/lecture/${lectureId}`
-        // apiUrl = `http://localhost:9000/getAllStudents`;
+      apiUrl = `http://localhost:9000/lecture/${lectureId}`;
+    // apiUrl = `http://localhost:9000/getAllStudents`;
     const response = await axios({
       method: fetchMethod,
       url: apiUrl,

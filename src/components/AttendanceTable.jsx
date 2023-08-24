@@ -10,9 +10,12 @@ import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
-import { getStudentsbyClassInfo, getStudentsbySubject } from "../utils/services";
+import {
+  getStudentsbyClassInfo,
+  getStudentsbySubject,
+} from "../utils/services";
 import { classInfoState } from "../atoms/classInfoState";
-const AttendanceTable = ({subjectCode}) => {
+const AttendanceTable = ({ subjectCode }) => {
   const [subject, setSubject] = useRecoilState(subjectState); //TODO : Fix
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
@@ -20,8 +23,10 @@ const AttendanceTable = ({subjectCode}) => {
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
   const classInfo = useRecoilValue(classInfoState);
+
   const fetchData = async (lectureId) => {
-    const content = await getStudentsbySubject(classInfo,subjectCode);
+    console.log(classInfo);
+    const content = await getStudentsbySubject(classInfo, subjectCode);
     let newData = [];
     let newColumns = [
       { accessorKey: "sapid", header: "sapid", size: 120 },
@@ -86,7 +91,7 @@ const AttendanceTable = ({subjectCode}) => {
     });
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
-      subject_code: "DWM69",
+      subject_code: subjectCode,
       attendance: sapIDs,
     });
     if (res) {
