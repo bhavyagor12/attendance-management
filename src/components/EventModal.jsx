@@ -20,7 +20,7 @@ export default function EventModal({ startD, endD }) {
   const [eventsData, setEventsData] = useRecoilState(eventState);
   const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null);
-  console.log(year)
+
   function timeSet() {
     if (startD === null && endD === null) {
       const start = timestampToDatetimeInputString(Date.now(), "start");
@@ -51,7 +51,7 @@ export default function EventModal({ startD, endD }) {
         year: year,
         faculty_id: userInfo.ID,
       };
-      console.log({ bdy });
+
       createLecture(bdy);
       setEventsData([
         ...eventsData,

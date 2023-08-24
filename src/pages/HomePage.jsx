@@ -2,24 +2,14 @@ import React, { useEffect } from "react";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
 import Calender from "../components/Calender";
-import { useRecoilState, useRecoilValue } from "recoil";
+import {  useRecoilValue } from "recoil";
 import { infoState } from "../atoms/infoState";
-import { eventState } from "../atoms/eventState";
-import { getAllLectures, getSubjectsByFaculty } from "../utils/services";
-import { timeTableEventsHelper } from "../utils/helpers";
+import {  getSubjectsByFaculty } from "../utils/services";
 
 const HomePage = () => {
   const info = useRecoilValue(infoState);
   let facultyID = info?.ID;
   const [subjects, setSubjects] = React.useState([]);
-  const [eventsData, setEventsData] = useRecoilState(eventState);
-
-  const initTT = async () => {
-    const lecs = await getAllLectures();
-    const events = await timeTableEventsHelper(facultyID);
-    let lets = [...lecs, ...events];
-    setEventsData(lets);
-  };
 
   const initSubjects = async () => {
     const subs = await getSubjectsByFaculty(facultyID);
@@ -28,7 +18,6 @@ const HomePage = () => {
     }
   };
   useEffect(() => {
-    initTT();
     initSubjects();
   }, []);
 

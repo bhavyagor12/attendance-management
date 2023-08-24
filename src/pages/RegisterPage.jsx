@@ -28,7 +28,6 @@ const RegisterPage = () => {
       const infol= await Register(teacherData);
       if(infol){
         setInfo(infol);
-        console.log(infol)
       navigate("/login");
       }
   };

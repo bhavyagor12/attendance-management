@@ -13,13 +13,11 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   const [tableRows, setTableRows] = useState([]);
   const [sapIDs, setSapIDs] = useState([]);
   let location = useLocation();
-  // console.log(location.state.subjectId);
+
   const lectureID = location.state.lectureId;
-  console.log(lectureID);
 
   useEffect(() => {
     if (data.length !== 0 && columns) {
-      console.log(data);
       setStundentsData(data);
       setTableRows(
         data.map((r) => {
@@ -34,13 +32,10 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   }, [data]);
 
   const navigate = useNavigate();
-  // console.log(data)
-
-  // console.log(`hello`+data)
   const addSapID = (e) => {
     if (e.length === data.length && sapIDs.length !== data.length) {
       let saps = [];
-      console.log(e);
+
       e.map((r) => saps.push(Number(r.sapid)));
       setSapIDs(saps);
     } else if (sapIDs.length !== data.length && !sapIDs.includes(e.sapid)) {
@@ -54,7 +49,6 @@ export default function WithMultipleCheckboxes({ data, columns }) {
     }
   };
 
-  console.log(sapIDs);
   const [checkbox1, setCheckbox1] = React.useState([]);
 
   const markAttendance = async () => {

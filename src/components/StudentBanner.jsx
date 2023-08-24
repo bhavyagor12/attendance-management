@@ -3,10 +3,9 @@ import { MdWavingHand } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 const Banner = () => {
     let location = useLocation();
-  // console.log(location.state.subjectId);
+
   const sapId = location.state.sapId;
   const name= location.state.name;
-  console.log(name)
   return (
     <section class="flex z-[-15]">
       <div class="flex bg-gray-800 w-[100vw]">

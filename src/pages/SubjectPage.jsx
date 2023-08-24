@@ -11,7 +11,6 @@ const SubjectPage = () => {
   const subjectId = location.state.subjectId;
   const initLecs = async () => {
     const lecs= await getLecturesBySubject(subjectId);
-    console.log(lecs)
     setLectures(lecs);
   };
   useEffect(() => {

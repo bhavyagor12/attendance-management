@@ -13,12 +13,10 @@ function Csvconvert({ lectureId, subjectId }) {
         accept=".csv"
         onChange={(e) => {
           const files = e.target.files;
-          console.log(files);
+
           if (files) {
-            console.log(files[0]);
             Papa.parse(files[0], {
               complete: function (results) {
-                console.log(results.data);
                 setSapIds(getCsvSapIds(results.data));
               },
             });

@@ -19,12 +19,7 @@ const ReportTable = () => {
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
   const [defaulter, setDefaulter] = useState([]);
-  // console.log(
-  //   filters.year,
-  //   filters.division,
-  //   filters.startDate,
-  //   filters.endDate
-  // );
+
   const fetchData = async (lectureId) => {
     try {
       let fetchMethod = "POST";
@@ -41,7 +36,7 @@ const ReportTable = () => {
         }),
       });
       const content = response.data;
-      console.log(content)
+
       let newData = [];
       let newColumns = [
         { accessorKey: "sapid", header: "sapid", size: 120 },
@@ -68,8 +63,6 @@ const ReportTable = () => {
       newData = getDefaulterArray(content, newColumns);
       setData(newData);
       setColumns(newColumns);
-      console.log(newData);
-      console.log(newColumns);
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +84,6 @@ const ReportTable = () => {
 
     initialStudents = data?.students.map((student) => {
       const jsonObject = {};
-      // console.log(student)
       const valuesToUpdate = [];
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
@@ -101,7 +93,6 @@ const ReportTable = () => {
       valuesToUpdate.push(student.grand_attendance);
       valuesToUpdate.push(student.defaulter);
       newColumns.forEach((key, index) => {
-        // console.log(key,index)
         jsonObject[key.accessorKey] = valuesToUpdate[index];
       });
 
@@ -128,7 +119,6 @@ const ReportTable = () => {
   const handleExportData = () => {
     csvExporter.generateCsv(data);
   };
-  // console.log(data);
   return (
     <>
       {data !== null && (

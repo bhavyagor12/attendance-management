@@ -17,7 +17,7 @@ const MarkAttendance = () => {
     }
   };
   let location = useLocation();
-  console.log(lectureId);
+
   useEffect(() => {
     if (location?.state?.lectureId !== null) {
       setLectureId(location?.state?.lectureId);

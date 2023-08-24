@@ -24,7 +24,6 @@ const Nav = () => {
         },
         // body: JSON.stringify(userData),
       });
-      console.log("going to login");
       resetValue();
       navigate("/");
     } catch (error) {

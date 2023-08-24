@@ -20,13 +20,6 @@ const AttendanceTable = () => {
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
   const classInfo = useRecoilValue(classInfoState);
-  console.log(
-    filters.year,
-    filters.division,
-    filters.startDate,
-    filters.endDate
-  );
-  console.log(classInfo)
   const fetchData = async (lectureId) => {
     const content = await getStudentsbyClassInfo(classInfo);
     let newData = [];
@@ -76,10 +69,6 @@ const AttendanceTable = () => {
     fetchData(location?.state?.lectureId);
   }, [location]);
 
-  useEffect(() => {
-    console.log(rowSelection);
-  }, [rowSelection]);
-
   const getStudentArray = (data) => {
     let initialStudents = [];
     initialStudents = data?.map((student) => {
@@ -95,13 +84,11 @@ const AttendanceTable = () => {
     rows.map((row) => {
       sapIDs.push(row.original.sapid);
     });
-    console.log(subject);
     const res = await axios.put("http://localhost:9000/markAttendance", {
       lecture_id: lectureId || "",
       subject_id: subject,
       attendance: sapIDs,
     });
-    console.log(res);
     if (res) {
       Swal.fire({
         title: "Success!",
@@ -119,7 +106,6 @@ const AttendanceTable = () => {
       });
     }
   };
-  // console.log(data);
   return (
     <>
       {data !== null && (

@@ -17,7 +17,7 @@ const LectureCard = ({
   const [eTime, seteTime] = React.useState(null);
   const navigate = useNavigate();
   const lectureID = ID;
-  console.log(lectureID);
+
   const handleClick = () => {
     navigate(`/lecture/${lectureID}`, {
       state: { lectureId: `${lectureID}` },
@@ -38,7 +38,7 @@ const LectureCard = ({
         }
       );
       const content = await rawResponse.json();
-      console.log(content.map((student) => student.attendance));
+
       setAttendance(content.map((student) => student.attendance));
     } catch (error) {
       console.log(error);

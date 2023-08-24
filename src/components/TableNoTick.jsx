@@ -13,9 +13,6 @@ export default function WithMultipleCheckboxes({ data, columns }) {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    console.log("clicked");
-    console.log(e.sapid)
-    console.log(e.name)
     navigate(`/student/${e.sapid}`, {
       state: { sapId: `${e.sapid}`, name: `${e.name}` },
     });
@@ -23,7 +20,6 @@ export default function WithMultipleCheckboxes({ data, columns }) {
 
   useEffect(() => {
     if (data.length !== 0 && columns) {
-      console.log(data);
       setStundentsData(data);
       setTableRows(
         data.map((r) => {
