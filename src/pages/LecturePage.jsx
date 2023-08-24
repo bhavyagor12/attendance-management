@@ -5,11 +5,12 @@ import Papa from "../components/Papa.js";
 import { useLocation } from "react-router-dom";
 import AttendanceTable from "../components/AttendanceTable";
 import { Button } from "@mui/material";
-import { deleteLecture } from "../utils/services";
+import { deleteLecture, getLectureById } from "../utils/services";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 const MarkAttendance = () => {
   const [lectureId, setLectureId] = useState("");
+  const [lecture, setLecture] = useState({});
   const navigate = useNavigate();
   const handleDeleteLeture = async () => {
     if (deleteLecture(lectureId)) {
@@ -21,6 +22,12 @@ const MarkAttendance = () => {
   useEffect(() => {
     if (location?.state?.lectureId !== null) {
       setLectureId(location?.state?.lectureId);
+      getLectureById(location?.state?.lectureId).then((res) => {
+        setLecture(res);
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      });
     } else {
       setLectureId("1");
     }
@@ -48,7 +55,7 @@ const MarkAttendance = () => {
       >
         Delete Lecture
       </Button>
-      <AttendanceTable />
+      <AttendanceTable subjectCode={lecture.subject_code}/>
     </div>
   );
 };

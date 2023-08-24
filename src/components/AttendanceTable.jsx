@@ -10,9 +10,9 @@ import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
-import { getStudentsbyClassInfo } from "../utils/services";
+import { getStudentsbyClassInfo, getStudentsbySubject } from "../utils/services";
 import { classInfoState } from "../atoms/classInfoState";
-const AttendanceTable = () => {
+const AttendanceTable = ({subjectCode}) => {
   const [subject, setSubject] = useRecoilState(subjectState); //TODO : Fix
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
@@ -21,7 +21,7 @@ const AttendanceTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const classInfo = useRecoilValue(classInfoState);
   const fetchData = async (lectureId) => {
-    const content = await getStudentsbyClassInfo(classInfo);
+    const content = await getStudentsbySubject(subjectCode);
     let newData = [];
     let newColumns = [
       { accessorKey: "sapid", header: "sapid", size: 120 },
