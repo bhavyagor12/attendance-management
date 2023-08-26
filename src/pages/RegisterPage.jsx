@@ -118,7 +118,8 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleSubmit}>
+                onClick={handleSubmit}
+              >
                 Register
               </button>
             </div>
@@ -128,7 +129,8 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleClick}>
+                onClick={handleClick}
+              >
                 Login
               </button>
             </div>

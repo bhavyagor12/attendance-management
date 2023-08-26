@@ -71,7 +71,7 @@ const AttendanceTable = ({ subjectCode }) => {
         icon: "success",
         confirmButtonText: "Done",
       });
-      navigate("/home");
+      navigate("/");
     } else {
       Swal.fire({
         title: "Failure!",

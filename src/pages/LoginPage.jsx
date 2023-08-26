@@ -26,13 +26,13 @@ const LoginPage = () => {
       const infol= await Login(userData);
       if(infol){
         setInfo(infol);
-      navigate("/home");
+      navigate("/");
       }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/");
+    navigate("/register");
   }
 
   return (

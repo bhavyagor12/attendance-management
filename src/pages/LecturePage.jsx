@@ -7,7 +7,6 @@ import AttendanceTable from "../components/AttendanceTable";
 import { Button } from "@mui/material";
 import { deleteLecture, getLectureById } from "../utils/services";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { classInfoState } from "../atoms/classInfoState";
 import Csvconvert from "../components/CsvTimetable";
@@ -19,7 +18,7 @@ const MarkAttendance = () => {
   const navigate = useNavigate();
   const handleDeleteLeture = async () => {
     if (deleteLecture(lectureId)) {
-      navigate("/home");
+      navigate("/");
     }
   };
   let location = useLocation();

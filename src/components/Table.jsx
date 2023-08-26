@@ -64,7 +64,7 @@ export default function WithMultipleCheckboxes({ data, columns }) {
         icon: "success",
         confirmButtonText: "Done",
       });
-      navigate("/home");
+      navigate("/");
     } else {
       Swal.fire({
         title: "Failure!",
