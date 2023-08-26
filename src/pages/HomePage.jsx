@@ -1,12 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "../components/Navbar";
 import SubjectCard from "../components/SubjectCard";
 import Calender from "../components/Calender";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { infoState } from "../atoms/infoState";
-import {  getSubjectsByFaculty } from "../utils/services";
+import { getSubjectsByFaculty } from "../utils/services";
 
 const HomePage = () => {
+  const [view, setView] = useState("week");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 390) {
+        setView("day");
+      } else {
+        setView("week");
+      }
+    };
+
+    // Initial call
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const info = useRecoilValue(infoState);
   let facultyID = info?.ID;
   const [subjects, setSubjects] = React.useState([]);
@@ -33,7 +55,7 @@ const HomePage = () => {
         </p>
       </div>
       <div className="flex items-center justify-center overflow-hidden">
-        <Calender />
+        <Calender view={view} />
       </div>
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4 ">
         <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Subjects</h1>

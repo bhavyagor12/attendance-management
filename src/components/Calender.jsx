@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -32,7 +32,7 @@ const eventPropGetter = (event) => {
   };
 };
 
-export default function Calender() {
+export default function Calender({ view }) {
   const userInfo = useRecoilValue(infoState);
   const navigate = useNavigate();
   const [modal, setModal] = useRecoilState(modalState);
@@ -41,6 +41,9 @@ export default function Calender() {
   const [classInfo, setClassInfo] = useRecoilState(classInfoState);
   const [eventsData, setEventsData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  console.log(view);
+
   function combineEventsAndLectures(events, lectures) {
     const combinedArray = [...lectures];
     events.forEach((event) => {
@@ -119,10 +122,10 @@ export default function Calender() {
           onNavigate={async (newDate) => {
             await initTT(newDate);
           }}
+          view={view}
           selectable
           localizer={localizer}
           defaultDate={new Date()}
-          defaultView="week"
           startAccessor="start"
           endAccessor="end"
           events={eventsData}
