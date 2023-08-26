@@ -20,6 +20,10 @@ const ReportTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [defaulter, setDefaulter] = useState([]);
 
+  const getTwoDecimals = (number) => {
+    return parseFloat(number.toFixed(2));
+  };
+
   const fetchData = async (lectureId) => {
     try {
       let fetchMethod = "POST";
@@ -39,7 +43,7 @@ const ReportTable = () => {
 
       let newData = [];
       let newColumns = [
-        { accessorKey: "sapid", header: "sapid", size: 120 },
+        { accessorKey: "sapid", header: "Sapid", size: 120 },
         { accessorKey: "name", header: "Name", size: 200 },
       ];
 
@@ -54,10 +58,10 @@ const ReportTable = () => {
       newColumns.push(
         {
           accessorKey: "grand_attendance",
-          header: "grand_attendance",
+          header: "Grand Attendance",
           size: 120,
         },
-        { accessorKey: "status", header: "status", size: 120 }
+        { accessorKey: "status", header: "Status", size: 120 }
       );
 
       newData = getDefaulterArray(content, newColumns);
@@ -88,9 +92,13 @@ const ReportTable = () => {
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
       student.subject_attendance.forEach((subject) => {
-        valuesToUpdate.push(subject.attendance);
+        // valuesToUpdate.push(subject.attendance);
+        const subjectAttendance = getTwoDecimals(subject.attendance);
+
+        valuesToUpdate.push(`${subjectAttendance}%`);
       });
-      valuesToUpdate.push(student.grand_attendance);
+      const grandAttendance = getTwoDecimals(student.grand_attendance);
+      valuesToUpdate.push(`${grandAttendance}%`);
       valuesToUpdate.push(student.defaulter);
       newColumns.forEach((key, index) => {
         jsonObject[key.accessorKey] = valuesToUpdate[index];
