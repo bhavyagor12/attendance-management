@@ -7,6 +7,7 @@ import { eventState } from "../atoms/eventState";
 import { infoState } from "../atoms/infoState";
 import { timestampToDatetimeInputString } from "../utils/helpers";
 import { createLecture } from "../utils/services";
+import { Troubleshoot } from "@mui/icons-material";
 export default function EventModal({ startD, endD }) {
   const userInfo = useRecoilValue(infoState);
   const [modal, setModal] = useRecoilState(modalState);
@@ -37,30 +38,24 @@ export default function EventModal({ startD, endD }) {
   useEffect(() => {
     timeSet();
   }, []);
+
   const onSubmit = async () => {
     if (SubjectCode === "") {
-      // alert("Please enter a valid event name");
       setError(true);
     } else {
       let bdy = {
         date_of_lecture: startTime,
         start_time: startTime,
         end_time: endTime,
-        subject_id: SubjectCode,
+        subject_code: SubjectCode,
         division: division,
         year: year,
         faculty_id: userInfo.ID,
+        batch: Number(1),
       };
 
-      createLecture(bdy);
-      setEventsData([
-        ...eventsData,
-        {
-          title: SubjectName, //TODO: somehow get the subject name
-          start: new Date(startTime),
-          end: new Date(endTime),
-        },
-      ]);
+      const l = await createLecture(bdy);
+      window.location.reload(false);
       setModal(false);
     }
   };

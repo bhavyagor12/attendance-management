@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -10,6 +9,7 @@ import { json, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
+import { getTwoDecimals } from "../utils/helpers";
 
 const ReportTable = () => {
   const [subject, setSubject] = useRecoilState(subjectState);
@@ -20,9 +20,8 @@ const ReportTable = () => {
   const [rowSelection, setRowSelection] = useState({});
   const [defaulter, setDefaulter] = useState([]);
 
-  const getTwoDecimals = (number) => {
-    return parseFloat(number.toFixed(2));
-  };
+  let location = useLocation();
+  const navigate = useNavigate();
 
   const fetchData = async (lectureId) => {
     try {
@@ -72,8 +71,6 @@ const ReportTable = () => {
     }
   };
 
-  let location = useLocation();
-  const navigate = useNavigate();
   useEffect(() => {
     if (location?.state?.lectureId !== null) {
       setLectureId(location?.state?.lectureId);
@@ -92,9 +89,7 @@ const ReportTable = () => {
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
       student.subject_attendance.forEach((subject) => {
-        // valuesToUpdate.push(subject.attendance);
         const subjectAttendance = getTwoDecimals(subject.attendance);
-
         valuesToUpdate.push(`${subjectAttendance}%`);
       });
       const grandAttendance = getTwoDecimals(student.grand_attendance);
@@ -120,10 +115,6 @@ const ReportTable = () => {
   };
   const csvExporter = new ExportToCsv(csvOptions);
 
-  const handleExportRows = (rows) => {
-    csvExporter.generateCsv(rows.map((row) => row.original));
-  };
-
   const handleExportData = () => {
     csvExporter.generateCsv(data);
   };
@@ -132,7 +123,7 @@ const ReportTable = () => {
       {data !== null && (
         <MaterialReactTable
           columns={columns}
-          data={data} //fallback to state={{ isLoading: true }}
+          data={data}
           enableRowSelection={false}
           positionToolbarAlertBanner="bottom"
           // muiTableBodyCellProps={{
@@ -149,15 +140,12 @@ const ReportTable = () => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}
-            >
+              }}>
               <Button
                 color="primary"
-                //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
+                variant="contained">
                 Download CSV
               </Button>
             </Box>

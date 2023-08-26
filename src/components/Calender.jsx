@@ -8,29 +8,17 @@ import EventModal from "./EventModal";
 import { useNavigate } from "react-router-dom";
 import { createLecture } from "../utils/services";
 import { infoState } from "../atoms/infoState";
-import { timeHelperBachaLe } from "../utils/helpers";
+import {
+  combineEventsAndLectures,
+  eventPropGetter,
+  makeEventForCreateLecture,
+} from "../utils/helpers";
 import { classInfoState } from "../atoms/classInfoState";
 import { getAllLectures } from "../utils/services";
 import { timeTableEventsHelper } from "../utils/helpers";
 
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
-
-const eventPropGetter = (event) => {
-  if (event?.type === undefined) {
-    return {
-      style: {
-        backgroundColor: "#34313197",
-      },
-    };
-  }
-  const color = event.type === "theory" ? "#AA5656" : "#0080FB";
-  return {
-    style: {
-      backgroundColor: color,
-    },
-  };
-};
 
 export default function Calender({ view }) {
   const userInfo = useRecoilValue(infoState);
@@ -42,24 +30,6 @@ export default function Calender({ view }) {
   const [eventsData, setEventsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(view);
-
-  function combineEventsAndLectures(events, lectures) {
-    const combinedArray = [...lectures];
-    events.forEach((event) => {
-      const matchingLecture = lectures.find(
-        (lecture) =>
-          lecture.start.toISOString() === event.start.toISOString() &&
-          lecture.end.toISOString() === event.end.toISOString()
-      );
-
-      if (!matchingLecture) {
-        combinedArray.push(event);
-      }
-    });
-
-    return combinedArray;
-  }
   const initTT = async (currDate) => {
     const lecs = await getAllLectures(userInfo.ID);
     const events = await timeTableEventsHelper(userInfo.ID, currDate);
@@ -68,10 +38,11 @@ export default function Calender({ view }) {
   };
 
   useEffect(() => {
-    const today = new Date();
     if (userInfo === null) return;
+    const today = new Date();
     initTT(today);
   }, [userInfo]);
+
   useEffect(() => {
     if (eventsData.length !== 0) {
       setLoading(false);
@@ -85,20 +56,9 @@ export default function Calender({ view }) {
       batch: event.batch,
     });
     if (event.type === "theory" || event.type === "practical") {
-      const startDate = timeHelperBachaLe(event.start.getTime());
-      const endDate = timeHelperBachaLe(event.end.getTime());
-      const lecture = {
-        date_of_lecture: startDate,
-        start_time: startDate,
-        end_time: endDate,
-        subject_code: event.id,
-        faculty_id: userInfo.ID,
-        division: event.division,
-        batch: event.batch,
-        type: event.type,
-        year: event.year,
-      };
+      const lecture = makeEventForCreateLecture(event, userInfo.ID);
       const l = await createLecture(lecture);
+
       navigate(`/lecture/${l.ID}`, {
         state: { lectureId: `${l.ID}` },
       });
@@ -108,6 +68,7 @@ export default function Calender({ view }) {
       state: { lectureId: `${event.id}` },
     });
   };
+
   const handleSelect = ({ start, end }) => {
     setStartTime(start);
     setEndTime(end);

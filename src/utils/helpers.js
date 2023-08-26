@@ -31,7 +31,7 @@ export function timeHelperBachaLe(timestamp) {
   return date.toISOString().slice(0, 16);
 }
 
-export function getDaysDateTime(day, time,currDate) {
+export function getDaysDateTime(day, time, currDate) {
   const mapDayToNumber = {
     sunday: 0,
     monday: 1,
@@ -52,15 +52,15 @@ export function getDaysDateTime(day, time,currDate) {
   const date = new Date(dayDate.toDateString() + " " + time);
   return date;
 }
-export async function timeTableEventsHelper(facultyID,currDate) {
+export async function timeTableEventsHelper(facultyID, currDate) {
   const ttevents = await getTimeTable(facultyID);
 
   let events = [];
   ttevents?.map((ttevent) => {
     const id = ttevent.subject_code;
     const title = ttevent.subject_name;
-    const start = getDaysDateTime(ttevent.day, ttevent.start_time,currDate);
-    const end = getDaysDateTime(ttevent.day, ttevent.end_time,currDate);
+    const start = getDaysDateTime(ttevent.day, ttevent.start_time, currDate);
+    const end = getDaysDateTime(ttevent.day, ttevent.end_time, currDate);
     const type = ttevent.type;
     const batch = ttevent.batch;
     const division = ttevent.division;
@@ -79,3 +79,68 @@ export async function timeTableEventsHelper(facultyID,currDate) {
   });
   return events;
 }
+
+export const getStudentArray = (data) => {
+  let initialStudents = [];
+  initialStudents = data?.map((student) => {
+    return {
+      sapid: student.sap_id,
+      name: student.name,
+    };
+  });
+  return initialStudents;
+};
+
+export function combineEventsAndLectures(events, lectures) {
+  const combinedArray = [...lectures];
+  events.forEach((event) => {
+    const matchingLecture = lectures.find(
+      (lecture) =>
+        lecture.start.toISOString() === event.start.toISOString() &&
+        lecture.end.toISOString() === event.end.toISOString()
+    );
+
+    if (!matchingLecture) {
+      combinedArray.push(event);
+    }
+  });
+
+  return combinedArray;
+}
+
+export const eventPropGetter = (event) => {
+  if (event?.type === undefined) {
+    return {
+      style: {
+        backgroundColor: "#34313197",
+      },
+    };
+  }
+  const color = event.type === "theory" ? "#AA5656" : "#0080FB";
+  return {
+    style: {
+      backgroundColor: color,
+    },
+  };
+};
+
+export const makeEventForCreateLecture = (event, faculty_id) => {
+  const startDate = timeHelperBachaLe(event.start.getTime());
+  const endDate = timeHelperBachaLe(event.end.getTime());
+  const lecture = {
+    date_of_lecture: startDate,
+    start_time: startDate,
+    end_time: endDate,
+    subject_code: event.id,
+    faculty_id: faculty_id,
+    division: event.division,
+    batch: event.batch,
+    type: event.type,
+    year: event.year,
+  };
+  return lecture;
+};
+
+export const getTwoDecimals = (number) => {
+  return parseFloat(number.toFixed(2));
+};

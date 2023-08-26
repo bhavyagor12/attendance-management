@@ -8,6 +8,9 @@ import { getSubjectsByFaculty } from "../utils/services";
 
 const HomePage = () => {
   const [view, setView] = useState("week");
+  const info = useRecoilValue(infoState);
+  const [subjects, setSubjects] = useState([]);
+  let facultyID = info?.ID;
 
   useEffect(() => {
     const handleResize = () => {
@@ -18,20 +21,12 @@ const HomePage = () => {
       }
     };
 
-    // Initial call
     handleResize();
-
-    // Add event listener for window resize
     window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const info = useRecoilValue(infoState);
-  let facultyID = info?.ID;
-  const [subjects, setSubjects] = React.useState([]);
 
   const initSubjects = async () => {
     const subs = await getSubjectsByFaculty(facultyID);
@@ -39,6 +34,7 @@ const HomePage = () => {
       setSubjects(subs);
     }
   };
+
   useEffect(() => {
     initSubjects();
   }, []);

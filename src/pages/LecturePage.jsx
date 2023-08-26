@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Nav from "../components/Navbar";
 import { TiTick } from "react-icons/ti";
-import Papa from "../components/Papa.js";
+
 import { useLocation } from "react-router-dom";
 import AttendanceTable from "../components/AttendanceTable";
 import { Button } from "@mui/material";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { classInfoState } from "../atoms/classInfoState";
+import Csvconvert from "../components/CsvTimetable";
 const MarkAttendance = () => {
   const [lectureId, setLectureId] = useState("");
   const [lecture, setLecture] = useState({});
@@ -55,7 +56,7 @@ const MarkAttendance = () => {
     <div>
       <Nav />
       {!loading && (
-        <Papa lectureId={lectureId} subjectCode={lecture.subject_code} />
+        <Csvconvert lectureId={lectureId} subjectCode={lecture.subject_code} />
       )}
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-2">Students Table</h1>

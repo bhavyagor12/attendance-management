@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Banner from "../components/Banner";
+
 import Nav from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 import LectureCard from "../components/LectureCard";
@@ -9,8 +9,9 @@ const SubjectPage = () => {
   const [lectures, setLectures] = React.useState([]);
   let location = useLocation();
   const subjectId = location.state.subjectId;
+
   const initLecs = async () => {
-    const lecs= await getLecturesBySubject(subjectId);
+    const lecs = await getLecturesBySubject(subjectId);
     setLectures(lecs);
   };
   useEffect(() => {
@@ -20,7 +21,7 @@ const SubjectPage = () => {
   return (
     <div>
       <Nav />
-      {/* <Banner /> */}
+
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <p className=" text-sm md:text-xl text-gray-600">
           Here is a list of conducted lectures,{" "}

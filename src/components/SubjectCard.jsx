@@ -5,6 +5,7 @@ import { subjectState } from "../atoms/subjectState";
 const SubjectCard = ({ name, year, semester, subjectId, code }) => {
   const [subject, setSubject] = useRecoilState(subjectState);
   const navigate = useNavigate();
+
   const handleClick = () => {
     setSubject(subjectId);
     navigate(`/subject/${subjectId}`, {

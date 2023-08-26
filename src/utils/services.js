@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 
+const BASE_URL = `http://localhost:9000/`;
+
 export const Login = async (userData) => {
   try {
     const response = await axios.post("http://localhost:9000/login", userData);
@@ -75,7 +77,9 @@ export const Register = async (teacherData) => {
 export const getAllLectures = async (facultyId) => {
   let updatedEventsData = [];
   try {
-    const response = await axios.get(`http://localhost:9000/getLecturesByFaculty/${facultyId}`);
+    const response = await axios.get(
+      `http://localhost:9000/getLecturesByFaculty/${facultyId}`
+    );
     const allLectures = response.data;
     // Initialize as an empty array to clear existing events
     allLectures.forEach((lecture) => {
@@ -240,12 +244,30 @@ export const getStudentsbySubject = async (classInfo, subjectCode) => {
 
 export const getLectureById = async (lectureId) => {
   try {
-    let fetchMethod = "GET",
-      apiUrl = `http://localhost:9000/lecture/${lectureId}`;
-    // apiUrl = `http://localhost:9000/getAllStudents`;
+    let fetchMethod = "GET";
+    const apiUrl = `http://localhost:9000/lecture/${lectureId}`;
+
     const response = await axios({
       method: fetchMethod,
       url: apiUrl,
+    });
+
+    const content = response.data;
+    return content;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLectureAttendance = async (lectureId) => {
+  try {
+    let fetchMethod = "POST";
+    const getClassAttendanceUrl =
+      BASE_URL + `getLectureAttendance/${lectureId}`;
+
+    const response = await axios({
+      method: fetchMethod,
+      url: getClassAttendanceUrl,
     });
 
     const content = response.data;

@@ -9,7 +9,7 @@ import { infoState } from "../atoms/infoState";
 import { Register } from "../utils/services";
 const RegisterPage = () => {
   const [sapid, setSapid] = useState("");
-    const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [info, setInfo] = useRecoilState(infoState);
@@ -22,20 +22,20 @@ const RegisterPage = () => {
     e.preventDefault();
     const teacherData = {
       sap_id: Number(sapid),
-      name: name,   
+      name: name,
       password,
     };
-      const infol= await Register(teacherData);
-      if(infol){
-        setInfo(infol);
+    const infol = await Register(teacherData);
+    if (infol) {
+      setInfo(infol);
       navigate("/login");
-      }
+    }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/login");
-  }
+  };
 
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
@@ -50,9 +50,6 @@ const RegisterPage = () => {
           <div>
             <h2 className="mt-6 text-center text-xl md:text-2xl font-extrabold text-gray-700">
               Attendance Management System
-            </h2>
-            <h2 className="text-center text-xl font-extrabold text-gray-700">
-              Register to this god system
             </h2>
           </div>
           <form className="mt-8 space-y-6 gap-2">
@@ -121,8 +118,7 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleSubmit}
-              >
+                onClick={handleSubmit}>
                 Register
               </button>
             </div>
@@ -132,8 +128,7 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleClick}
-              >
+                onClick={handleClick}>
                 Login
               </button>
             </div>
