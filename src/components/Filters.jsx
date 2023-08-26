@@ -28,7 +28,7 @@ const Filters = () => {
     setFilters({ year, division, startDate, endDate });
   };
   return (
-    <div className="flex items-center justify-center gap-8">
+    <div className="flex items-center justify-center gap-8 flex-wrap">
       <Input
         placeholder="PassOut Year"
         id="year"

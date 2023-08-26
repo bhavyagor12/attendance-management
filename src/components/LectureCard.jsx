@@ -49,35 +49,39 @@ const LectureCard = ({
     fetchAttendance();
   }, []);
   return (
-    <div onClick={handleClick}>
-      <div className=" flex py-8  border rounded-lg shadow bg-gray-800 border-gray-700">
-        <div className="mx-4">
-          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-white ">
-            Date : {datte?.toString().slice(0, 15)}
+    <div onClick={handleClick} className="w-[360px] h-[250px]">
+      <div className="flex justify-around py-4 border rounded-lg shadow bg-gray-800 border-gray-700">
+        <div className="">
+          <h5 className="mb-2 text-md font-semibold tracking-tight text-white ">
+            {datte?.toString().slice(0, 15)}
           </h5>
-          <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white flex justify-between">
+          <h4 className="mb-2 text-md font-semibold tracking-tight text-white flex justify-between">
             <div>Year : {year}</div>
           </h4>
-          <h4 className="mb-2 text-2xl font-semibold tracking-tight text-white flex justify-between">
-            <div>Division : {division}</div> <div>Batch : {batch}</div>
+          <h4 className="mb-2 text-md font-semibold tracking-tight text-white flex justify-between">
+            <div>Division : {division}</div>
+          </h4>
+          <h4 className="mb-2 text-md font-semibold tracking-tight text-white flex justify-between">
+            <div>Batch : {batch}</div>
           </h4>
         </div>
-        <div className=" px-8 mx-4">
+        <div className=" px-[1px] mx-4 text-md">
+          <div className="flex gap-1 pb-2">
           <p className="font-bold text-gray-300 w-[100%] ">Type:</p>
           <p className="font-normal text-gray-300 w-[100%]">{type}</p>
-          <p className="font-bold text-gray-300 w-[100%">Students attended: </p>
+          </div>
+          <div className="flex gap-1 pb-2">
+          <p className="font-bold text-gray-300 w-[100%]">Attended: </p>
           <p className="font-normal text-gray-300 w-[100%]">
             {attendance.length}
           </p>
-          <p className="font-bold text-gray-300 ">Start Time:</p>
+          </div>
+          <div className="flex-wrap pb-2">
           <p className="font-normal text-gray-300 w-[100%]">
             {" "}
-            {startTime && startTime.slice(-5)}{" "}
+            {startTime && startTime.slice(-5)}{" "} - {endTime && endTime.slice(-5)}{" "}
           </p>
-          <p className="font-bold text-gray-300 ">End Time:</p>
-          <p className="font-normal text-gray-300 w-[100%]">
-            {endTime && endTime.slice(-5)}{" "}
-          </p>
+          </div>
         </div>
       </div>
     </div>
