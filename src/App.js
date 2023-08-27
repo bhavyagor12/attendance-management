@@ -20,14 +20,14 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
             </>
           ) : (
-            ` <>
+            <>
               <Route path="/lecture/:lectureId" element={<LecturePage />} />
               <Route path="/subject/:subjectId" element={<SubjectPage />} />
               <Route path="/report" element={<ReportPage />} />
               <Route path="/" element={<HomePage />} />
               {/* <Route path="/register" element={<RegisterPage />} />
               <Route path="/" element={<LoginPage />} /> */}
-            </>`
+            </>
           )}
         </Routes>
       </BrowserRouter>
