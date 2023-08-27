@@ -19,6 +19,7 @@ const MarkAttendance = () => {
   const handleDeleteLeture = async () => {
     if (deleteLecture(lectureId)) {
       navigate("/");
+      window.location.reload(false);
     }
   };
   let location = useLocation();
@@ -71,7 +72,8 @@ const MarkAttendance = () => {
       <Button
         onClick={handleDeleteLeture}
         variant="contained"
-        sx={{ backgroundColor: "red", margin: "1rem" }}>
+        sx={{ backgroundColor: "red", margin: "1rem" }}
+      >
         Delete Lecture
       </Button>
       {!loading && <AttendanceTable subjectCode={lecture.subject_code} />}

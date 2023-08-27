@@ -5,7 +5,10 @@ const BASE_URL = `http://localhost:9000/`;
 
 export const Login = async (userData) => {
   try {
-    const response = await axios.post("http://localhost:9000/login", userData);
+    const response = await axios.post("http://localhost:9000/login", userData, {
+      withCredentials: true,
+    });
+    console.log(response.headers);
     const content = await response.data;
     let info = null;
     if (content !== "AuthError") {
@@ -27,7 +30,7 @@ export const Login = async (userData) => {
     console.log(error);
     Swal.fire({
       title: "Error!",
-      text: "internal error",
+      text: error,
       icon: "error",
       confirmButtonText: "Retry",
     });
@@ -38,7 +41,8 @@ export const Register = async (teacherData) => {
   try {
     const response = await axios.post(
       "http://localhost:9000/register",
-      teacherData
+      teacherData,
+      { withCredentials: true }
     );
     const content = await response.data;
     let info = null;
@@ -78,7 +82,8 @@ export const getAllLectures = async (facultyId) => {
   let updatedEventsData = [];
   try {
     const response = await axios.get(
-      `http://localhost:9000/getLecturesByFaculty/${facultyId}`
+      `http://localhost:9000/getLecturesByFaculty/${facultyId}`,
+      { withCredentials: true }
     );
     const allLectures = response.data;
     // Initialize as an empty array to clear existing events
@@ -114,7 +119,8 @@ export const getAllLectures = async (facultyId) => {
 export const getSubjectsByFaculty = async (facultyID) => {
   try {
     const response = await axios.get(
-      `http://localhost:9000/getSubjectsbyFaculty/${facultyID}`
+      `http://localhost:9000/getSubjectsbyFaculty/${facultyID}`,
+      { withCredentials: true }
     );
     const subjects = await response.data;
     return subjects;
@@ -128,7 +134,8 @@ export const createLecture = async (lecture) => {
   try {
     const response = await axios.post(
       "http://localhost:9000/lecture",
-      JSON.stringify(lecture)
+      JSON.stringify(lecture),
+      { withCredentials: true }
     );
     const content = await response.data;
     return content;
@@ -140,7 +147,8 @@ export const createLecture = async (lecture) => {
 export const getLecturesBySubject = async (subjectID) => {
   try {
     const res = await axios.get(
-      `http://localhost:9000/getLecturesBySubject/${subjectID}`
+      `http://localhost:9000/getLecturesBySubject/${subjectID}`,
+      { withCredentials: true }
     );
     return res.data;
   } catch (error) {
@@ -154,11 +162,15 @@ export const markLectureAttendance = async (
   subjectCode
 ) => {
   try {
-    const res = await axios.put("http://localhost:9000/markAttendance", {
-      lecture_id: lectureId || "",
-      attendance: stundentArr,
-      subject_code: subjectCode || "",
-    });
+    const res = await axios.put(
+      "http://localhost:9000/markAttendance",
+      {
+        lecture_id: lectureId || "",
+        attendance: stundentArr,
+        subject_code: subjectCode || "",
+      },
+      { withCredentials: true }
+    );
 
     return res.data;
   } catch (error) {
@@ -168,11 +180,12 @@ export const markLectureAttendance = async (
 
 export const deleteLecture = async (lectureId) => {
   try {
-    const response = await fetch(`http://localhost:9000/lecture/${lectureId}`, {
-      method: "DELETE",
-    });
-
-    if (response.ok) {
+    const response = await axios.delete(
+      `http://localhost:9000/lecture/${lectureId}`,
+      { withCredentials: true }
+    );
+    console.log(response);
+    if (response.status === 200) {
       console.log("Lecture deleted successfully");
       Swal.fire({
         title: "Success!",
@@ -200,7 +213,8 @@ export const deleteLecture = async (lectureId) => {
 export const getTimeTable = async (facultyID) => {
   try {
     const res = await axios.get(
-      `http://localhost:9000/getAllTimeTableEntries/${facultyID}`
+      `http://localhost:9000/getAllTimeTableEntries/${facultyID}`,
+      { withCredentials: true }
     );
     return res.data;
   } catch (error) {
@@ -210,13 +224,9 @@ export const getTimeTable = async (facultyID) => {
 
 export const getStudentsbyClassInfo = async (classInfo) => {
   try {
-    let fetchMethod = "GET",
-      apiUrl = `http://localhost:9000/getAllStudents?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
+    let apiUrl = `http://localhost:9000/getAllStudents?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
     // apiUrl = `http://localhost:9000/getAllStudents`;
-    const response = await axios({
-      method: fetchMethod,
-      url: apiUrl,
-    });
+    const response = await axios.get(apiUrl, { withCredentials: true });
 
     const content = response.data;
     return content;
@@ -227,13 +237,9 @@ export const getStudentsbyClassInfo = async (classInfo) => {
 
 export const getStudentsbySubject = async (classInfo, subjectCode) => {
   try {
-    let fetchMethod = "GET",
-      apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
+    let apiUrl = `http://localhost:9000/getAllStudentsBySubject/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
     // apiUrl = `http://localhost:9000/getAllStudents`;
-    const response = await axios({
-      method: fetchMethod,
-      url: apiUrl,
-    });
+    const response = await axios.get(apiUrl, { withCredentials: true });
 
     const content = response.data;
     return content;
@@ -244,13 +250,9 @@ export const getStudentsbySubject = async (classInfo, subjectCode) => {
 
 export const getLectureById = async (lectureId) => {
   try {
-    let fetchMethod = "GET";
     const apiUrl = `http://localhost:9000/lecture/${lectureId}`;
 
-    const response = await axios({
-      method: fetchMethod,
-      url: apiUrl,
-    });
+    const response = await axios.get(apiUrl, { withCredentials: true });
 
     const content = response.data;
     return content;
@@ -261,18 +263,40 @@ export const getLectureById = async (lectureId) => {
 
 export const getLectureAttendance = async (lectureId) => {
   try {
-    let fetchMethod = "POST";
-    const getClassAttendanceUrl =
+    const getLectureAttendanceUrl =
       BASE_URL + `getLectureAttendance/${lectureId}`;
 
-    const response = await axios({
-      method: fetchMethod,
-      url: getClassAttendanceUrl,
+    const response = await axios.post(getLectureAttendanceUrl, {
+      withCredentials: true,
     });
 
     const content = response.data;
     return content;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getClassAttendance = async (classInfo) => {
+  try {
+    let apiUrl = "http://localhost:9000/getClassAttendance";
+
+    const response = await axios.post(apiUrl, JSON.stringify(classInfo), {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const rawResponse = await axios.get("http://localhost:9000/logout", {
+      withCredentials: true,
+    });
+    return rawResponse;
+  } catch (error) {
+    return error;
   }
 };

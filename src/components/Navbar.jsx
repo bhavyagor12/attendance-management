@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useResetRecoilState } from "recoil";
 import { infoState } from "../atoms/infoState";
 import Swal from "sweetalert2";
+import { logout } from "../utils/services";
 const Nav = () => {
   const navigate = useNavigate();
   const handleClicked = () => {
@@ -16,13 +17,7 @@ const Nav = () => {
     e.preventDefault();
     resetValue();
     try {
-      const rawResponse = await fetch("http://localhost:9000/logout", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
+      const rawResponse = await logout();
       navigate("/");
     } catch (error) {
       Swal.fire({

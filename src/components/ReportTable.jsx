@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { subjectState } from "../atoms/subjectState";
 import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
+import { getClassAttendance, getLectureAttendance } from "../utils/services";
 
 const ReportTable = () => {
   const [subject, setSubject] = useRecoilState(subjectState);
@@ -18,25 +19,17 @@ const ReportTable = () => {
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
-  const [defaulter, setDefaulter] = useState([]);
 
   let location = useLocation();
   const navigate = useNavigate();
 
-  const fetchData = async (lectureId) => {
+  const fetchData = async () => {
     try {
-      let fetchMethod = "POST";
-      let apiUrl = "http://localhost:9000/getClassAttendance";
-
-      const response = await axios({
-        method: fetchMethod,
-        url: apiUrl,
-        data: JSON.stringify({
-          year: filters.year,
-          division: filters.division,
-          start_date: filters.startDate,
-          end_date: filters.endDate,
-        }),
+      const response = await getClassAttendance({
+        year: filters.year,
+        division: filters.division,
+        start_date: filters.startDate,
+        end_date: filters.endDate,
       });
       const content = response.data;
 
@@ -140,12 +133,14 @@ const ReportTable = () => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}>
+              }}
+            >
               <Button
                 color="primary"
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
-                variant="contained">
+                variant="contained"
+              >
                 Download CSV
               </Button>
             </Box>
