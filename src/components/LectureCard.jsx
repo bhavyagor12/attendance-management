@@ -14,8 +14,7 @@ const LectureCard = ({
 }) => {
   const [attendance, setAttendance] = React.useState([]);
   const [datte, setDatte] = React.useState(null);
-  const [sTime, setsTime] = React.useState(null);
-  const [eTime, seteTime] = React.useState(null);
+
   const navigate = useNavigate();
   const lectureID = ID;
 
@@ -25,7 +24,6 @@ const LectureCard = ({
     });
   };
   const fetchAttendance = async () => {
-    // e.preventDefault();
     try {
       const rawResponse = await getLectureAttendance(lectureID);
       setAttendance(rawResponse.map((student) => student.attendance));

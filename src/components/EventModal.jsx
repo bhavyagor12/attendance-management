@@ -7,18 +7,18 @@ import { eventState } from "../atoms/eventState";
 import { infoState } from "../atoms/infoState";
 import { timestampToDatetimeInputString } from "../utils/helpers";
 import { createLecture } from "../utils/services";
-import { Troubleshoot } from "@mui/icons-material";
+
 export default function EventModal({ startD, endD }) {
   const userInfo = useRecoilValue(infoState);
   const [modal, setModal] = useRecoilState(modalState);
   const [SubjectCode, setSubjectCode] = useState("");
-  const [SubjectName, setSubjectName] = useState("");
+
   const [division, setDivision] = useState("A");
   const [year, setYear] = useState(3);
-  // const [type, setType] = useState("Lecture");
+
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState(startTime);
-  const [eventsData, setEventsData] = useRecoilState(eventState);
+
   const [error, setError] = useState(false);
   const cancelButtonRef = useRef(null);
 

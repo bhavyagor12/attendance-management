@@ -3,17 +3,15 @@ import MaterialReactTable from "material-react-table";
 import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
-import axios from "axios";
+
 import { useRecoilState } from "recoil";
-import { json, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { subjectState } from "../atoms/subjectState";
+import { useLocation } from "react-router-dom";
+
 import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
-import { getClassAttendance, getLectureAttendance } from "../utils/services";
+import { getClassAttendance } from "../utils/services";
 
 const ReportTable = () => {
-  const [subject, setSubject] = useRecoilState(subjectState);
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
@@ -21,7 +19,6 @@ const ReportTable = () => {
   const [rowSelection, setRowSelection] = useState({});
 
   let location = useLocation();
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
@@ -119,11 +116,6 @@ const ReportTable = () => {
           data={data}
           enableRowSelection={false}
           positionToolbarAlertBanner="bottom"
-          // muiTableBodyCellProps={{
-          //   sx: {
-          //     color: "red",
-          //   },
-          // }}
           getRowId={(originalRow) => originalRow.sapid}
           onRowSelectionChange={setRowSelection}
           renderTopToolbarCustomActions={({ table }) => (
@@ -133,14 +125,12 @@ const ReportTable = () => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}
-            >
+              }}>
               <Button
                 color="primary"
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
-                variant="contained"
-              >
+                variant="contained">
                 Download CSV
               </Button>
             </Box>

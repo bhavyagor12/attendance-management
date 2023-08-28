@@ -1,5 +1,5 @@
 import { Select, Input, DatePicker } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
 
@@ -8,8 +8,8 @@ const Filters = () => {
   const [year, setYear] = useState("3");
   const [division, setDivision] = useState("B");
   const [filters, setFilters] = useRecoilState(filtersState);
-  const[startDate, setStartDate] = useState("2024-06-01");
-  const[endDate, setEndDate] = useState("2024-09-01");
+  const [startDate, setStartDate] = useState("2024-06-01");
+  const [endDate, setEndDate] = useState("2024-09-01");
 
   const yearOnchange = (value) => {
     setYear(parseInt(value));
@@ -20,9 +20,9 @@ const Filters = () => {
   };
 
   const handleChange = (value) => {
-    setStartDate(value[0].format('YYYY-MM-DD'));
-    setEndDate(value[1].format('YYYY-MM-DD'));
-  }
+    setStartDate(value[0].format("YYYY-MM-DD"));
+    setEndDate(value[1].format("YYYY-MM-DD"));
+  };
 
   const onButtonClick = () => {
     setFilters({ year, division, startDate, endDate });
@@ -70,32 +70,9 @@ const Filters = () => {
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         type="button"
-        onClick={onButtonClick}
-      >
+        onClick={onButtonClick}>
         Get Data
       </button>
-
-      {/* <Select
-    style={{ width: 250, marginLeft: 65 }}
-    showSearch
-    placeholder="Select batch"
-    optionFilterProp="children"
-    // onChange={onChange}
-    // onSearch={onSearch}
-    filterOption={(input, option) =>
-      (option?.label ?? '').toString().includes(input.toString())
-    }
-    options={[
-      {
-        value: 'batch1',
-        label: 'batch 1',
-      },
-      {
-        value: 'batch2',
-        label: 'batch 2',
-      }
-    ]}
-  /> */}
     </div>
   );
 };

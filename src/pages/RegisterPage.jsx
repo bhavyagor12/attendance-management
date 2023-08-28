@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Swal from "sweetalert2";
-// import logo from "../images/logo.png";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -118,8 +116,7 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleSubmit}
-              >
+                onClick={handleSubmit}>
                 Register
               </button>
             </div>
@@ -129,8 +126,7 @@ const RegisterPage = () => {
             <div className="flex items-center justify-center">
               <button
                 className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
-                onClick={handleClick}
-              >
+                onClick={handleClick}>
                 Login
               </button>
             </div>
