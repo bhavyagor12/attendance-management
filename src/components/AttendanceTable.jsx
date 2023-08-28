@@ -64,7 +64,7 @@ const AttendanceTable = ({ subjectCode }) => {
       sapIDs.push(row.original.sapid);
     });
     const res = await markLectureAttendance(lectureId, sapIDs, subjectCode);
-    if (res.status === 200) {
+    if (res === "Attendance Marked") {
       Swal.fire({
         title: "Success!",
         text: "Marked Attendance",

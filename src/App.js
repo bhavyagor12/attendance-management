@@ -9,7 +9,6 @@ import { infoState } from "./atoms/infoState";
 import { useRecoilValue } from "recoil";
 function App() {
   const userinfo = useRecoilValue(infoState);
-  console.log(userinfo.ID === undefined || userinfo.ID === "");
   return (
     <div>
       <BrowserRouter>
@@ -25,8 +24,6 @@ function App() {
               <Route path="/subject/:subjectId" element={<SubjectPage />} />
               <Route path="/report" element={<ReportPage />} />
               <Route path="/" element={<HomePage />} />
-              {/* <Route path="/register" element={<RegisterPage />} />
-              <Route path="/" element={<LoginPage />} /> */}
             </>
           )}
         </Routes>

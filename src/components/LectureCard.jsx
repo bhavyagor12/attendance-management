@@ -27,21 +27,8 @@ const LectureCard = ({
   const fetchAttendance = async () => {
     // e.preventDefault();
     try {
-      // const rawResponse = await fetch(
-      //   `http://localhost:9000/getLectureAttendance/${lectureID}`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       Accept: "application/json",
-      //       "Content-Type": "application/json",
-      //     },
-      //     // body: JSON.stringify(userData),
-      //   }
-      // );
       const rawResponse = await getLectureAttendance(lectureID);
-      const content = await rawResponse.json();
-
-      setAttendance(content.map((student) => student.attendance));
+      setAttendance(rawResponse.map((student) => student.attendance));
     } catch (error) {
       console.log(error);
     }
