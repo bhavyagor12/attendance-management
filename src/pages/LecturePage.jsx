@@ -19,7 +19,7 @@ const MarkAttendance = () => {
   const handleDeleteLeture = async () => {
     if (deleteLecture(lectureId)) {
       navigate("/");
-      window.location.reload(false);
+      // window.location.reload();
     }
   };
   let location = useLocation();

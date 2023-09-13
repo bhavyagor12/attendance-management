@@ -9,7 +9,7 @@ const GET_LECTURES_BY_FACULTY = BASE_URL + "/getLecturesByFaculty";
 const LECTURE_URL = BASE_URL + "/lecture";
 const GET_LECTURES_BY_SUBJECT = BASE_URL + "/getLecturesBySubject";
 const MARK_ATTENDANCE = BASE_URL + "/markAttendance";
-const DELETE_LECTURE = BASE_URL + "/delete";
+const DELETE_LECTURE = BASE_URL + "/lecture";
 const TIMETABE_ENTRY = BASE_URL + "/getAllTimeTableEntries";
 const GET_ALL_STUDENTS = BASE_URL + "/getAllStudents";
 const GET_STUDENTS_BY_SUBJECT = BASE_URL + "/getAllStudentsBySubject";
@@ -175,7 +175,22 @@ export const markLectureAttendance = async (
       },
       { withCredentials: true }
     );
-
+    if (res.status === 200) {
+      Swal.fire({
+        title: "Success!",
+        text: "Marked Attendance",
+        icon: "success",
+        confirmButtonText: "Done",
+      });
+      
+    } else {
+      Swal.fire({
+        title: "Failure!",
+        text: "Some error",
+        icon: "error",
+        confirmButtonText: "retry",
+      });
+    }
     return res.data;
   } catch (error) {
     console.log(error);
@@ -183,7 +198,7 @@ export const markLectureAttendance = async (
 };
 
 export const deleteLecture = async (lectureId) => {
-  const url = DELETE_LECTURE + `${lectureId}`;
+  const url = DELETE_LECTURE + `/${lectureId}`;
   try {
     const response = await axios.delete(url, { withCredentials: true });
     console.log(response);
@@ -195,6 +210,7 @@ export const deleteLecture = async (lectureId) => {
         icon: "success",
         confirmButtonText: "Done",
       });
+      window.location.reload(false)
       return true;
     } else {
       console.log("Failed to delete lecture");

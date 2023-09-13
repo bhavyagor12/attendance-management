@@ -63,22 +63,9 @@ const AttendanceTable = ({ subjectCode }) => {
     rows.map((row) => {
       sapIDs.push(row.original.sapid);
     });
-    const res = await markLectureAttendance(lectureId, sapIDs, subjectCode);
-    if (res === "Attendance Marked") {
-      Swal.fire({
-        title: "Success!",
-        text: "Marked Attendance",
-        icon: "success",
-        confirmButtonText: "Done",
-      });
+    if (markLectureAttendance(lectureId, sapIDs, subjectCode)) {
       navigate("/");
-    } else {
-      Swal.fire({
-        title: "Failure!",
-        text: "Some error",
-        icon: "error",
-        confirmButtonText: "retry",
-      });
+      // window.location.reload();
     }
   };
   return (

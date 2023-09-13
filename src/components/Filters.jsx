@@ -6,7 +6,7 @@ import { filtersState } from "../atoms/filtersState";
 const { RangePicker } = DatePicker;
 const Filters = () => {
   const [year, setYear] = useState("3");
-  const [division, setDivision] = useState("B");
+  const [division, setDivision] = useState("I1");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [startDate, setStartDate] = useState("2024-06-01");
   const [endDate, setEndDate] = useState("2024-09-01");
@@ -40,7 +40,7 @@ const Filters = () => {
         style={{ width: 250 }}
         showSearch
         id="division"
-        defaultValue="B"
+        defaultValue="I1"
         placeholder="Select division"
         optionFilterProp="children"
         onChange={divOnchange}
@@ -49,21 +49,13 @@ const Filters = () => {
         }
         options={[
           {
-            value: "A",
-            label: "A",
+            value: "I1",
+            label: "I1",
           },
           {
-            value: "B",
-            label: "B",
-          },
-          {
-            value: "C",
-            label: "C",
-          },
-          {
-            value: "D",
-            label: "D",
-          },
+            value: "I2",
+            label: "I2",
+          }
         ]}
       />
       <RangePicker onChange={handleChange} />
