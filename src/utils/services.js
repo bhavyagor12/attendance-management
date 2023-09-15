@@ -182,7 +182,6 @@ export const markLectureAttendance = async (
         icon: "success",
         confirmButtonText: "Done",
       });
-      
     } else {
       Swal.fire({
         title: "Failure!",
@@ -210,7 +209,7 @@ export const deleteLecture = async (lectureId) => {
         icon: "success",
         confirmButtonText: "Done",
       });
-      window.location.reload(false)
+      window.location.reload(false);
       return true;
     } else {
       console.log("Failed to delete lecture");
@@ -281,10 +280,14 @@ export const getLectureAttendance = async (lectureId) => {
   }
 };
 
-export const getStudentsbySubject = async (classInfo, subjectCode) => {
+export const getStudentsbySubject = async (
+  classInfo,
+  subjectCode,
+  lecture_id
+) => {
   const url =
     GET_STUDENTS_BY_SUBJECT +
-    `/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}`;
+    `/${subjectCode}?year=${classInfo.year}&division=${classInfo.division}&batch=${classInfo.batch}&lecture_id=${lecture_id}`;
   try {
     const response = await axios.get(url, { withCredentials: true });
 

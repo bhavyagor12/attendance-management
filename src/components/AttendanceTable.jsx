@@ -24,7 +24,11 @@ const AttendanceTable = ({ subjectCode }) => {
   const navigate = useNavigate();
 
   const fetchData = async (lectureId) => {
-    const content = await getStudentsbySubject(classInfo, subjectCode);
+    const content = await getStudentsbySubject(
+      classInfo,
+      subjectCode,
+      lectureId
+    );
     let newColumns = [
       { accessorKey: "sapid", header: "sapid", size: 120 },
       { accessorKey: "name", header: "Name", size: 200 },
