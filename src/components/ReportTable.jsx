@@ -38,13 +38,13 @@ const ReportTable = () => {
 
       content.subjects.forEach((subject) => {
         newColumns.push({
-          accessorKey: subject + "theory",
+          accessorKey: subject + " theory",
           header: subject + "theory",
           size: 120,
         });
         newColumns.push({
-          accessorKey: subject + "practical",
-          header: subject + "practical",
+          accessorKey: subject + " practical",
+          header: subject + " practical",
           size: 120,
         });
       });
