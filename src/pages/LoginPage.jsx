@@ -23,17 +23,17 @@ const LoginPage = () => {
       sap_id: Number(sapid),
       password,
     };
-      const infol= await Login(userData);
-      if(infol){
-        setInfo(infol);
+    const infol = await Login(userData);
+    if (infol) {
+      setInfo(infol);
       navigate("/");
-      }
+    }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/register");
-  }
+  };
 
   return (
     <div className="w-full min-h-screen flex items-center justify-around pt-0">
@@ -53,7 +53,7 @@ const LoginPage = () => {
               Sign in to your account
             </h2>
           </div>
-          <form className="mt-8 space-y-6 gap-2">
+          <form className="mt-8 space-y-4">
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px gap-y-4">
               <div className="mb-4">
@@ -100,20 +100,26 @@ const LoginPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-2">
               <button
-                className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                className="bg-[#AA5656] text-[#F1DBBF] font-Poppins py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500 w-fit"
                 onClick={handleSubmit}
               >
                 Login
               </button>
+              <div
+                onClick={() => {}}
+                className="text-xs underline text-gray-800 hover:text-[#AA5656] duration-200 cursor-pointer"
+              >
+                Forgot Password?
+              </div>
             </div>
             <h2 className="text-center text-l font-bold text-gray-700">
               Not Registered?
             </h2>
             <div className="flex items-center justify-center">
               <button
-                className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                className="bg-[#AA5656] text-[#F1DBBF] font-Poppins py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
                 onClick={handleClick}
               >
                 Register

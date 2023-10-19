@@ -44,13 +44,20 @@ const Nav = () => {
         navigate("/report");
       },
     },
+    {
+      name: "PROFILE",
+      link: "/profile",
+      onclick: () => {
+        navigate("/profile");
+      },
+    },
     { name: "LOGOUT", link: "/", onclick: handleLogout },
   ];
   let [open, setOpen] = useState(false);
   return (
     <div className="md:flex items-center justify-between  bg-white py-4 md:py-2 px-7 h-20">
       <div
-        className="font-bold text-lg md:text-2xl cursor-pointer flex items-center font-[Poppins] 
+        className="font-bold text-lg md:text-2xl cursor-pointer flex items-center font-Poppins
         text-gray-800"
         onClick={handleClicked}
       >
@@ -83,7 +90,7 @@ const Nav = () => {
               ) : (
                 <button
                   // href={link.link}
-                  className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-8  rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                  className="bg-[#AA5656] text-[#F1DBBF] font-Poppins py-2 px-8  rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
                   onClick={link.onclick}
                 >
                   {link.name}

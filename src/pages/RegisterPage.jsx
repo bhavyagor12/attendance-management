@@ -115,7 +115,7 @@ const RegisterPage = () => {
             </div>
             <div className="flex items-center justify-center">
               <button
-                className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                className="bg-[#AA5656] text-[#F1DBBF] font-Poppins py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
                 onClick={handleSubmit}>
                 Register
               </button>
@@ -125,7 +125,7 @@ const RegisterPage = () => {
             </h2>
             <div className="flex items-center justify-center">
               <button
-                className="bg-[#AA5656] text-[#F1DBBF] font-[Poppins] py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
+                className="bg-[#AA5656] text-[#F1DBBF] font-Poppins py-2 px-6 rounded  hover:bg-[#F1DBBF] hover:text-[#AA5656] duration-500"
                 onClick={handleClick}>
                 Login
               </button>
