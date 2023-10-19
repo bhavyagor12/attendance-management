@@ -38,8 +38,13 @@ const ReportTable = () => {
 
       content.subjects.forEach((subject) => {
         newColumns.push({
-          accessorKey: subject,
-          header: subject,
+          accessorKey: subject + "theory",
+          header: subject + "theory",
+          size: 120,
+        });
+        newColumns.push({
+          accessorKey: subject + "practical",
+          header: subject + "practical",
           size: 120,
         });
       });
@@ -79,8 +84,12 @@ const ReportTable = () => {
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
       student.subject_attendance.forEach((subject) => {
-        const subjectAttendance = getTwoDecimals(subject.attendance);
-        valuesToUpdate.push(`${subjectAttendance}%`);
+        const theoryAttendance = getTwoDecimals(subject.attendance_theory);
+        const practicalAttendance = getTwoDecimals(
+          subject.attendance_practical
+        );
+        valuesToUpdate.push(`${theoryAttendance}%`);
+        valuesToUpdate.push(`${practicalAttendance}%`);
       });
       const grandAttendance = getTwoDecimals(student.grand_attendance);
       valuesToUpdate.push(`${grandAttendance}%`);
