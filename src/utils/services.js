@@ -3,6 +3,8 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const LOGIN_URL = BASE_URL + "/login";
+const FACULTY_URL = BASE_URL + "/faculty";
+
 const GET_SUBJECTS_BY_FACULTY = BASE_URL + "/getSubjectsbyFaculty";
 const REGISTER_URL = BASE_URL + "/register";
 const GET_LECTURES_BY_FACULTY = BASE_URL + "/getLecturesByFaculty";
@@ -55,6 +57,34 @@ export const getSubjectsByFaculty = async (facultyID) => {
     });
     const subjects = await response.data;
     return subjects;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getFacultyById = async (facultyID) => {
+  const url = FACULTY_URL + `/${facultyID}`;
+  try {
+    const response = await axios.get(url, {
+      withCredentials: true,
+    });
+    const content = await response.data;
+    return content;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const updateFacultyById = async (facultyID, facultyData) => {
+  const url = FACULTY_URL + `/${facultyID}`;
+  try {
+    const response = await axios.put(url, JSON.stringify(facultyData), {
+      withCredentials: true,
+    });
+    const content = await response.data;
+    return content;
   } catch (error) {
     console.log(error);
     return null;
