@@ -37,9 +37,15 @@ const ReportTable = () => {
       ];
 
       content.subjects.forEach((subject) => {
+        console.log(subject);
         newColumns.push({
-          accessorKey: subject,
-          header: subject,
+          accessorKey: subject + " theory",
+          header: subject + " (Theory)",
+          size: 120,
+        });
+        newColumns.push({
+          accessorKey: subject + " practical",
+          header: subject + " (Practical)",
           size: 120,
         });
       });
@@ -68,6 +74,7 @@ const ReportTable = () => {
       setLectureId("1");
     }
     fetchData(location?.state?.lectureId);
+    console.log(filters);
   }, [location, filters]);
 
   const getDefaulterArray = (data, newColumns) => {
@@ -78,9 +85,14 @@ const ReportTable = () => {
       const valuesToUpdate = [];
       valuesToUpdate.push(student.student_id);
       valuesToUpdate.push(student.student_name);
+
       student.subject_attendance.forEach((subject) => {
-        const subjectAttendance = getTwoDecimals(subject.attendance);
-        valuesToUpdate.push(`${subjectAttendance}%`);
+        const theoryAttendance = getTwoDecimals(subject.attendance_theory);
+        const practicalAttendance = getTwoDecimals(
+          subject.attendance_practical
+        );
+        valuesToUpdate.push(`${theoryAttendance}%`);
+        valuesToUpdate.push(`${practicalAttendance}%`);
       });
       const grandAttendance = getTwoDecimals(student.grand_attendance);
       valuesToUpdate.push(`${grandAttendance}%`);
