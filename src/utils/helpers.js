@@ -82,6 +82,7 @@ export async function timeTableEventsHelper(facultyID, currDate) {
 
 export const getStudentArray = (data) => {
   let initialStudents = [];
+  console.log(data)
   initialStudents = data?.map((student) => {
     return {
       sapid: student.sap_id,

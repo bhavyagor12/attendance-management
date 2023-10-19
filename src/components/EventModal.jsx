@@ -13,7 +13,9 @@ export default function EventModal({ startD, endD }) {
   const [modal, setModal] = useRecoilState(modalState);
   const [SubjectCode, setSubjectCode] = useState("");
 
-  const [division, setDivision] = useState("A");
+  const [division, setDivision] = useState("I1");
+  const [batch, setBatch]= useState(0)
+  const [Type, setType]= useState("")
   const [year, setYear] = useState(3);
 
   const [startTime, setStartTime] = useState();
@@ -50,10 +52,11 @@ export default function EventModal({ startD, endD }) {
         subject_code: SubjectCode,
         division: division,
         year: year,
+        type: Type,
+        batch: Number(batch),
         faculty_id: userInfo.ID,
-        batch: Number(1),
       };
-
+      console.log(bdy)
       const l = await createLecture(bdy);
       window.location.reload(false);
       setModal(false);
@@ -167,9 +170,10 @@ export default function EventModal({ startD, endD }) {
                         </div>
                       )}
                     </div>
+                    
                     <div className="flex flex-col items-start my-1">
                       <label>Division</label>
-                      <input
+                      <select
                         onChange={(e) => {
                           setDivision(e.target.value);
                           setError(false);
@@ -177,16 +181,76 @@ export default function EventModal({ startD, endD }) {
                             setError(true);
                           }
                         }}
-                        type="text"
-                        name="Dvision"
+                        name="Division"
                         id="Division"
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
-                        placeholder="Division"
-                      />
+                        // value={year} // Make sure to set the value here if you want to show a default value
+                      >
+                        <option value="">Select Division</option>{" "}
+                        {/* Empty value for default selection */}
+                        <option value="I1">I1</option>
+                        <option value="I2">I2</option>
+                        <option value="I3">I3</option>
+                        {/* Add more options as needed */}
+                      </select>
 
                       {error && (
                         <div className="text-red-400 text-sm">
                           please enter valid division
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col items-start my-1">
+                      <label>Type(theory/practical)</label>
+                      <input
+                        onChange={(e) => {
+                          setType(e.target.value);
+                          setError(false);
+                          if (e.target.value === "") {
+                            setError(true);
+                          }
+                        }}
+                        type="text"
+                        name="Type"
+                        id="Type"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        placeholder="Type"
+                      />
+
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter valid type
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col items-start my-1">
+                      <label>Batch</label>
+                      <select
+                        onChange={(e) => {
+                          setBatch(e.target.value);
+                          setError(false);
+                          if (e.target.value === "") {
+                            setError(true);
+                          }
+                        }}
+                        name="Batch"
+                        id="Batch"
+                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
+                        // value={year} // Make sure to set the value here if you want to show a default value
+                      >
+                        <option value="">Select Batch</option>{" "}
+                        {/* Empty value for default selection */}
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        {/* Add more options as needed */}
+                      </select>
+
+                      {error && (
+                        <div className="text-red-400 text-sm">
+                          please enter valid batch
                         </div>
                       )}
                     </div>
