@@ -3,14 +3,62 @@ import Banner from "../components/Banner";
 import Nav from "../components/Navbar";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import { getFacultyById, logout, updateFacultyById } from "../utils/services";
+import { infoState } from "../atoms/infoState";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const ProfilePage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
+  const [facInfo, setFacInfo] = useState();
+  const info = useRecoilValue(infoState);
+  const navigate = useNavigate();
+  const resetValue = useResetRecoilState(infoState);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    resetValue();
+    try {
+      const rawResponse = await logout();
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Logout Unsuccessful",
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
+    }
+  };
   const togglePassword = (e) => {
     e.preventDefault();
     setPasswordShown(!passwordShown);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const facInfo = await getFacultyById(info.sap_id);
+    setFacInfo(facInfo);
+    setName(facInfo.name);
+    setEmail(facInfo.email);
+    setPassword(facInfo.password);
+  };
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const newInfo = {
+      name,
+      email,
+      password,
+    };
+    const res = await updateFacultyById(info.sap_id, newInfo);
+    if (res !== null && password !== facInfo.password) {
+      handleLogout(e);
+    }
   };
   return (
     <div>
@@ -73,7 +121,7 @@ const ProfilePage = () => {
           </div>
           <button
             className="bg-gray-800 text-green-300 font-Poppins py-2 px-6 rounded  hover:bg-green-300 hover:text-gray-800 duration-500 w-fit"
-            onClick={() => {}}
+            onClick={handleSave}
           >
             Update changes
           </button>
