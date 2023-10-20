@@ -11,8 +11,8 @@ const Filters = () => {
   const [startDate, setStartDate] = useState("2024-06-01");
   const [endDate, setEndDate] = useState("2024-09-01");
 
-  const yearOnchange = (value) => {
-    setYear(parseInt(value));
+  const yearOnchange = (e) => {
+    setYear(e.target.value);
   };
 
   const divOnchange = (value) => {
@@ -30,9 +30,9 @@ const Filters = () => {
   return (
     <div className="flex items-center justify-center gap-8 flex-wrap">
       <Input
-        placeholder="PassOut Year"
+        placeholder="Current Year"
         id="year"
-        defaultValue={year}
+        value={year}
         onChange={yearOnchange}
         style={{ width: 75 }}
       />
@@ -55,6 +55,10 @@ const Filters = () => {
           {
             value: "I2",
             label: "I2",
+          },
+          {
+            value: "I3",
+            label: "I3",
           }
         ]}
       />
