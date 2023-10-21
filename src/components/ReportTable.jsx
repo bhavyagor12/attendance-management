@@ -3,7 +3,7 @@ import MaterialReactTable from "material-react-table";
 import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
-
+import ReactLoading from "react-loading";
 import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
 
@@ -17,6 +17,7 @@ const ReportTable = () => {
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
+  const [loading, setLoading] = useState(true);
 
   let location = useLocation();
 
@@ -103,6 +104,7 @@ const ReportTable = () => {
 
       return jsonObject;
     });
+    setLoading(false);
 
     return initialStudents;
   };
@@ -122,7 +124,7 @@ const ReportTable = () => {
   };
   return (
     <>
-      {data !== null && (
+      {data !== null && !loading ? (
         <MaterialReactTable
           columns={columns}
           data={data}
@@ -148,6 +150,17 @@ const ReportTable = () => {
             </Box>
           )}
         />
+      ) : (
+        <div
+          className="flex items-center justify-center h-full
+        ">
+          <ReactLoading
+            type={"spinningBubbles"}
+            color={"#000000"}
+            height={"20%"}
+            width={"20%"}
+          />
+        </div>
       )}
     </>
   );
