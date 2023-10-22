@@ -14,8 +14,8 @@ export default function EventModal({ startD, endD }) {
   const [SubjectCode, setSubjectCode] = useState("");
 
   const [division, setDivision] = useState("I1");
-  const [batch, setBatch]= useState(0)
-  const [Type, setType]= useState("")
+  const [batch, setBatch] = useState(0);
+  const [Type, setType] = useState("");
   const [year, setYear] = useState(3);
 
   const [startTime, setStartTime] = useState();
@@ -56,7 +56,6 @@ export default function EventModal({ startD, endD }) {
         batch: Number(batch),
         faculty_id: userInfo.ID,
       };
-      console.log(bdy)
       const l = await createLecture(bdy);
       window.location.reload(false);
       setModal(false);
@@ -170,7 +169,7 @@ export default function EventModal({ startD, endD }) {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex flex-col items-start my-1">
                       <label>Division</label>
                       <select

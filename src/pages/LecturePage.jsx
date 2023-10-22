@@ -30,7 +30,6 @@ const MarkAttendance = () => {
       getLectureById(location?.state?.lectureId)
         .then((res) => {
           setLecture(res);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -42,7 +41,6 @@ const MarkAttendance = () => {
 
   useEffect(() => {
     if (lecture?.subject_code && lecture?.subject_code !== "") {
-      console.log(lecture?.subject_code);
       setLoading(false);
       setClassInfo({
         year: lecture.year,
@@ -72,8 +70,7 @@ const MarkAttendance = () => {
       <Button
         onClick={handleDeleteLeture}
         variant="contained"
-        sx={{ backgroundColor: "red", margin: "1rem" }}
-      >
+        sx={{ backgroundColor: "red", margin: "1rem" }}>
         Delete Lecture
       </Button>
       {!loading && <AttendanceTable subjectCode={lecture.subject_code} />}

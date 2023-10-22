@@ -230,9 +230,7 @@ export const deleteLecture = async (lectureId) => {
   const url = DELETE_LECTURE + `/${lectureId}`;
   try {
     const response = await axios.delete(url, { withCredentials: true });
-    console.log(response);
     if (response.status === 200) {
-      console.log("Lecture deleted successfully");
       Swal.fire({
         title: "Success!",
         text: "Lecture Deleted",
@@ -242,7 +240,6 @@ export const deleteLecture = async (lectureId) => {
       window.location.reload(false);
       return true;
     } else {
-      console.log("Failed to delete lecture");
       Swal.fire({
         title: "Failure!",
         text: "Some error",

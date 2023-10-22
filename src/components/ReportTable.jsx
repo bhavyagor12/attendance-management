@@ -4,14 +4,15 @@ import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
 import ReactLoading from "react-loading";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useLocation } from "react-router-dom";
-
+import { infoState } from "../atoms/infoState";
 import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
 import { getClassAttendance } from "../utils/services";
 
 const ReportTable = () => {
+  const userinfo = useRecoilValue(infoState);
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
@@ -28,6 +29,7 @@ const ReportTable = () => {
         division: filters.division,
         start_date: filters.startDate,
         end_date: filters.endDate,
+        teacher_id: userinfo.ID,
       });
       const content = response.data;
 
@@ -38,7 +40,6 @@ const ReportTable = () => {
       ];
 
       content.subjects.forEach((subject) => {
-        console.log(subject);
         newColumns.push({
           accessorKey: subject + " theory",
           header: subject + " (T)",
@@ -75,7 +76,6 @@ const ReportTable = () => {
       setLectureId("1");
     }
     fetchData(location?.state?.lectureId);
-    console.log(filters);
   }, [location, filters]);
 
   const getDefaulterArray = (data, newColumns) => {
