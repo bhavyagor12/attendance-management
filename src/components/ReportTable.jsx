@@ -41,12 +41,12 @@ const ReportTable = () => {
         console.log(subject);
         newColumns.push({
           accessorKey: subject + " theory",
-          header: subject + " (Theory)",
+          header: subject + " (T)",
           size: 120,
         });
         newColumns.push({
           accessorKey: subject + " practical",
-          header: subject + " (Practical)",
+          header: subject + " (P)",
           size: 120,
         });
       });
