@@ -124,7 +124,7 @@ const ReportTable = () => {
   };
   return (
     <>
-      {data !== null && !loading ? (
+      {!loading && data !== null ? (
         <MaterialReactTable
           columns={columns}
           data={data}
@@ -141,6 +141,7 @@ const ReportTable = () => {
                 flexWrap: "wrap",
               }}>
               <Button
+                disabled={loading}
                 color="primary"
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
