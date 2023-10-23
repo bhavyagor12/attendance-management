@@ -58,7 +58,10 @@ export async function timeTableEventsHelper(facultyID, currDate) {
   let events = [];
   ttevents?.map((ttevent) => {
     const id = ttevent.subject_code;
-    const title = ttevent.subject_name;
+    let title = `${ttevent.subject_name} ${ttevent.division}`;
+    if (ttevent.type === "practical") {
+      title += ` B(${ttevent.batch})`;
+    }
     const start = getDaysDateTime(ttevent.day, ttevent.start_time, currDate);
     const end = getDaysDateTime(ttevent.day, ttevent.end_time, currDate);
     const type = ttevent.type;
