@@ -141,7 +141,6 @@ const ReportTable = () => {
                 flexWrap: "wrap",
               }}>
               <Button
-                disabled={loading}
                 color="primary"
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
