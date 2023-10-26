@@ -14,7 +14,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 390) {
+      if (window.innerWidth <= 460) {
         setView("day");
       } else {
         setView("week");
@@ -44,7 +44,7 @@ const HomePage = () => {
       <Nav />
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4">
         <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Time - Table</h1>
-        <p className=" text-sm md:text-xl text-gray-600">
+        <p className="px-5 text-sm md:text-xl text-gray-600">
           Here is a list of lectures you have,{" "}
           <span className="font-bold text-gray-900">Click on them</span> to mark
           attendance
@@ -55,7 +55,7 @@ const HomePage = () => {
       </div>
       <div className="max-w-3xl mx-auto text-center pt-4 pb-4 md:pb-4 ">
         <h1 className="h2 mb-4 text-lg md:text-4xl font-bold">Subjects</h1>
-        <p className=" text-sm md:text-xl text-gray-600">
+        <p className="px-5 text-sm md:text-xl text-gray-600">
           Here is a list of Subjects you teach,{" "}
           <span className="font-bold text-gray-900">Click on them</span> to see
           a list of lectures

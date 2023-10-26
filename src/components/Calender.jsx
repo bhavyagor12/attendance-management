@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar, momentLocalizer, Navigate } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { modalState } from "../atoms/modalState";
@@ -19,6 +19,57 @@ import { timeTableEventsHelper } from "../utils/helpers";
 
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
+
+class CustomToolbar extends React.Component {
+  render() {
+    return (
+      <div className="rbc-toolbar flex flex-col sm:flex-row gap-2 lg:gap-0">
+        <span className="rbc-btn-group">
+          <button type="button" onClick={() => this.navigate(Navigate.TODAY)}>
+            Today
+          </button>
+          <button
+            type="button"
+            onClick={() => this.navigate(Navigate.PREVIOUS)}
+          >
+            Back
+          </button>
+          <button type="button" onClick={() => this.navigate(Navigate.NEXT)}>
+            Next
+          </button>
+        </span>
+        <span className="rbc-toolbar-label">{this.props.label}</span>
+        <span className="rbc-btn-group">{this.viewNamesGroup()}</span>
+      </div>
+    );
+  }
+
+  navigate = (action) => {
+    this.props.onNavigate(action);
+  };
+
+  view = (view) => {
+    this.props.onView(view);
+  };
+
+  viewNamesGroup() {
+    let viewNames = this.props.views;
+    const view = this.props.view;
+
+    if (viewNames.length > 1) {
+      return viewNames.map((name) => (
+        <button
+          type="button"
+          key={name}
+          className={view === name ? "rbc-active" : ""}
+          onClick={this.view.bind(null, name)}
+        >
+          {name}
+        </button>
+      ));
+    }
+  }
+}
 
 export default function Calender({ view }) {
   const userInfo = useRecoilValue(infoState);
@@ -79,6 +130,9 @@ export default function Calender({ view }) {
       {modal ? <EventModal startD={startTime} endD={endTime} /> : null}
       {!loading && (
         <Calendar
+          components={{
+            toolbar: CustomToolbar,
+          }}
           views={["day", "week"]}
           onNavigate={async (newDate) => {
             await initTT(newDate);
