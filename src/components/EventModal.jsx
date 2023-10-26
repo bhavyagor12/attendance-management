@@ -76,7 +76,8 @@ export default function EventModal({ startD, endD }) {
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setModal}>
+        onClose={setModal}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -84,7 +85,8 @@ export default function EventModal({ startD, endD }) {
           enterTo="opacity-100"
           leave="ease-in duration-200"
           leaveFrom="opacity-100"
-          leaveTo="opacity-0">
+          leaveTo="opacity-0"
+        >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
@@ -97,7 +99,8 @@ export default function EventModal({ startD, endD }) {
               enterTo="opacity-100 translate-y-0 sm:scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pt-4 pb-4 sm:p-6 sm:pb-4">
                   <div className="flex items-center">
@@ -110,7 +113,8 @@ export default function EventModal({ startD, endD }) {
                     <div className="text-left sm:mt-0 sm:ml-4 sm:text-left">
                       <Dialog.Title
                         as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900">
+                        className="text-base font-semibold leading-6 text-gray-900"
+                      >
                         Create Lecture
                       </Dialog.Title>
                     </div>
@@ -202,7 +206,7 @@ export default function EventModal({ startD, endD }) {
 
                     <div className="flex flex-col items-start my-1">
                       <label>Type(theory/practical)</label>
-                      <input
+                      <select
                         onChange={(e) => {
                           setType(e.target.value);
                           setError(false);
@@ -210,12 +214,16 @@ export default function EventModal({ startD, endD }) {
                             setError(true);
                           }
                         }}
-                        type="text"
                         name="Type"
                         id="Type"
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
-                        placeholder="Type"
-                      />
+                      >
+                        <option value="">Select Type</option>{" "}
+                        {/* Empty value for default selection */}
+                        <option value="theory">Theory</option>
+                        <option value="practical">Practical</option>
+                        {/* Add more options as needed */}
+                      </select>
 
                       {error && (
                         <div className="text-red-400 text-sm">
@@ -237,19 +245,23 @@ export default function EventModal({ startD, endD }) {
                         name="Batch"
                         id="Batch"
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm sm:leading-6"
-                        // value={year} // Make sure to set the value here if you want to show a default value
                       >
-                        <option value="">Select Batch</option>{" "}
-                        {/* Empty value for default selection */}
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        {/* Add more options as needed */}
+                        {Type === "practical" ? (
+                          <>
+                            <option value="">Select Batch</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value="0">0</option>
+                          </>
+                        )}
                       </select>
 
                       {error && (
                         <div className="text-red-400 text-sm">
-                          please enter valid batch
+                          please enter valid batch and type of lecture first
                         </div>
                       )}
                     </div>
@@ -284,14 +296,16 @@ export default function EventModal({ startD, endD }) {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                    onClick={onSubmit}>
+                    onClick={onSubmit}
+                  >
                     Create
                   </button>
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 sm:mt-0 sm:w-auto"
                     onClick={() => setModal(false)}
-                    ref={cancelButtonRef}>
+                    ref={cancelButtonRef}
+                  >
                     Cancel
                   </button>
                 </div>
