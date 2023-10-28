@@ -57,7 +57,7 @@ const Nav = () => {
   return (
     <div className="md:flex items-center justify-between  bg-white py-4 md:py-2 px-7 h-20">
       <div
-        className="font-bold text-lg md:text-2xl cursor-pointer flex items-center font-Poppins
+        className="font-bold text-base w-[60%] md:w-[80%] lg:w-fit lg:text-2xl cursor-pointer flex items-center font-Poppins
         text-gray-800"
         onClick={handleClicked}
       >

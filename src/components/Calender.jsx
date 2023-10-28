@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import React, { useState, useEffect } from "react";
+import { momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { modalState } from "../atoms/modalState";
@@ -16,6 +16,7 @@ import {
 import { classInfoState } from "../atoms/classInfoState";
 import { getAllLectures } from "../utils/services";
 import { timeTableEventsHelper } from "../utils/helpers";
+import CalendarComponent from "./CalendarComponent";
 
 moment.locale("en_IN");
 const localizer = momentLocalizer(moment);
@@ -78,23 +79,13 @@ export default function Calender({ view }) {
     <div className="flex flex-col">
       {modal ? <EventModal startD={startTime} endD={endTime} /> : null}
       {!loading && (
-        <Calendar
-          views={["day", "week"]}
-          onNavigate={async (newDate) => {
-            await initTT(newDate);
-          }}
+        <CalendarComponent
+          eventsData={eventsData}
           view={view}
-          selectable
           localizer={localizer}
-          defaultDate={new Date()}
-          startAccessor="start"
-          endAccessor="end"
-          events={eventsData}
-          style={{ height: "80vh", width: "80vw", padding: 10 }}
-          onSelectEvent={(e) => {
-            handleClick(e);
-          }}
-          onSelectSlot={handleSelect}
+          initTT={initTT}
+          handleClick={handleClick}
+          handleSelect={handleSelect}
           eventPropGetter={eventPropGetter}
         />
       )}
