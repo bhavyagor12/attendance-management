@@ -78,7 +78,8 @@ const AttendanceTable = ({ subjectCode }) => {
       {data !== null && (
         <MaterialReactTable
           columns={columns}
-          data={data} //fallback to state={{ isLoading: true }}
+          data={data}
+          selectAllMode={"all"} //fallback to state={{ isLoading: true }}
           enableRowSelection={true}
           positionToolbarAlertBanner="bottom"
           getRowId={(originalRow) => originalRow.sapid}
