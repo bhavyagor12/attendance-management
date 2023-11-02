@@ -67,7 +67,8 @@ const AttendanceTable = ({ subjectCode }) => {
     rows.map((row) => {
       sapIDs.push(row.original.sapid);
     });
-    if (markLectureAttendance(lectureId, sapIDs, subjectCode)) {
+    const mark = await markLectureAttendance(lectureId, sapIDs, subjectCode);
+    if (mark) {
       navigate("/");
       // window.location.reload();
     }
@@ -91,7 +92,8 @@ const AttendanceTable = ({ subjectCode }) => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}>
+              }}
+            >
               {table.setRowSelection}
               <Button
                 disabled={
@@ -100,7 +102,8 @@ const AttendanceTable = ({ subjectCode }) => {
                 }
                 onClick={() => markAttendance(table.getSelectedRowModel().rows)}
                 startIcon={<FileUploadIcon />}
-                variant="contained">
+                variant="contained"
+              >
                 Mark Attendance
               </Button>
             </Box>
