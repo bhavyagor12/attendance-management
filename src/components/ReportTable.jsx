@@ -10,6 +10,7 @@ import { infoState } from "../atoms/infoState";
 import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
 import { getClassAttendance } from "../utils/services";
+import Filters from "./Filters";
 
 const ReportTable = () => {
   const userinfo = useRecoilValue(infoState);
@@ -125,35 +126,41 @@ const ReportTable = () => {
   return (
     <>
       {!loading && data !== null ? (
-        <MaterialReactTable
-          columns={columns}
-          data={data}
-          enableRowSelection={false}
-          positionToolbarAlertBanner="bottom"
-          getRowId={(originalRow) => originalRow.sapid}
-          onRowSelectionChange={setRowSelection}
-          renderTopToolbarCustomActions={({ table }) => (
-            <Box
-              sx={{
-                display: "flex",
-                gap: "1rem",
-                p: "0.5rem",
-                flexWrap: "wrap",
-              }}>
-              <Button
-                color="primary"
-                onClick={handleExportData}
-                startIcon={<FileDownloadIcon />}
-                variant="contained">
-                Download CSV
-              </Button>
-            </Box>
-          )}
-        />
+        <>
+          <Filters loading={loading} />
+          <MaterialReactTable
+            columns={columns}
+            data={data}
+            enableRowSelection={false}
+            positionToolbarAlertBanner="bottom"
+            getRowId={(originalRow) => originalRow.sapid}
+            onRowSelectionChange={setRowSelection}
+            renderTopToolbarCustomActions={({ table }) => (
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "1rem",
+                  p: "0.5rem",
+                  flexWrap: "wrap",
+                }}
+              >
+                <Button
+                  color="primary"
+                  onClick={handleExportData}
+                  startIcon={<FileDownloadIcon />}
+                  variant="contained"
+                >
+                  Download CSV
+                </Button>
+              </Box>
+            )}
+          />
+        </>
       ) : (
         <div
           className="flex items-center justify-center h-full
-        ">
+        "
+        >
           <ReactLoading
             type={"spinningBubbles"}
             color={"#000000"}

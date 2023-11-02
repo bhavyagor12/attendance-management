@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { filtersState } from "../atoms/filtersState";
 
 const { RangePicker } = DatePicker;
-const Filters = () => {
+const Filters = ({ loading }) => {
   const [year, setYear] = useState("3");
   const [division, setDivision] = useState("I1");
   const [filters, setFilters] = useRecoilState(filtersState);
@@ -33,6 +33,7 @@ const Filters = () => {
         placeholder="Current Year"
         id="year"
         value={year}
+        disabled={loading}
         onChange={yearOnchange}
         style={{ width: 75 }}
       />
@@ -44,6 +45,7 @@ const Filters = () => {
         placeholder="Select division"
         optionFilterProp="children"
         onChange={divOnchange}
+        disabled={loading}
         filterOption={(input, option) =>
           (option?.label ?? "").toString().includes(input.toString())
         }
@@ -59,14 +61,16 @@ const Filters = () => {
           {
             value: "I3",
             label: "I3",
-          }
+          },
         ]}
       />
-      <RangePicker onChange={handleChange} />
+      <RangePicker disabled={loading} onChange={handleChange} />
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         type="button"
-        onClick={onButtonClick}>
+        disabled={loading}
+        onClick={onButtonClick}
+      >
         Get Data
       </button>
     </div>
