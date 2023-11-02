@@ -10,21 +10,21 @@ import { infoState } from "../atoms/infoState";
 import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
 import { getClassAttendance } from "../utils/services";
-import Filters from "./Filters";
 
-const ReportTable = () => {
+const ReportTable = ({ loading, setLoading }) => {
   const userinfo = useRecoilValue(infoState);
   const [data, setData] = React.useState(null);
   const [columns, setColumns] = React.useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   let location = useLocation();
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       const response = await getClassAttendance({
         year: filters.year,
         division: filters.division,
@@ -127,7 +127,7 @@ const ReportTable = () => {
     <>
       {!loading && data !== null ? (
         <>
-          <Filters loading={loading} />
+          {/* <Filters loading={loading} /> */}
           <MaterialReactTable
             columns={columns}
             data={data}
