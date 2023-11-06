@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import { ExportToCsv } from "export-to-csv"; //or use your library of choice here
+import { ExportToCsv } from "export-to-csv";
 import ReactLoading from "react-loading";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useLocation } from "react-router-dom";
@@ -11,14 +11,15 @@ import { filtersState } from "../atoms/filtersState";
 import { getTwoDecimals } from "../utils/helpers";
 import { getClassAttendance } from "../utils/services";
 
-const ReportTable = () => {
+function ReportTable() {
   const userinfo = useRecoilValue(infoState);
-  const [data, setData] = React.useState(null);
-  const [columns, setColumns] = React.useState([]);
+  const [data, setData] = useState(null);
+  const [columns, setColumns] = useState([]);
   const [lectureId, setLectureId] = useState("");
   const [filters, setFilters] = useRecoilState(filtersState);
   const [rowSelection, setRowSelection] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showPercentage, setShowPercentage] = useState(true);
 
   let location = useLocation();
 
@@ -92,8 +93,26 @@ const ReportTable = () => {
         const practicalAttendance = getTwoDecimals(
           subject.attendance_practical
         );
-        valuesToUpdate.push(`${theoryAttendance}%`);
-        valuesToUpdate.push(`${practicalAttendance}%`);
+        const totalTheoryAttended = getTwoDecimals(
+          subject.attended_theoryLectures
+        );
+        const totalTheoryLectures = getTwoDecimals(subject.total_theory);
+        const totalPracticalsAttended = getTwoDecimals(
+          subject.attended_practicalLectures
+        );
+        const totalPractical = getTwoDecimals(subject.total_practical);
+
+        valuesToUpdate.push(
+          showPercentage
+            ? `${theoryAttendance}%`
+            : `${totalTheoryAttended}/${totalTheoryLectures}`
+        );
+
+        valuesToUpdate.push(
+          showPercentage
+            ? `${practicalAttendance}%`
+            : `${totalPracticalsAttended}/${totalPractical}`
+        );
       });
       const grandAttendance = getTwoDecimals(student.grand_attendance);
       valuesToUpdate.push(`${grandAttendance}%`);
@@ -108,6 +127,7 @@ const ReportTable = () => {
 
     return initialStudents;
   };
+
   const csvOptions = {
     fieldSeparator: ",",
     quoteStrings: '"',
@@ -122,8 +142,13 @@ const ReportTable = () => {
   const handleExportData = () => {
     csvExporter.generateCsv(data);
   };
+
   return (
     <>
+      <Button onClick={() => setShowPercentage(!showPercentage)}>
+         {showPercentage ? "Percentage" : "Fraction"}
+      </Button>
+
       {!loading && data !== null ? (
         <MaterialReactTable
           columns={columns}
@@ -139,21 +164,21 @@ const ReportTable = () => {
                 gap: "1rem",
                 p: "0.5rem",
                 flexWrap: "wrap",
-              }}>
+              }}
+            >
               <Button
                 color="primary"
                 onClick={handleExportData}
                 startIcon={<FileDownloadIcon />}
-                variant="contained">
+                variant="contained"
+              >
                 Download CSV
               </Button>
             </Box>
           )}
         />
       ) : (
-        <div
-          className="flex items-center justify-center h-full
-        ">
+        <div className="flex items-center justify-center h-full">
           <ReactLoading
             type={"spinningBubbles"}
             color={"#000000"}
@@ -164,6 +189,6 @@ const ReportTable = () => {
       )}
     </>
   );
-};
+}
 
 export default ReportTable;
