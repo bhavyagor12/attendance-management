@@ -1,13 +1,9 @@
 import { Select, Input, DatePicker } from "antd";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { filtersState } from "../atoms/filtersState";
-
 const { RangePicker } = DatePicker;
-const Filters = ({ loading }) => {
+const Filters = ({ loading, fetchData }) => {
   const [year, setYear] = useState("3");
   const [division, setDivision] = useState("I1");
-  const [filters, setFilters] = useRecoilState(filtersState);
   const [startDate, setStartDate] = useState("2024-06-01");
   const [endDate, setEndDate] = useState("2024-09-01");
 
@@ -25,8 +21,10 @@ const Filters = ({ loading }) => {
   };
 
   const onButtonClick = () => {
-    setFilters({ year, division, startDate, endDate });
+    let filterData = { year, division, startDate, endDate };
+    fetchData(filterData);
   };
+
   return (
     <div className="flex items-center justify-center gap-8 flex-wrap">
       <Input
