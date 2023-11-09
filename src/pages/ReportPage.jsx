@@ -27,6 +27,7 @@ const ReportPage = () => {
         end_date: filterData.endDate,
         teacher_id: userinfo.ID,
       });
+      console.log(response.data);
       setMainContent(response.data);
       const content = response.data;
       if (content?.students === null) {
@@ -84,10 +85,10 @@ const ReportPage = () => {
       student.subject_attendance.forEach((subject) => {
         let theoryAttendance, practicalAttendance;
         if (displayMode === "fraction") {
-          theoryAttendance = `${subject.attended_theory || 0}/${
+          theoryAttendance = `${subject.attended_theoryLectures || 0}/${
             subject.total_theory
           }`;
-          practicalAttendance = `${subject.attended_practical || 0}/${
+          practicalAttendance = `${subject.attended_practicalLectures || 0}/${
             subject.total_practical
           }`;
         } else {
